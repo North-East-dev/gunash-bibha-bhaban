@@ -100,6 +100,12 @@ header p {
   cursor: pointer;
 }
 
+/* DISABLED BUTTON */
+.btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* SECTIONS */
 section {
   max-width: 1050px;
@@ -271,14 +277,6 @@ h2 {
 .dot.available { background: #f4eff9; border: 1px solid #ccc; }
 .dot.booked { background: var(--primary); }
 
-/* FOOTER */
-footer {
-  background: linear-gradient(135deg, #2d143f, #14001f);
-  color: #ddd;
-  text-align: center;
-  padding: 35px;
-}
-
 /* MODAL */
 .modal {
   display: none;
@@ -296,16 +294,43 @@ footer {
   border-radius: 18px;
 }
 
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+}
+
+.modal-content label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: block;
+  color: #555;
+}
+
 .close {
   float: right;
   font-size: 22px;
   cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+  background: linear-gradient(135deg, #2d143f, #14001f);
+  color: #ddd;
+  text-align: center;
+  padding: 35px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <nav class="navbar">
   <div class="nav-brand">Gunash Padmawati Bibha Bhaban</div>
   <ul class="nav-links">
@@ -379,7 +404,7 @@ footer {
     <div class="calendar-header" id="monthYear"></div>
     <div class="calendar-grid" id="calendarGrid"></div>
 
-    <div class="calendar-legend known">
+    <div class="calendar-legend">
       <div><span class="dot available"></span> Available</div>
       <div><span class="dot booked"></span> Booked</div>
     </div>
@@ -396,14 +421,46 @@ footer {
   © 2026 Gunash Padmawati Bibha Bhaban · Crafted with Care
 </footer>
 
+<!-- BOOKING MODAL (PHASE D) -->
 <div id="bookingModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Booking Enquiry</h2>
-    <input type="text" placeholder="Your Name">
-    <input type="tel" placeholder="Phone Number">
-    <textarea placeholder="Event Details (optional)"></textarea>
-    <button class="btn">Submit Enquiry</button>
+
+    <!-- STEP 1 -->
+    <div id="step1">
+      <h2>Booking Enquiry</h2>
+      <input id="nameInput" type="text" placeholder="Your Name">
+      <input id="phoneInput" type="tel" placeholder="Phone Number">
+      <button id="continueBtn" class="btn disabled">Continue to Dates</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" style="display:none;">
+      <h2>Select Dates</h2>
+
+      <label>Number of Days</label>
+      <select id="daysSelect">
+        <option value="1">1 Day</option>
+        <option value="2">2 Days</option>
+        <option value="3">3 Days</option>
+        <option value="4">4+ Days</option>
+      </select>
+
+      <div id="singleDate">
+        <label>Date</label>
+        <input type="date">
+      </div>
+
+      <div id="rangeDate" style="display:none;">
+        <label>From</label>
+        <input type="date">
+        <label>To</label>
+        <input type="date">
+      </div>
+
+      <textarea placeholder="Event Details (optional)"></textarea>
+      <button class="btn">Submit Enquiry</button>
+    </div>
   </div>
 </div>
 
@@ -414,6 +471,7 @@ function openModal() {
 function closeModal() {
   document.getElementById("bookingModal").style.display = "none";
 }
+
 function switchExperience(type) {
   document.querySelectorAll(".exp-tab").forEach(t => t.classList.remove("active"));
   document.querySelectorAll(".exp-panel").forEach(p => p.classList.remove("active"));
@@ -425,6 +483,42 @@ function switchExperience(type) {
     document.getElementById("exp-events").classList.add("active");
   }
 }
+
+/* PHASE D LOGIC */
+const nameInput = document.getElementById("nameInput");
+const phoneInput = document.getElementById("phoneInput");
+const continueBtn = document.getElementById("continueBtn");
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+const daysSelect = document.getElementById("daysSelect");
+const singleDate = document.getElementById("singleDate");
+const rangeDate = document.getElementById("rangeDate");
+
+function validateStep1() {
+  if (nameInput.value.trim() && phoneInput.value.trim()) {
+    continueBtn.classList.remove("disabled");
+  } else {
+    continueBtn.classList.add("disabled");
+  }
+}
+
+nameInput.addEventListener("input", validateStep1);
+phoneInput.addEventListener("input", validateStep1);
+
+continueBtn.addEventListener("click", () => {
+  step1.style.display = "none";
+  step2.style.display = "block";
+});
+
+daysSelect.addEventListener("change", () => {
+  if (daysSelect.value === "1") {
+    singleDate.style.display = "block";
+    rangeDate.style.display = "none";
+  } else {
+    singleDate.style.display = "none";
+    rangeDate.style.display = "block";
+  }
+});
 
 /* CALENDAR */
 const bookedDates = ["2024-01-12","2024-01-18","2024-01-19","2024-01-28"];
