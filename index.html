@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Gunash Padmawati Bibha Bhaban</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Premium Wedding and Event Venue">
 
 <!-- PREMIUM FONTS -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -13,7 +14,7 @@
 :root {
   --primary: #5b2b82;
   --primary-light: #7a3fa8;
-  --secondary: #d4af37;
+  --secondary: #d4af37; /* Gold Accent */
   --soft-bg: #faf8ff;
   --dark-bg: #2d143f;
   --text-main: #333;
@@ -43,6 +44,7 @@ body.modal-open, body.menu-open { overflow: hidden; }
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+/* Stagger Delays for Grids */
 .stagger-1 { transition-delay: 0.1s; }
 .stagger-2 { transition-delay: 0.2s; }
 .stagger-3 { transition-delay: 0.3s; }
@@ -53,7 +55,7 @@ body.modal-open, body.menu-open { overflow: hidden; }
   100% { transform: scale(1.1); }
 }
 
-/* ================= NAVBAR (OPTIMIZED) ================= */
+/* ================= NAVBAR (RESPONSIVE) ================= */
 .navbar {
   position: sticky;
   top: 0;
@@ -70,14 +72,13 @@ body.modal-open, body.menu-open { overflow: hidden; }
 
 .nav-brand {
   font-family: "Playfair Display", serif;
-  font-size: clamp(18px, 4vw, 22px); /* Scales on mobile */
+  font-size: clamp(20px, 4vw, 24px);
   font-weight: 700;
   color: var(--primary);
   text-decoration: none;
-  z-index: 1002; /* Above mobile menu */
+  z-index: 1002;
 }
 
-/* Menu Container */
 .nav-links {
   list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center;
 }
@@ -87,13 +88,12 @@ body.modal-open, body.menu-open { overflow: hidden; }
   position: relative; transition: 0.3s;
 }
 .nav-links a::after {
-  content: ""; position: absolute; left: 0; bottom: -4px;
-  width: 0; height: 2px; background: var(--secondary); transition: 0.3s ease;
+  content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px;
+  background: var(--secondary); transition: 0.3s ease;
 }
 .nav-links a:hover { color: var(--primary); }
 .nav-links a:hover::after { width: 100%; }
 
-/* CTA Button */
 .nav-cta {
   background: var(--primary); color: white; border: none;
   padding: 12px 28px; border-radius: 50px; cursor: pointer;
@@ -102,36 +102,32 @@ body.modal-open, body.menu-open { overflow: hidden; }
 }
 .nav-cta:hover { background: var(--primary-light); transform: translateY(-2px); }
 
-/* Hamburger Menu Icon (Hidden on PC) */
+/* Hamburger Menu (Mobile) */
 .hamburger {
   display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1002;
 }
 .bar { width: 25px; height: 3px; background: var(--primary); border-radius: 2px; transition: 0.3s; }
 
-/* TABLET & MOBILE STYLES (< 900px) */
+/* Responsive Menu Styles */
 @media(max-width: 900px) {
   .hamburger { display: flex; }
-  
-  /* Slide-out Menu */
   .nav-links {
     position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
     background: white; flex-direction: column; justify-content: center;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001;
     box-shadow: -10px 0 30px rgba(0,0,0,0.1);
   }
-  
   .nav-links.active { right: 0; }
   .nav-links li { margin: 15px 0; opacity: 0; transform: translateX(20px); transition: 0.4s; }
-  
-  /* Stagger animation for links */
   .nav-links.active li { opacity: 1; transform: translateX(0); }
+  
+  /* Stagger animation */
   .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
   .nav-links.active li:nth-child(2) { transition-delay: 0.2s; }
   .nav-links.active li:nth-child(3) { transition-delay: 0.3s; }
   .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
   .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
-  .nav-links.active li:nth-child(6) { transition-delay: 0.6s; }
-
+  
   .nav-links a { font-size: 20px; color: #333; }
   .nav-cta { width: 80%; padding: 15px; font-size: 16px; margin-top: 10px; }
 
@@ -165,8 +161,8 @@ header {
 
 header h1 {
   font-family: "Playfair Display", serif;
-  /* FLUID TYPOGRAPHY: Scales between 36px and 56px depending on screen */
-  font-size: clamp(36px, 6vw, 56px); 
+  /* Fluid Typography */
+  font-size: clamp(36px, 6vw, 60px); 
   margin: 0 0 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); line-height: 1.1;
 }
 
@@ -192,10 +188,11 @@ header p {
 }
 .btn:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 20px 40px rgba(91,43,130,0.4); }
 .btn.disabled { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
+.btn.loading { opacity: 0.8; pointer-events: none; cursor: wait; }
 
 section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
 
-/* Mobile Padding Adjustments */
+/* Responsive Section Card */
 .section-card {
   background: white; padding: 60px 50px; border-radius: 30px;
   box-shadow: var(--shadow-soft); position: relative; overflow: hidden;
@@ -215,10 +212,10 @@ h2::after {
   background: var(--secondary); margin: 15px auto 0;
 }
 
-/* ================= AMENITIES ================= */
-/* Optimized Grid: 1 col mobile, 2 tablet, 3 desktop */
+/* ================= AMENITIES GRID ================= */
 .features { 
   display: grid; 
+  /* Auto-fit: 1 col on mobile, 2 on tablet, 3 on desktop */
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
   gap: 25px; 
 }
@@ -231,8 +228,7 @@ h2::after {
 
 /* ================= EXPERIENCES ================= */
 .exp-tabs {
-  display: flex; justify-content: center; gap: 10px;
-  margin-bottom: 50px; 
+  display: flex; justify-content: center; gap: 10px; margin-bottom: 50px; 
   background: #f4eff9; width: fit-content; margin-left: auto; margin-right: auto;
   padding: 6px; border-radius: 50px;
 }
@@ -243,29 +239,33 @@ h2::after {
 .exp-panel.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Reviews & Events Grids */
+/* Reviews Mosaic */
 .reviews-mosaic { 
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
   gap: 25px; 
 }
-
 .review-card { background: var(--soft-bg); padding: 30px; border-radius: 22px; font-size: 15px; font-style: italic; color: #555; transition: 0.4s; }
+.review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.review-card.large { grid-column: span 2; }
 .review-card strong { display: block; margin-top: 20px; color: var(--primary); font-style: normal; font-size: 13px; font-weight: 600; text-transform: uppercase; }
 
+/* Events Grid */
 .events-grid { 
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
   gap: 30px; 
 }
 .event-card { border-radius: 22px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.4s; background: white; cursor: pointer; }
+.event-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
 .event-card img { width: 100%; height: 220px; object-fit: cover; transition: 0.5s; }
+.event-card:hover img { transform: scale(1.05); }
 .event-info { padding: 25px; }
+.event-info span { font-size: 12px; font-weight: 700; color: var(--secondary); text-transform: uppercase; display: block; margin-bottom: 5px; }
 
 /* ================= CALENDAR ================= */
 .calendar-wrapper { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
 .calendar-header { font-family: "Playfair Display"; font-size: 24px; margin-bottom: 25px; color: var(--primary); text-align: center; }
-/* 7 Columns always, works on mobile too */
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
 .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 13px; background: #fbf9fd; transition: 0.3s; }
 .calendar-day:not(.booked):hover { background: var(--primary); color: white; transform: scale(1.1); box-shadow: 0 8px 20px rgba(91,43,130,0.3); cursor: pointer; }
@@ -274,12 +274,12 @@ h2::after {
 /* ================= FOOTER ================= */
 footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #ccc; text-align: center; padding: 60px 20px; margin-top: 80px; }
 
-/* ================= MODAL ================= */
+/* ================= MODAL (RESPONSIVE) ================= */
 .modal {
   display: none; position: fixed; inset: 0;
   background: rgba(45, 20, 63, 0.85); backdrop-filter: blur(8px);
-  z-index: 2000; overflow-y: auto; opacity: 0; transition: opacity 0.3s ease;
-  padding: 10px; /* Touch friendly padding */
+  z-index: 2000; overflow-y: auto; padding: 10px; /* Touch friendly padding */
+  opacity: 0; transition: opacity 0.3s ease;
 }
 .modal.active { display: block; opacity: 1; }
 
@@ -289,12 +289,9 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 30px 60px rgba(0,0,0,0.3);
 }
-@media(max-width: 480px) {
-  .modal-content { padding: 25px; margin: 10px auto; border-radius: 20px; }
-}
+@media(max-width: 480px) { .modal-content { padding: 25px; margin: 10px auto; border-radius: 20px; } }
 .modal.active .modal-content { transform: translateY(0); }
 
-/* Modal Header with fixed X button */
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
 .modal-header h2 { margin: 0; font-size: 22px; color: var(--text-main); text-align: left; }
 
@@ -306,10 +303,11 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 .close-btn:hover { background: #ffebeb; color: #d32f2f; }
 
 .modal-label { font-size: 13px; font-weight: 600; color: #666; margin-bottom: 6px; display: block; }
-/* Input Sizing for Touch */
+
+/* Optimized Inputs for Touch */
 .modal-content input, .modal-content select, .modal-content textarea {
   width: 100%; padding: 14px; margin-bottom: 18px; border-radius: 12px;
-  border: 2px solid #f0f0f0; font-family: inherit; font-size: 16px; /* 16px prevents zoom on iOS */
+  border: 2px solid #f0f0f0; font-family: inherit; font-size: 16px; /* Prevents iOS zoom */
   background: #fdfdfd; transition: 0.3s;
 }
 .modal-content input:focus { background: white; border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.08); }
@@ -317,6 +315,11 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 .success-box { text-align: center; padding: 30px 0; }
 .success-check { font-size: 50px; color: #4CAF50; margin-bottom: 20px; animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 @keyframes popIn { 0%{transform:scale(0);} 100%{transform:scale(1);} }
+
+@media(max-width: 768px) {
+  .reviews-mosaic .review-card.large { grid-column: span 1; } /* Stack on mobile */
+  .reviews-mosaic .review-card.tall { grid-row: span 1; }
+}
 </style>
 </head>
 
@@ -326,7 +329,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 <nav class="navbar">
   <a href="index.html" class="nav-brand">Gunash Padmawati Bibha Bhaban</a>
   
-  <!-- Navigation Links -->
   <ul class="nav-links" id="navLinks">
     <li><a href="#home" onclick="closeMenu()">Home</a></li>
     <li><a href="gallery.html" onclick="closeMenu()">Gallery</a></li>
@@ -334,15 +336,11 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
     <li><a href="#amenities" onclick="closeMenu()">Amenities</a></li>
     <li><a href="#experiences" onclick="closeMenu()">Experiences</a></li>
     <li><a href="#calendar" onclick="closeMenu()">Calendar</a></li>
-    <!-- Mobile CTA inside menu -->
     <li><button class="nav-cta" onclick="openModal(); closeMenu()">Enquire Now</button></li>
   </ul>
 
-  <!-- Hamburger Icon for Mobile -->
   <div class="hamburger" onclick="toggleMenu()">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
   </div>
 </nav>
 
@@ -463,13 +461,13 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
       <label class="modal-label">Phone Number</label>
       <input id="phoneInput" type="tel" placeholder="e.g. 9876543210" maxlength="10">
       
-      <button id="continueBtn" class="btn disabled" style="width:100%">Continue to Dates</button>
+      <button id="continueBtn" class="btn disabled" style="width:100%" onclick="goToStep2()">Continue to Dates</button>
     </div>
 
     <!-- STEP 2: Dates -->
     <div id="step2" style="display:none;">
       <label class="modal-label">Duration</label>
-      <select id="daysSelect">
+      <select id="daysSelect" onchange="updateDateViews()">
         <option value="1">1 Day</option>
         <option value="2">2 Days</option>
         <option value="3">3 Days</option>
@@ -479,7 +477,7 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 
       <div id="customDaysDiv" style="display:none;">
         <label class="modal-label">Enter Number of Days</label>
-        <input type="number" id="customDaysInput" placeholder="e.g. 7" min="1" max="30">
+        <input type="number" id="customDaysInput" placeholder="e.g. 7" min="1" max="30" oninput="calculateEndDate()">
       </div>
 
       <div id="singleDate">
@@ -491,7 +489,7 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
         <div style="display:flex; gap:15px;">
           <div style="flex:1;">
             <label class="modal-label">Start Date</label>
-            <input type="date" id="dateFrom">
+            <input type="date" id="dateFrom" onchange="calculateEndDate()">
           </div>
           <div style="flex:1;">
             <label class="modal-label">End Date</label>
@@ -501,11 +499,11 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
       </div>
 
       <label class="modal-label">Event Details (Optional)</label>
-      <textarea placeholder="Type of event, expected guests..." rows="3"></textarea>
+      <textarea id="detailsInput" placeholder="Type of event, expected guests..." rows="3"></textarea>
       
       <div style="display:flex; gap:10px; margin-top:10px;">
          <button class="btn" onclick="backToStep1()" style="background:#eee; color:#333; flex:1;">Back</button>
-         <button class="btn" onclick="submitEnquiry()" style="flex:2;">Submit Enquiry</button>
+         <button class="btn" id="submitBtn" onclick="submitEnquiry()" style="flex:2;">Submit Enquiry</button>
       </div>
     </div>
 
@@ -513,7 +511,8 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
     <div id="successStep" style="display:none;" class="success-box">
       <div class="success-check">✔</div>
       <h2>Thank you!</h2>
-      <p>Your enquiry has been received.<br>Our team will contact you shortly to confirm availability.</p>
+      <p>Your enquiry has been sent to our team.</p>
+      <p style="font-size:13px; color:#666; margin-top:10px;">Opening WhatsApp for your confirmation...</p>
       <button class="btn" onclick="closeModal()" style="margin-top:20px; min-width:150px;">Close</button>
     </div>
 
@@ -521,179 +520,163 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 </div>
 
 <script>
-/* ================= MOBILE MENU LOGIC ================= */
-function toggleMenu() {
+/* =========================================================
+   CONFIGURATION: YOUR GOOGLE SCRIPT & WHATSAPP
+   ========================================================= */
+const scriptURL = "https://script.google.com/macros/s/AKfycbyGsTQXMR6PyFdJnxvtVDh7QqI5tJSnAZ3s54t1zv48sGHr2mtoiutor46K88tzDjE/exec";
+const ownerPhone = "919876543210"; // REPLACE WITH YOUR NUMBER (e.g., 919998887777)
+
+/* ================= NAV LOGIC ================= */
+function toggleMenu(){
   document.getElementById("navLinks").classList.toggle("active");
   document.querySelector(".hamburger").classList.toggle("active");
   document.body.classList.toggle("menu-open");
 }
-
-function closeMenu() {
+function closeMenu(){
   document.getElementById("navLinks").classList.remove("active");
   document.querySelector(".hamburger").classList.remove("active");
   document.body.classList.remove("menu-open");
 }
 
 /* ================= MODAL LOGIC ================= */
-const bookingModal = document.getElementById("bookingModal");
-const nameInput = document.getElementById("nameInput");
-const phoneInput = document.getElementById("phoneInput");
-const continueBtn = document.getElementById("continueBtn");
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const successStep = document.getElementById("successStep");
+const bookingModal=document.getElementById("bookingModal");
+const step1=document.getElementById("step1");
+const step2=document.getElementById("step2");
+const successStep=document.getElementById("successStep");
+const nameInput=document.getElementById("nameInput");
+const phoneInput=document.getElementById("phoneInput");
+const continueBtn=document.getElementById("continueBtn");
+const submitBtn=document.getElementById("submitBtn");
 
-function openModal() {
-  bookingModal.classList.add("active");
-  document.body.classList.add("modal-open");
-  nameInput.focus();
+function openModal(){ bookingModal.classList.add("active"); document.body.classList.add("modal-open"); nameInput.focus(); }
+function closeModal(){
+  bookingModal.classList.remove("active"); document.body.classList.remove("modal-open");
+  setTimeout(()=>{ step1.style.display="block"; step2.style.display="none"; successStep.style.display="none"; nameInput.value=""; phoneInput.value=""; validateStep1(); },300);
 }
+document.addEventListener("keydown",(e)=>{if(e.key==="Escape")closeModal()});
+bookingModal.addEventListener("click",(e)=>{if(e.target===bookingModal)closeModal()});
 
-function closeModal() {
-  bookingModal.classList.remove("active");
-  document.body.classList.remove("modal-open");
-  setTimeout(() => {
-    step1.style.display = "block";
-    step2.style.display = "none";
-    successStep.style.display = "none";
-    nameInput.value = "";
-    phoneInput.value = "";
-    validateStep1();
-  }, 300);
-}
-
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
-bookingModal.addEventListener("click", (e) => { if (e.target === bookingModal) closeModal(); });
-
-/* ================= STEP 1 VALIDATION ================= */
-phoneInput.addEventListener("input", () => {
-  phoneInput.value = phoneInput.value.replace(/\D/g, "");
-  validateStep1();
-});
+/* VALIDATION */
+phoneInput.addEventListener("input",()=>{ phoneInput.value=phoneInput.value.replace(/\D/g,""); validateStep1(); });
 nameInput.addEventListener("input", validateStep1);
-
-function validateStep1() {
-  if (nameInput.value.trim().length > 0 && phoneInput.value.length === 10) {
-    continueBtn.classList.remove("disabled");
-  } else {
-    continueBtn.classList.add("disabled");
-  }
+function validateStep1(){
+  if(nameInput.value.trim().length>0 && phoneInput.value.length===10) continueBtn.classList.remove("disabled");
+  else continueBtn.classList.add("disabled");
 }
+function goToStep2(){ step1.style.display="none"; step2.style.display="block"; }
+function backToStep1(){ step1.style.display="block"; step2.style.display="none"; }
 
-continueBtn.addEventListener("click", () => {
-  step1.style.display = "none";
-  step2.style.display = "block";
-  step2.style.animation = "fadeIn 0.4s ease";
-});
-
-function backToStep1() {
-  step1.style.display = "block";
-  step2.style.display = "none";
-  step1.style.animation = "fadeIn 0.4s ease";
-}
-
+/* ================= SUBMISSION LOGIC ================= */
 function submitEnquiry() {
-  step2.style.display = "none";
-  successStep.style.display = "block";
+  submitBtn.textContent = "Sending...";
+  submitBtn.classList.add("disabled");
+
+  // Gather Data
+  const durationValue = document.getElementById("daysSelect").value === 'custom' ? document.getElementById("customDaysInput").value : document.getElementById("daysSelect").value;
+  let dateValue = "";
+  if(document.getElementById("daysSelect").value === '1') {
+    dateValue = document.getElementById("dateSingle").value;
+  } else {
+    dateValue = document.getElementById("dateFrom").value + " to " + document.getElementById("dateTo").value;
+  }
+
+  const formData = {
+    name: nameInput.value,
+    phone: phoneInput.value,
+    duration: durationValue,
+    date: dateValue,
+    details: document.getElementById("detailsInput").value
+  };
+
+  // 1. Send to Google Sheet & Email
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    // 2. Success UI
+    step2.style.display = "none";
+    successStep.style.display = "block";
+    submitBtn.textContent = "Submit Enquiry";
+    submitBtn.classList.remove("disabled");
+
+    // 3. Open WhatsApp on Customer's Phone (to Owner)
+    const msg = `Hi, I am ${formData.name}. I would like to book the hall.\n\n*Date:* ${formData.date}\n*Duration:* ${formData.duration} days\n*Phone:* ${formData.phone}`;
+    const waURL = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(msg)}`;
+    
+    setTimeout(() => { window.open(waURL, '_blank'); }, 1500);
+  })
+  .catch(error => {
+    console.error('Error!', error.message);
+    alert("There was a network error. Please check your connection.");
+    submitBtn.textContent = "Submit Enquiry";
+    submitBtn.classList.remove("disabled");
+  });
 }
 
-/* ================= DATE & CUSTOM LOGIC ================= */
-const daysSelect = document.getElementById("daysSelect");
-const customDaysDiv = document.getElementById("customDaysDiv");
-const customDaysInput = document.getElementById("customDaysInput");
-const singleDate = document.getElementById("singleDate");
-const rangeDate = document.getElementById("rangeDate");
-const dateSingle = document.getElementById("dateSingle");
-const dateFrom = document.getElementById("dateFrom");
-const dateTo = document.getElementById("dateTo");
+/* ================= DATE LOGIC ================= */
+const daysSelect=document.getElementById("daysSelect");
+const customDaysDiv=document.getElementById("customDaysDiv");
+const customDaysInput=document.getElementById("customDaysInput");
+const singleDate=document.getElementById("singleDate");
+const rangeDate=document.getElementById("rangeDate");
+const dateSingle=document.getElementById("dateSingle");
+const dateFrom=document.getElementById("dateFrom");
+const dateTo=document.getElementById("dateTo");
 
-const today = new Date().toISOString().split("T")[0];
-dateSingle.min = today;
-dateFrom.min = today;
+const today=new Date().toISOString().split("T")[0];
+dateSingle.min=today; dateFrom.min=today;
 
-function updateDateViews() {
-  const val = daysSelect.value;
-  if (val === "custom") {
-    customDaysDiv.style.display = "block";
-    customDaysInput.focus();
-  } else {
-    customDaysDiv.style.display = "none";
-  }
-  let isSingle = (val === "1");
-  if (isSingle) {
-    singleDate.style.display = "block";
-    rangeDate.style.display = "none";
-  } else {
-    singleDate.style.display = "none";
-    rangeDate.style.display = "block";
-    calculateEndDate();
-  }
+function updateDateViews(){
+  const val=daysSelect.value;
+  customDaysDiv.style.display=(val==="custom")?"block":"none";
+  if(val==="1"){ singleDate.style.display="block"; rangeDate.style.display="none"; }
+  else { singleDate.style.display="none"; rangeDate.style.display="block"; calculateEndDate(); }
 }
-
-function calculateEndDate() {
-  let days = 0;
-  if (daysSelect.value === "custom") {
-    days = parseInt(customDaysInput.value, 10);
-  } else {
-    days = parseInt(daysSelect.value, 10);
-  }
-  if (!days || days < 1 || !dateFrom.value) {
-    dateTo.value = "";
-    return;
-  }
-  const fromDate = new Date(dateFrom.value);
-  const toDate = new Date(fromDate);
-  toDate.setDate(fromDate.getDate() + days - 1);
-  dateTo.value = toDate.toISOString().split("T")[0];
+function calculateEndDate(){
+  let days=daysSelect.value==="custom"?parseInt(customDaysInput.value):parseInt(daysSelect.value);
+  if(!days||days<1||!dateFrom.value)return;
+  const fromDate=new Date(dateFrom.value);
+  const toDate=new Date(fromDate);
+  toDate.setDate(fromDate.getDate()+days-1);
+  dateTo.value=toDate.toISOString().split("T")[0];
 }
-
-daysSelect.addEventListener("change", updateDateViews);
-customDaysInput.addEventListener("input", calculateEndDate);
-dateFrom.addEventListener("change", calculateEndDate);
 
 /* ================= TABS ================= */
-function switchExperience(type) {
-  document.querySelectorAll(".exp-tab").forEach(t => t.classList.remove("active"));
-  document.querySelectorAll(".exp-panel").forEach(p => p.classList.remove("active"));
-  if (type === "reviews") {
+function switchExperience(type){
+  document.querySelectorAll(".exp-tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".exp-panel").forEach(p=>p.classList.remove("active"));
+  if(type==="reviews"){
     document.querySelectorAll(".exp-tab")[0].classList.add("active");
     document.getElementById("exp-reviews").classList.add("active");
-  } else {
+  }else{
     document.querySelectorAll(".exp-tab")[1].classList.add("active");
     document.getElementById("exp-events").classList.add("active");
   }
 }
 
 /* ================= CALENDAR ================= */
-const bookedDates = ["2024-01-12", "2024-01-18", "2024-01-19", "2024-01-28"];
-const calendarGrid = document.getElementById("calendarGrid");
-const monthLabel = document.getElementById("monthYear");
-const now = new Date();
-monthLabel.textContent = now.toLocaleString("default", { month: "long", year: "numeric" });
-const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-
-for (let d = 1; d <= daysInMonth; d++) {
-  const el = document.createElement("div");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(d).padStart(2, "0");
-  const dateStr = `${now.getFullYear()}-${month}-${day}`;
-  el.className = "calendar-day";
-  el.textContent = d;
-  if (bookedDates.includes(dateStr)) { el.classList.add("booked"); el.title = "Booked"; }
-  else { el.title = "Available"; }
+const bookedDates=["2024-01-12","2024-01-18","2024-01-19","2024-01-28"];
+const calendarGrid=document.getElementById("calendarGrid");
+const now=new Date();
+document.getElementById("monthYear").textContent=now.toLocaleString("default",{month:"long",year:"numeric"});
+const daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+for(let d=1;d<=daysInMonth;d++){
+  const el=document.createElement("div");
+  const month=String(now.getMonth()+1).padStart(2,"0");
+  const day=String(d).padStart(2,"0");
+  const dateStr=`${now.getFullYear()}-${month}-${day}`;
+  el.className="calendar-day"; el.textContent=d;
+  if(bookedDates.includes(dateStr)) el.classList.add("booked");
   calendarGrid.appendChild(el);
 }
 
-/* ================= SCROLL ANIMATIONS ================= */
-const observer = new IntersectionObserver((entries, obs) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      obs.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+/* ================= ANIMATIONS ================= */
+const observer=new IntersectionObserver((entries,obs)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("visible"); obs.unobserve(e.target); } });
+},{threshold:0.1});
+document.querySelectorAll(".fade-up").forEach(el=>observer.observe(el));
 </script>
 
 </body>
