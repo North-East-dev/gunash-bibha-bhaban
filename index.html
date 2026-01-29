@@ -14,17 +14,63 @@
   --secondary: #8e44ad;
 }
 
-/* DYNAMIC BACKGROUND */
+/* RESET */
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   background: linear-gradient(180deg, #f5effa, #ffffff);
   color: #333;
   line-height: 1.7;
-  transition: background 0.6s ease;
 }
 
-/* HERO */
+/* ================= NAVBAR ================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 40px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.nav-brand {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.nav-cta {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* ================= HERO ================= */
 header {
   background: linear-gradient(rgba(91,43,130,0.7), rgba(0,0,0,0.6)),
               url('https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c');
@@ -32,19 +78,17 @@ header {
   background-position: center;
   color: white;
   text-align: center;
-  padding: 110px 20px;
+  padding: 120px 20px;
 }
 
 header h1 {
   font-family: "Playfair Display", serif;
   font-size: 42px;
   margin-bottom: 10px;
-  animation: fadeDown 1s ease;
 }
 
 header p {
   font-size: 18px;
-  opacity: 0.95;
   margin-bottom: 35px;
 }
 
@@ -54,21 +98,14 @@ header p {
   color: white;
   padding: 15px 36px;
   border-radius: 30px;
-  font-size: 16px;
   border: none;
   cursor: pointer;
-  transition: all 0.35s ease;
 }
 
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(91,43,130,0.4);
-}
-
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 section {
   max-width: 1050px;
-  margin: 60px auto;
+  margin: 70px auto;
   padding: 70px 35px;
   background: white;
   border-radius: 18px;
@@ -92,37 +129,9 @@ h2 {
 }
 
 .box {
-  padding: 30px 20px;
+  padding: 30px;
   border-radius: 14px;
   background: #faf8ff;
-  border: 1px solid #eee;
-  transition: all 0.35s ease;
-}
-
-.box:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-
-/* REVIEWS */
-.reviews {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-}
-
-.review {
-  background: #faf8ff;
-  padding: 25px;
-  border-radius: 14px;
-  font-size: 14px;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
-}
-
-.review strong {
-  display: block;
-  margin-top: 12px;
-  color: var(--primary);
 }
 
 /* FOOTER */
@@ -134,7 +143,7 @@ footer {
   font-size: 14px;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 .modal {
   display: none;
   position: fixed;
@@ -150,30 +159,6 @@ footer {
   margin: 8% auto;
   padding: 30px;
   border-radius: 18px;
-  animation: scaleIn 0.4s ease;
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-}
-
-.modal-content input,
-.modal-content textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 14px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.modal-content button {
-  width: 100%;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  padding: 13px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
 }
 
 .close {
@@ -181,93 +166,75 @@ footer {
   font-size: 22px;
   cursor: pointer;
 }
-
-/* SCROLL REVEAL */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.9s ease;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ANIMATIONS */
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
 </style>
 </head>
 
 <body>
 
-<header>
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="nav-brand">Gunash Padmawati Bibha Bhaban</div>
+
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+
+  <button class="nav-cta" onclick="openModal()">Enquire</button>
+</nav>
+
+<!-- HERO -->
+<header id="home">
   <h1>Gunash Padmawati Bibha Bhaban</h1>
   <p>An Elegant & Graceful Venue for Weddings, Receptions & Celebrations</p>
   <button class="btn" onclick="openModal()">Check Availability</button>
 </header>
 
-<section class="reveal">
-  <h2>About the Hall</h2>
+<!-- VENUE -->
+<section id="venue">
+  <h2>Venue Overview</h2>
   <p style="text-align:center; max-width:800px; margin:auto;">
-    Gunash Padmawati Bibha Bhaban is a premium marriage and event venue designed
-    to host life’s most cherished moments. With spacious interiors, refined
-    aesthetics, and a warm atmosphere, we offer the perfect setting for weddings,
-    receptions, anniversaries, and family celebrations.
+    Gunash Padmawati Bibha Bhaban is a premium venue designed for life’s most
+    meaningful celebrations, combining space, elegance, and comfort.
   </p>
 </section>
 
-<section class="reveal">
-  <h2>Facilities & Amenities</h2>
+<!-- AMENITIES -->
+<section id="amenities">
+  <h2>Amenities</h2>
   <div class="features">
     <div class="box">Grand Seating Capacity</div>
-    <div class="box">Spacious & Elevated Stage</div>
-    <div class="box">Reliable Power Backup</div>
-    <div class="box">Ample Parking Space</div>
-    <div class="box">Decoration-Friendly Layout</div>
-    <div class="box">Ideal for All Celebrations</div>
+    <div class="box">Spacious Stage</div>
+    <div class="box">Power Backup</div>
+    <div class="box">Parking Space</div>
+    <div class="box">Decoration Friendly</div>
+    <div class="box">Suitable for All Events</div>
   </div>
 </section>
 
-<section class="reveal">
-  <h2>What Our Guests Say</h2>
-  <div class="reviews">
-    <div class="review">
-      “Beautiful hall with excellent space and arrangements. Our wedding
-      ceremony was smooth and memorable.”
-      <strong>— Wedding Family</strong>
-    </div>
-    <div class="review">
-      “Clean, spacious, and very well managed. Highly recommended for large
-      gatherings.”
-      <strong>— Local Client</strong>
-    </div>
-    <div class="review">
-      “Perfect venue for family functions. The ambience feels premium.”
-      <strong>— Event Guest</strong>
-    </div>
-  </div>
+<!-- EXPERIENCES (SKELETON) -->
+<section id="experiences">
+  <h2>Experiences</h2>
+  <!-- Guest Voices + Past Events will be implemented in Phase B -->
 </section>
 
-<section class="reveal">
+<!-- CALENDAR (SKELETON) -->
+<section id="calendar">
+  <h2>Availability</h2>
+  <!-- Calendar system will be implemented in Phase C -->
+</section>
+
+<!-- LOCATION -->
+<section id="location">
   <h2>Location</h2>
-  <div style="border-radius:18px; overflow:hidden;">
-    <iframe
-      src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
-      width="100%"
-      height="360"
-      style="border:0;"
-      loading="lazy">
-    </iframe>
-  </div>
+  <iframe
+    src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
+    width="100%" height="360" style="border:0;" loading="lazy">
+  </iframe>
 </section>
 
 <footer>
@@ -282,7 +249,6 @@ footer {
     <form>
       <input type="text" placeholder="Your Name" required>
       <input type="tel" placeholder="Phone Number" required>
-      <input type="date" required>
       <textarea placeholder="Event Details (optional)"></textarea>
       <button type="submit">Submit Enquiry</button>
     </form>
@@ -293,39 +259,9 @@ footer {
 function openModal() {
   document.getElementById("bookingModal").style.display = "block";
 }
-
 function closeModal() {
   document.getElementById("bookingModal").style.display = "none";
 }
-
-window.onclick = function(e) {
-  const modal = document.getElementById("bookingModal");
-  if (e.target === modal) modal.style.display = "none";
-};
-
-/* SCROLL REVEAL */
-function revealOnScroll() {
-  const reveals = document.querySelectorAll(".reveal");
-  const windowHeight = window.innerHeight;
-
-  reveals.forEach(el => {
-    if (el.getBoundingClientRect().top < windowHeight - 120) {
-      el.classList.add("active");
-    }
-  });
-}
-
-/* GRADIENT SHIFT ON SCROLL */
-window.addEventListener("scroll", () => {
-  const scroll = window.scrollY;
-  document.body.style.background =
-    `linear-gradient(180deg,
-     rgb(${245 - scroll/30}, ${239 - scroll/40}, 250),
-     #ffffff)`;
-});
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
 </script>
 
 </body>
