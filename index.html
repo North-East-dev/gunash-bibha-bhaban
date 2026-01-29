@@ -9,33 +9,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ================= ROOT ================= */
+/* ================= ROOT & RESET ================= */
 :root {
   --primary: #5b2b82;
   --secondary: #8e44ad;
   --soft-bg: #faf8ff;
   --dark-bg: #2d143f;
+  --text-main: #333;
 }
 
-/* ================= RESET ================= */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   background: linear-gradient(180deg, #f5effa, #ffffff);
-  color: #333;
+  color: var(--text-main);
   line-height: 1.7;
 }
 
-/* LOCK SCROLL WHEN MODAL OPEN */
-body.modal-open {
-  overflow: hidden;
+body.modal-open { overflow: hidden; }
+
+/* ================= ANIMATIONS ================= */
+/* Elements start hidden and float up when in view */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* ================= NAVBAR (PHASE A) ================= */
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================= NAVBAR ================= */
 .navbar {
   position: sticky;
   top: 0;
@@ -43,113 +53,145 @@ body.modal-open {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 40px;
-  background: rgba(255,255,255,0.9);
+  padding: 14px 5%;
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 
 .nav-brand {
   font-family: "Playfair Display", serif;
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 600;
   color: var(--primary);
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 22px;
+  gap: 25px;
   margin: 0;
   padding: 0;
 }
+
+.nav-links li { display: inline-block; }
 
 .nav-links a {
   text-decoration: none;
   color: #333;
   font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s;
 }
 
-.nav-links a:hover {
-  color: var(--primary);
+/* Animated Underline */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: 0.3s ease;
 }
+
+.nav-links a:hover { color: var(--primary); }
+.nav-links a:hover::after { width: 100%; }
 
 .nav-cta {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
   border: none;
-  padding: 10px 22px;
+  padding: 10px 24px;
   border-radius: 22px;
   cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  transition: 0.3s;
 }
 
-/* ================= HERO ================= */
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(91, 43, 130, 0.35);
+}
+
+/* ================= HERO SECTION ================= */
 header {
   background:
-    linear-gradient(rgba(91,43,130,0.75), rgba(0,0,0,0.65)),
+    linear-gradient(rgba(91, 43, 130, 0.75), rgba(0, 0, 0, 0.65)),
     url("https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c");
   background-size: cover;
   background-position: center;
   color: white;
   text-align: center;
-  padding: 130px 20px;
+  padding: 140px 20px;
+  position: relative;
 }
 
 header h1 {
   font-family: "Playfair Display", serif;
-  font-size: 42px;
+  font-size: 44px;
+  margin-bottom: 10px;
 }
 
 header p {
   font-size: 18px;
-  margin: 20px 0 35px;
+  margin: 20px 0 30px;
+  font-weight: 300;
 }
 
 .hero-trust {
   font-size: 14px;
   opacity: 0.9;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
+  letter-spacing: 0.5px;
 }
 
-/* ================= BUTTON ================= */
+/* ================= GENERIC BUTTON ================= */
 .btn {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
-  padding: 15px 36px;
+  padding: 15px 38px;
   border-radius: 30px;
   border: none;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.35s ease;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(91,43,130,0.35);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(91, 43, 130, 0.4);
 }
 
 .btn.disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   pointer-events: none;
+  background: #ccc;
 }
 
-/* ================= SECTIONS (PHASE B) ================= */
+/* ================= SECTIONS ================= */
 section {
   max-width: 1050px;
-  margin: 80px auto;
-  padding: 75px 35px;
+  margin: 90px auto;
+  padding: 80px 40px;
   background: white;
-  border-radius: 20px;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
 }
 
 h2 {
   font-family: "Playfair Display", serif;
   text-align: center;
-  font-size: 30px;
+  font-size: 32px;
   color: var(--primary);
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 
-/* ================= AMENITIES ================= */
+/* ================= AMENITIES GRID ================= */
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -158,76 +200,100 @@ h2 {
 
 .box {
   background: var(--soft-bg);
-  padding: 30px;
-  border-radius: 16px;
+  padding: 32px;
+  border-radius: 18px;
   text-align: center;
+  font-weight: 500;
+  transition: 0.35s;
 }
 
-/* ================= EXPERIENCES (PHASE C) ================= */
+.box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  color: var(--primary);
+}
+
+/* ================= EXPERIENCES TABS ================= */
 .exp-tabs {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 30px;
   margin-bottom: 45px;
 }
 
 .exp-tab {
   background: none;
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   cursor: pointer;
-  color: #555;
-  padding: 8px 20px;
+  color: #777;
+  padding: 8px 12px;
   position: relative;
+  transition: 0.3s;
 }
+
+.exp-tab:hover { color: var(--primary); }
 
 .exp-tab.active {
   color: var(--primary);
+  font-weight: 600;
 }
 
 .exp-tab.active::after {
   content: "";
   position: absolute;
-  bottom: -8px;
-  left: 20%;
-  width: 60%;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
   height: 2px;
   background: var(--primary);
 }
 
-.exp-panel { display: none; }
+.exp-panel {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
 .exp-panel.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* ================= REVIEWS MOSAIC ================= */
 .reviews-mosaic {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 26px;
+  gap: 28px;
 }
 
 .review-card {
   background: var(--soft-bg);
-  padding: 28px;
-  border-radius: 18px;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
-  font-size: 14px;
-  transition: 0.4s ease;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  font-size: 15px;
+  font-style: italic;
+  transition: 0.4s;
+  border: 1px solid rgba(0,0,0,0.02);
 }
 
-.review-card:hover {
-  transform: translateY(-6px);
-}
-
+.review-card:hover { transform: translateY(-8px); }
 .review-card.large { grid-column: span 2; }
 .review-card.tall { grid-row: span 2; }
 
 .review-card strong {
   display: block;
-  margin-top: 14px;
+  margin-top: 15px;
   color: var(--primary);
+  font-style: normal;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* ================= EVENTS ================= */
+/* ================= EVENTS GRID ================= */
 .events-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -235,29 +301,32 @@ h2 {
 }
 
 .event-card {
-  border-radius: 18px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 35px rgba(0,0,0,0.1);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.1);
+  transition: 0.35s;
+  background: white;
 }
+
+.event-card:hover { transform: translateY(-6px); }
 
 .event-card img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
 }
 
-.event-info {
-  padding: 18px;
-}
-
+.event-info { padding: 20px; }
 .event-info span {
   font-size: 12px;
-  color: var(--primary);
+  font-weight: 600;
+  color: var(--secondary);
+  text-transform: uppercase;
 }
 
-/* ================= CALENDAR (PHASE D) ================= */
+/* ================= CALENDAR ================= */
 .calendar-wrapper {
-  max-width: 520px;
+  max-width: 540px;
   margin: auto;
   text-align: center;
 }
@@ -272,20 +341,29 @@ h2 {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
 .calendar-day {
   padding: 14px 0;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: 14px;
   background: #f4eff9;
+  transition: 0.25s;
+}
+
+.calendar-day:not(.booked):hover {
+  background: rgba(91, 43, 130, 0.15);
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
 .calendar-day.booked {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
   font-weight: 500;
+  opacity: 0.8;
+  cursor: not-allowed;
 }
 
 /* ================= FOOTER ================= */
@@ -293,75 +371,93 @@ footer {
   background: linear-gradient(135deg, var(--dark-bg), #14001f);
   color: #ddd;
   text-align: center;
-  padding: 40px;
+  padding: 50px 20px;
+  margin-top: 60px;
 }
 
-/* ================= MODAL (PHASE D + E) ================= */
+/* ================= MODAL ================= */
 .modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
   z-index: 2000;
+  overflow-y: auto;
 }
 
-.modal.active {
-  display: block;
-}
+.modal.active { display: block; }
 
 .modal-content {
   background: white;
-  max-width: 440px;
+  max-width: 460px;
   margin: 6% auto;
-  padding: 35px;
-  border-radius: 22px;
-  animation: modalIn 0.45s ease;
+  padding: 40px;
+  border-radius: 26px;
+  animation: modalIn 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
 }
 
 @keyframes modalIn {
-  from { transform: scale(0.95); opacity: 0; }
+  from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  transition: 0.2s;
+}
+
+.close:hover { color: var(--primary); }
+
+.modal-content h2 { margin-top: 0; font-size: 24px; }
 
 .modal-content input,
 .modal-content select,
 .modal-content textarea {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
   font-family: inherit;
+  font-size: 14px;
+  background: #f9f9f9;
+  transition: 0.3s;
 }
 
-.modal-content input[type="tel"] {
-  font-family: monospace;
-  letter-spacing: 1px;
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  background: white;
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(91,43,130,0.1);
 }
 
-.close {
-  float: right;
-  font-size: 22px;
-  cursor: pointer;
-}
+/* Success State */
+.success-box { text-align: center; padding: 20px 0; }
+.success-box h2 { color: var(--secondary); margin-bottom: 10px; }
 
-/* ================= SUCCESS STATE ================= */
-.success-box {
-  text-align: center;
-}
-
-.success-box h2 {
-  color: var(--primary);
+/* Responsive */
+@media(max-width: 768px) {
+  header h1 { font-size: 32px; }
+  .navbar { padding: 14px 20px; }
+  .nav-links { display: none; } /* Simplified for mobile: normally would add burger menu */
+  section { margin: 40px 15px; padding: 40px 20px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= NAV ================= -->
+<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-brand">Gunash Padmawati Bibha Bhaban</div>
+  <!-- Hidden on mobile for simplicity -->
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#venue">Venue</a></li>
@@ -373,38 +469,39 @@ footer {
   <button class="nav-cta" onclick="openModal()">Enquire</button>
 </nav>
 
-<!-- ================= HERO ================= -->
-<header id="home">
+<!-- HERO -->
+<header id="home" class="fade-up">
   <h1>Gunash Padmawati Bibha Bhaban</h1>
   <p>An Elegant & Graceful Venue for Weddings, Receptions & Celebrations</p>
   <div class="hero-trust">Trusted by 100+ families · Serving with care</div>
   <button class="btn" onclick="openModal()">Check Availability</button>
 </header>
 
-<!-- ================= VENUE ================= -->
-<section id="venue">
+<!-- VENUE OVERVIEW -->
+<section id="venue" class="fade-up">
   <h2>Venue Overview</h2>
-  <p style="text-align:center;max-width:800px;margin:auto;">
+  <p style="text-align:center; max-width:800px; margin:auto; font-size:16px;">
     A premium venue crafted for refined celebrations, combining elegance,
-    comfort, and thoughtful design.
+    comfort, and thoughtful design. Every corner is designed to create
+    unforgettable memories for you and your guests.
   </p>
 </section>
 
-<!-- ================= AMENITIES ================= -->
-<section id="amenities">
+<!-- AMENITIES -->
+<section id="amenities" class="fade-up">
   <h2>Amenities</h2>
   <div class="features">
     <div class="box">Grand Seating Capacity</div>
     <div class="box">Spacious Stage</div>
-    <div class="box">Power Backup</div>
-    <div class="box">Parking Space</div>
+    <div class="box">Power Backup (24/7)</div>
+    <div class="box">Ample Parking Space</div>
     <div class="box">Decoration Friendly</div>
-    <div class="box">All Event Support</div>
+    <div class="box">Catering Support</div>
   </div>
 </section>
 
-<!-- ================= EXPERIENCES ================= -->
-<section id="experiences">
+<!-- EXPERIENCES -->
+<section id="experiences" class="fade-up">
   <h2>Experiences</h2>
 
   <div class="exp-tabs">
@@ -412,27 +509,33 @@ footer {
     <button class="exp-tab" onclick="switchExperience('events')">Past Experiences</button>
   </div>
 
+  <!-- Reviews Panel -->
   <div id="exp-reviews" class="exp-panel active">
     <div class="reviews-mosaic">
-      <div class="review-card large">“The ambience felt refined and welcoming.”<strong>Wedding · 2024</strong></div>
-      <div class="review-card">“Beautifully managed venue.”<strong>Reception · 2023</strong></div>
-      <div class="review-card tall">“Everything felt premium.”<strong>Celebration · 2024</strong></div>
-      <div class="review-card">“Spacious and elegant.”<strong>Family Event · 2022</strong></div>
+      <div class="review-card large">“The ambience felt refined and welcoming. The staff was incredibly helpful throughout the wedding.”<strong>Wedding · 2024</strong></div>
+      <div class="review-card">“Beautifully managed venue. Parking was hassle-free.”<strong>Reception · 2023</strong></div>
+      <div class="review-card tall">“Everything felt premium. The lighting and stage setup were perfect for photos.”<strong>Celebration · 2024</strong></div>
+      <div class="review-card">“Spacious and elegant hall.”<strong>Family Event · 2022</strong></div>
     </div>
   </div>
 
+  <!-- Events Panel -->
   <div id="exp-events" class="exp-panel">
     <div class="events-grid">
       <div class="event-card">
-        <img src="https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c">
-        <div class="event-info"><span>Wedding · Jan 2024</span></div>
+        <img src="https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c" alt="Wedding">
+        <div class="event-info"><span>Wedding · Jan 2024</span><p>A beautiful floral theme setup.</p></div>
+      </div>
+      <div class="event-card">
+        <img src="https://images.unsplash.com/photo-1519225468359-2996bc140aaa" alt="Reception">
+        <div class="event-info"><span>Reception · Dec 2023</span><p>Golden hour lighting event.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= CALENDAR ================= -->
-<section id="calendar">
+<!-- CALENDAR -->
+<section id="calendar" class="fade-up">
   <h2>Availability</h2>
   <div class="calendar-wrapper">
     <div class="calendar-header" id="monthYear"></div>
@@ -440,11 +543,11 @@ footer {
   </div>
 </section>
 
-<!-- ================= LOCATION ================= -->
-<section id="location">
+<!-- LOCATION -->
+<section id="location" class="fade-up">
   <h2>Location</h2>
   <iframe src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
-    width="100%" height="360" style="border:0;" loading="lazy"></iframe>
+    width="100%" height="380" style="border:0; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,0.1);" loading="lazy"></iframe>
 </section>
 
 <footer>
@@ -454,22 +557,22 @@ footer {
 <!-- ================= MODAL ================= -->
 <div id="bookingModal" class="modal">
   <div class="modal-content">
-
     <span class="close" onclick="closeModal()">&times;</span>
 
-    <!-- STEP 1 -->
+    <!-- Step 1: Contact Info -->
     <div id="step1">
       <h2>Booking Enquiry</h2>
+      <p style="font-size:14px; color:#666; margin-bottom:20px;">Let's get your details first.</p>
       <input id="nameInput" type="text" placeholder="Your Name">
       <input id="phoneInput" type="tel" placeholder="Phone Number" maxlength="10">
       <button id="continueBtn" class="btn disabled">Continue to Dates</button>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- Step 2: Date Selection -->
     <div id="step2" style="display:none;">
       <h2>Select Dates</h2>
 
-      <label>Number of Days</label>
+      <label style="font-size:12px; font-weight:600; color:#555;">Event Duration</label>
       <select id="daysSelect">
         <option value="1">1 Day</option>
         <option value="2">2 Days</option>
@@ -477,54 +580,154 @@ footer {
         <option value="4">4+ Days</option>
       </select>
 
+      <!-- Single Date Picker -->
       <div id="singleDate">
-        <label>Date</label>
+        <label style="font-size:12px; font-weight:600; color:#555;">Event Date</label>
         <input type="date" id="dateSingle">
       </div>
 
+      <!-- Range Date Picker -->
       <div id="rangeDate" style="display:none;">
-        <label>From</label>
+        <label style="font-size:12px; font-weight:600; color:#555;">Start Date</label>
         <input type="date" id="dateFrom">
-        <label>To</label>
-        <input type="date" id="dateTo">
+        <label style="font-size:12px; font-weight:600; color:#555;">End Date (Calculated)</label>
+        <input type="date" id="dateTo" readonly style="background:#eee; color:#777;">
       </div>
 
-      <textarea placeholder="Event Details (optional)"></textarea>
+      <textarea placeholder="Tell us more about your event (optional)"></textarea>
       <button class="btn" onclick="submitEnquiry()">Submit Enquiry</button>
+      <div style="text-align:center; margin-top:10px;">
+        <a href="#" onclick="backToStep1()" style="font-size:12px; color:#888; text-decoration:none;">Back</a>
+      </div>
     </div>
 
-    <!-- SUCCESS -->
+    <!-- Step 3: Success -->
     <div id="successStep" style="display:none;" class="success-box">
-      <h2>Thank you</h2>
-      <p>Your enquiry has been received.<br>We will contact you shortly.</p>
+      <h2>Thank you!</h2>
+      <p>Your enquiry has been received.<br>Our team will contact you shortly to confirm availability.</p>
+      <button class="btn" onclick="closeModal()" style="margin-top:15px; padding:10px 25px;">Close</button>
     </div>
 
   </div>
 </div>
 
 <script>
-/* ================= MODAL CONTROL ================= */
+/* ================= MODAL LOGIC ================= */
+const bookingModal = document.getElementById("bookingModal");
+const nameInput = document.getElementById("nameInput");
+const phoneInput = document.getElementById("phoneInput");
+const continueBtn = document.getElementById("continueBtn");
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+const successStep = document.getElementById("successStep");
+
 function openModal() {
-  document.getElementById("bookingModal").classList.add("active");
+  bookingModal.classList.add("active");
   document.body.classList.add("modal-open");
-  document.getElementById("nameInput").focus();
+  nameInput.focus();
 }
 
 function closeModal() {
-  document.getElementById("bookingModal").classList.remove("active");
+  bookingModal.classList.remove("active");
   document.body.classList.remove("modal-open");
+  // Reset form after short delay for smoothness
+  setTimeout(() => {
+    step1.style.display = "block";
+    step2.style.display = "none";
+    successStep.style.display = "none";
+    nameInput.value = "";
+    phoneInput.value = "";
+    validateStep1();
+  }, 300);
 }
 
-/* ESC CLOSE */
-document.addEventListener("keydown", e => {
+// Close on Escape key
+document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
-/* ================= EXPERIENCE TABS ================= */
+// Close if clicked outside
+bookingModal.addEventListener("click", (e) => {
+  if (e.target === bookingModal) closeModal();
+});
+
+/* ================= FORM VALIDATION ================= */
+phoneInput.addEventListener("input", () => {
+  // Remove non-numeric characters
+  phoneInput.value = phoneInput.value.replace(/\D/g, "");
+  validateStep1();
+});
+
+nameInput.addEventListener("input", validateStep1);
+
+function validateStep1() {
+  if (nameInput.value.trim().length > 0 && phoneInput.value.length === 10) {
+    continueBtn.classList.remove("disabled");
+  } else {
+    continueBtn.classList.add("disabled");
+  }
+}
+
+continueBtn.addEventListener("click", () => {
+  step1.style.display = "none";
+  step2.style.display = "block";
+});
+
+function backToStep1() {
+  step1.style.display = "block";
+  step2.style.display = "none";
+}
+
+function submitEnquiry() {
+  step2.style.display = "none";
+  successStep.style.display = "block";
+}
+
+/* ================= SMART DATE LOGIC ================= */
+const daysSelect = document.getElementById("daysSelect");
+const singleDate = document.getElementById("singleDate");
+const rangeDate = document.getElementById("rangeDate");
+const dateSingle = document.getElementById("dateSingle");
+const dateFrom = document.getElementById("dateFrom");
+const dateTo = document.getElementById("dateTo");
+
+// Prevent past dates
+const today = new Date().toISOString().split("T")[0];
+dateSingle.min = today;
+dateFrom.min = today;
+
+daysSelect.addEventListener("change", () => {
+  if (daysSelect.value === "1") {
+    singleDate.style.display = "block";
+    rangeDate.style.display = "none";
+  } else {
+    singleDate.style.display = "none";
+    rangeDate.style.display = "block";
+    dateFrom.value = "";
+    dateTo.value = "";
+  }
+});
+
+// Auto-calculate End Date
+dateFrom.addEventListener("change", () => {
+  const days = parseInt(daysSelect.value, 10);
+  if (!dateFrom.value || days <= 1) return;
+
+  const fromDate = new Date(dateFrom.value);
+  const toDate = new Date(fromDate);
+  // Add days (minus 1 because if I book for 2 days starting the 1st, I end on the 2nd)
+  toDate.setDate(fromDate.getDate() + days - 1);
+
+  dateTo.value = toDate.toISOString().split("T")[0];
+});
+
+/* ================= TABS LOGIC ================= */
 function switchExperience(type) {
+  // Remove active classes
   document.querySelectorAll(".exp-tab").forEach(t => t.classList.remove("active"));
   document.querySelectorAll(".exp-panel").forEach(p => p.classList.remove("active"));
 
+  // Add active classes
   if (type === "reviews") {
     document.querySelectorAll(".exp-tab")[0].classList.add("active");
     document.getElementById("exp-reviews").classList.add("active");
@@ -534,76 +737,52 @@ function switchExperience(type) {
   }
 }
 
-/* ================= PHASE E FORM LOGIC ================= */
-const nameInput = document.getElementById("nameInput");
-const phoneInput = document.getElementById("phoneInput");
-const continueBtn = document.getElementById("continueBtn");
-
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const successStep = document.getElementById("successStep");
-
-const daysSelect = document.getElementById("daysSelect");
-const singleDate = document.getElementById("singleDate");
-const rangeDate = document.getElementById("rangeDate");
-
-/* NUMERIC ONLY PHONE */
-phoneInput.addEventListener("input", () => {
-  phoneInput.value = phoneInput.value.replace(/\D/g, "");
-  validateStep1();
-});
-
-/* ENABLE CONTINUE */
-function validateStep1() {
-  if (nameInput.value.trim() && phoneInput.value.length === 10) {
-    continueBtn.classList.remove("disabled");
-  } else {
-    continueBtn.classList.add("disabled");
-  }
-}
-
-nameInput.addEventListener("input", validateStep1);
-
-/* STEP SWITCH */
-continueBtn.addEventListener("click", () => {
-  step1.style.display = "none";
-  step2.style.display = "block";
-});
-
-/* DAY LOGIC */
-daysSelect.addEventListener("change", () => {
-  if (daysSelect.value === "1") {
-    singleDate.style.display = "block";
-    rangeDate.style.display = "none";
-  } else {
-    singleDate.style.display = "none";
-    rangeDate.style.display = "block";
-  }
-});
-
-/* SUBMIT */
-function submitEnquiry() {
-  step2.style.display = "none";
-  successStep.style.display = "block";
-}
-
-/* ================= CALENDAR ================= */
-const bookedDates = ["2024-01-12","2024-01-18","2024-01-19","2024-01-28"];
-const grid = document.getElementById("calendarGrid");
-const label = document.getElementById("monthYear");
+/* ================= CALENDAR GENERATOR ================= */
+const bookedDates = ["2024-01-12", "2024-01-18", "2024-01-19", "2024-01-28"];
+const calendarGrid = document.getElementById("calendarGrid");
+const monthLabel = document.getElementById("monthYear");
 const now = new Date();
 
-label.textContent = now.toLocaleString("default",{month:"long",year:"numeric"});
-const days = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+monthLabel.textContent = now.toLocaleString("default", { month: "long", year: "numeric" });
+const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 
-for(let d=1; d<=days; d++){
+for (let d = 1; d <= daysInMonth; d++) {
   const el = document.createElement("div");
-  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+  // Format YYYY-MM-DD
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(d).padStart(2, "0");
+  const dateStr = `${now.getFullYear()}-${month}-${day}`;
+
   el.className = "calendar-day";
   el.textContent = d;
-  if(bookedDates.includes(dateStr)) el.classList.add("booked");
-  grid.appendChild(el);
+
+  if (bookedDates.includes(dateStr)) {
+    el.classList.add("booked");
+    el.title = "Booked";
+  } else {
+    el.title = "Available";
+  }
+
+  calendarGrid.appendChild(el);
 }
+
+/* ================= SCROLL ANIMATIONS (INTERSECTION OBSERVER) ================= */
+const observerOptions = {
+  threshold: 0.15 // Trigger when 15% of the element is visible
+};
+
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      obs.unobserve(entry.target); // Stop watching once animated
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll(".fade-up").forEach(el => {
+  observer.observe(el);
+});
 </script>
 
 </body>
