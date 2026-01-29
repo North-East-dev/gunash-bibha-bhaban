@@ -6,10 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* GLOBAL */
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #ffffff;
+  background: linear-gradient(180deg, #f7f5f2, #ffffff);
   color: #333;
   line-height: 1.6;
 }
@@ -22,7 +23,7 @@ header {
   background-position: center;
   color: white;
   text-align: center;
-  padding: 90px 20px;
+  padding: 100px 20px;
 }
 
 header h1 {
@@ -42,7 +43,7 @@ header p {
 .btn {
   background: #8b0000;
   color: white;
-  padding: 14px 30px;
+  padding: 14px 32px;
   border-radius: 6px;
   font-size: 16px;
   border: none;
@@ -60,17 +61,21 @@ header p {
 /* SECTIONS */
 section {
   max-width: 1000px;
-  margin: auto;
-  padding: 60px 20px;
-  animation: fadeUp 1s ease;
+  margin: 50px auto;
+  padding: 60px 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.07);
 }
 
+/* HEADINGS */
 h2 {
   text-align: center;
   margin-bottom: 30px;
   color: #8b0000;
 }
 
+/* FEATURES */
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -80,14 +85,15 @@ h2 {
 
 .box {
   padding: 25px;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #fafafa;
   border: 1px solid #eee;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .box:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* FOOTER */
@@ -95,8 +101,9 @@ footer {
   background: #111;
   color: #ccc;
   text-align: center;
-  padding: 20px;
+  padding: 25px;
   font-size: 14px;
+  margin-top: 60px;
 }
 
 /* MODAL */
@@ -106,6 +113,7 @@ footer {
   inset: 0;
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(4px);
+  z-index: 1000;
 }
 
 .modal-content {
@@ -113,7 +121,7 @@ footer {
   max-width: 420px;
   margin: 8% auto;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 14px;
   animation: scaleIn 0.4s ease;
 }
 
@@ -154,7 +162,19 @@ footer {
   cursor: pointer;
 }
 
-/* ANIMATIONS */
+/* SCROLL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* KEYFRAMES */
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -180,7 +200,7 @@ footer {
   <button class="btn" onclick="openModal()">Check Availability</button>
 </header>
 
-<section>
+<section class="reveal">
   <h2>About the Hall</h2>
   <p style="text-align:center;">
     Gunash Padmawati Bibha Bhaban is a spacious and well-designed marriage hall,
@@ -188,7 +208,7 @@ footer {
   </p>
 </section>
 
-<section>
+<section class="reveal">
   <h2>Facilities</h2>
   <div class="features">
     <div class="box">Large Seating Capacity</div>
@@ -197,6 +217,20 @@ footer {
     <div class="box">Parking Facility</div>
     <div class="box">Decoration Friendly</div>
     <div class="box">Suitable for All Events</div>
+  </div>
+</section>
+
+<section class="reveal">
+  <h2>Location</h2>
+  <div style="border-radius:14px; overflow:hidden;">
+    <iframe
+      src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
+      width="100%"
+      height="350"
+      style="border:0;"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
   </div>
 </section>
 
@@ -231,7 +265,23 @@ function closeModal() {
 window.onclick = function(e) {
   const modal = document.getElementById("bookingModal");
   if (e.target === modal) modal.style.display = "none";
+};
+
+/* SCROLL REVEAL */
+function revealOnScroll() {
+  const reveals = document.querySelectorAll(".reveal");
+  const windowHeight = window.innerHeight;
+
+  reveals.forEach(el => {
+    const elementTop = el.getBoundingClientRect().top;
+    if (elementTop < windowHeight - 100) {
+      el.classList.add("active");
+    }
+  });
 }
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
 </script>
 
 </body>
