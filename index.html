@@ -1,83 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Gunash Padmawati Bibha Bhaban</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Gunash Padmawati Bibha Bhaban</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #ffffff;
-      color: #333;
-      line-height: 1.6;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #ffffff;
+  color: #333;
+  line-height: 1.6;
+}
 
-    header {
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-                  url('https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 80px 20px;
-    }
+/* HERO */
+header {
+  background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+              url('https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 90px 20px;
+}
 
-    header h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
+header h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  animation: fadeDown 1s ease;
+}
 
-    header p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
+header p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  animation: fadeDown 1.3s ease;
+}
 
-    .btn {
-      background: #8b0000;
-      color: white;
-      padding: 12px 25px;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 16px;
-    }
+/* BUTTON */
+.btn {
+  background: #8b0000;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 6px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: fadeUp 1.6s ease;
+}
 
-    section {
-      max-width: 1000px;
-      margin: auto;
-      padding: 50px 20px;
-    }
+.btn:hover {
+  background: #a40000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
 
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #8b0000;
-    }
+/* SECTIONS */
+section {
+  max-width: 1000px;
+  margin: auto;
+  padding: 60px 20px;
+  animation: fadeUp 1s ease;
+}
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      text-align: center;
-    }
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #8b0000;
+}
 
-    .box {
-      padding: 20px;
-      border: 1px solid #eee;
-      border-radius: 6px;
-      background: #fafafa;
-    }
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  text-align: center;
+}
 
-    footer {
-      background: #111;
-      color: #ccc;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-    }
-  </style>
+.box {
+  padding: 25px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  transition: transform 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+}
+
+/* FOOTER */
+footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: #fff;
+  max-width: 420px;
+  margin: 8% auto;
+  padding: 30px;
+  border-radius: 12px;
+  animation: scaleIn 0.4s ease;
+}
+
+.modal-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #8b0000;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.modal-content button {
+  width: 100%;
+  background: #8b0000;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background: #a40000;
+}
+
+.close {
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ANIMATIONS */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
 </head>
 
 <body>
@@ -85,7 +177,7 @@
 <header>
   <h1>Gunash Padmawati Bibha Bhaban</h1>
   <p>An Elegant Venue for Weddings & Celebrations</p>
-  <a class="btn" href="tel:XXXXXXXXXX">📞 Call Now</a>
+  <button class="btn" onclick="openModal()">Check Availability</button>
 </header>
 
 <section>
@@ -93,7 +185,6 @@
   <p style="text-align:center;">
     Gunash Padmawati Bibha Bhaban is a spacious and well-designed marriage hall,
     ideal for weddings, receptions, and family functions.
-    We provide a comfortable and elegant space to make your special day memorable.
   </p>
 </section>
 
@@ -109,18 +200,39 @@
   </div>
 </section>
 
-<section>
-  <h2>Contact Us</h2>
-  <p style="text-align:center;">
-    📍 Address: Your full address here<br><br>
-    📞 Phone: XXXXXXXXXX
-  </p>
-</section>
-
 <footer>
   © 2026 Gunash Padmawati Bibha Bhaban. All Rights Reserved.
 </footer>
 
+<!-- BOOKING MODAL -->
+<div id="bookingModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Booking Enquiry</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="tel" placeholder="Phone Number" required>
+      <input type="date" required>
+      <textarea placeholder="Event Details (optional)"></textarea>
+      <button type="submit">Submit Enquiry</button>
+    </form>
+  </div>
+</div>
+
+<script>
+function openModal() {
+  document.getElementById("bookingModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("bookingModal").style.display = "none";
+}
+
+window.onclick = function(e) {
+  const modal = document.getElementById("bookingModal");
+  if (e.target === modal) modal.style.display = "none";
+}
+</script>
+
 </body>
 </html>
-
