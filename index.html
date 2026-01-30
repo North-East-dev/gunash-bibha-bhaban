@@ -253,6 +253,13 @@ h2::after {
 
 @media(max-width:600px) { .mySlides { height: 250px; } .slide-caption { font-size: 18px; padding: 20px; } }
 
+/* Location responsive */
+@media(max-width: 900px) {
+  #location .section-card > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ================= CALENDAR (OPTIMIZED) ================= */
 .calendar-wrapper { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
 .calendar-header { 
@@ -358,7 +365,7 @@ footer::before {
     <li><a href="#amenities" onclick="closeMenu()">Amenities</a></li>
     <li><a href="#experiences" onclick="closeMenu()">Experiences</a></li>
     <li><a href="#calendar" onclick="closeMenu()">Calendar</a></li>
-    <li><a href="#location" onclick="closeMenu()">Location</a></li>
+    <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
     <li><button class="nav-cta" onclick="openModal(); closeMenu()">Enquire Now</button></li>
   </ul>
   <div class="hamburger" onclick="toggleMenu()">
@@ -453,9 +460,39 @@ footer::before {
 </section>
 
 <section id="location">
-  <div class="section-card fade-up" style="padding:0; overflow:hidden;">
-    <iframe src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
-      width="100%" height="400" style="border:0;" loading="lazy"></iframe>
+  <div class="section-card fade-up">
+    <h2>Location & Contact</h2>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; margin-top: 30px;">
+      <div>
+        <h3 style="font-family: 'Playfair Display'; font-size: 22px; color: var(--primary); margin-bottom: 15px;">Find Us</h3>
+        <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 300px;">
+          <iframe src="https://www.google.com/maps?q=Gunash+Padmawati+Bibha+Bhaban&output=embed" 
+            width="100%" height="100%" style="border: 0;" 
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <a href="https://maps.app.goo.gl/akBEiYpUUhLsCrjf8" target="_blank" style="display: inline-block; margin-top: 15px; color: var(--primary); text-decoration: none; font-weight: 500; font-size: 14px;">
+          📍 Open in Google Maps →
+        </a>
+      </div>
+      <div>
+        <h3 style="font-family: 'Playfair Display'; font-size: 22px; color: var(--primary); margin-bottom: 15px;">Contact</h3>
+        <div style="background: var(--soft-bg); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+          <p style="margin: 0 0 15px; color: #555; font-size: 15px;">
+            <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Phone:</strong>
+            <a href="tel:+917002905175" style="color: var(--primary); text-decoration: none; font-size: 18px; font-weight: 600;">+91 70029 05175</a>
+          </p>
+          <p style="margin: 0; color: #555; font-size: 15px;">
+            <strong style="color: var(--primary); display: block; margin-bottom: 5px;">WhatsApp:</strong>
+            <a href="https://wa.me/917002905175" target="_blank" style="color: #25D366; text-decoration: none; font-size: 18px; font-weight: 600;">Message us on WhatsApp</a>
+          </p>
+        </div>
+        <div style="text-align: center; padding: 20px; background: white; border-radius: 15px; border: 2px dashed var(--primary-light);">
+          <p style="margin: 0 0 12px; color: #555; font-size: 14px; font-weight: 600;">Scan QR Code for Location</p>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://maps.app.goo.gl/akBEiYpUUhLsCrjf8" 
+            alt="Location QR Code" style="width: 180px; height: 180px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -530,7 +567,7 @@ footer::before {
       <h2 class="success-title">Booking Enquiry</h2>
       <div class="success-check">✔</div>
       <h2 class="success-title" style="color: var(--primary);">Thank you!</h2>
-      <p style="color:#555; margin-bottom:20px;">We have received your enquiry.<br>Our team will review your request and message you on WhatsApp shortly.<br><small style="opacity:0.85;">If you don't hear from us within 24 hours, please contact us directly.</small></p>
+      <p style="color:#555; margin-bottom:20px;">WhatsApp will open with your enquiry details.<br>Send the message to complete your booking request.<br><small style="opacity:0.85;">Or call us directly at <a href="tel:+917002905175" style="color: var(--primary);">+91 70029 05175</a></small></p>
       <button class="btn" onclick="closeModal()" style="min-width:150px; background: var(--primary);">Close</button>
     </div>
 
@@ -545,8 +582,7 @@ footer::before {
 </div>
 
 <script>
-/* URL */
-const scriptURL = "https://script.google.com/macros/s/AKfycbztI-7SfuvC9uoD158jVcPmbcNLPIq95kbJM6sTVHDqA5Az6vP6KRyjNrhleAGQgNl/exec";
+/* WhatsApp submission - no server needed, reliable and instant */
 
 /* NAV */
 function toggleMenu(){ document.getElementById("navLinks").classList.toggle("active"); document.querySelector(".hamburger").classList.toggle("active"); document.body.classList.toggle("menu-open"); }
@@ -586,8 +622,10 @@ function validateStep1(){
 function goToStep2(){ step1.style.display="none"; step2.style.display="block"; }
 function backToStep1(){ step1.style.display="block"; step2.style.display="none"; }
 
-/* SUBMIT – Google Sheet: ensure your script reads Name, Phone, Duration, Date, Details (same as form field names) */
+/* SUBMIT – WhatsApp (Reliable, no server needed) */
 const form = document.getElementById('enquiryForm');
+const whatsappPhone = "917002905175"; // Your phone number with country code
+
 form.addEventListener('submit', e => {
   e.preventDefault();
 
@@ -597,45 +635,50 @@ form.addEventListener('submit', e => {
   const dateSingle = document.getElementById("dateSingle");
   const dateFrom = document.getElementById("dateFrom");
   const dateTo = document.getElementById("dateTo");
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const details = document.querySelector('textarea[name="Details"]').value.trim();
 
   if (isCustom && (!customDays || isNaN(parseInt(customDays)) || parseInt(customDays) < 1)) {
     alert("Please enter a valid number of days (1 or more).");
     return;
   }
+  
+  let eventDate = "";
   if (daysVal === '1') {
     if (!dateSingle.value) {
       alert("Please select an event date.");
       return;
     }
-    document.getElementById("hiddenDate").value = dateSingle.value;
+    eventDate = dateSingle.value;
   } else {
     if (!dateFrom.value) {
       alert("Please select a start date.");
       return;
     }
-    document.getElementById("hiddenDate").value = dateFrom.value + " to " + (dateTo.value || dateFrom.value);
+    eventDate = dateFrom.value + " to " + (dateTo.value || dateFrom.value);
   }
 
-  document.getElementById("hiddenDuration").value = isCustom ? (customDays + " Days") : (daysVal + " Day" + (daysVal === "1" ? "" : "s"));
+  const duration = isCustom ? (customDays + " Days") : (daysVal + " Day" + (daysVal === "1" ? "" : "s"));
 
-  submitBtn.textContent = "Sending...";
-  submitBtn.classList.add("disabled");
+  // Format WhatsApp message
+  let message = `*Booking Enquiry - Gunash Padmawati Bibha Bhaban*\n\n`;
+  message += `*Name:* ${name}\n`;
+  message += `*Phone:* ${phone}\n`;
+  message += `*Duration:* ${duration}\n`;
+  message += `*Event Date:* ${eventDate}\n`;
+  if (details) message += `*Details:* ${details}\n`;
 
-  fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
-  .then(() => {
-    formSection.style.display = "none";
-    successStep.style.display = "flex";
-    errorStep.style.display = "none";
-    submitBtn.textContent = "Submit";
-    submitBtn.classList.remove("disabled");
-  })
-  .catch(() => {
-    formSection.style.display = "none";
-    successStep.style.display = "flex";
-    errorStep.style.display = "none";
-    submitBtn.textContent = "Submit";
-    submitBtn.classList.remove("disabled");
-  });
+  // Open WhatsApp
+  const whatsappURL = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, '_blank');
+
+  // Show success
+  formSection.style.display = "none";
+  successStep.style.display = "flex";
+  errorStep.style.display = "none";
+  submitBtn.textContent = "Submit";
+  submitBtn.classList.remove("disabled");
 });
 
 /* DATES */
