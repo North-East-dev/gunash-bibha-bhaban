@@ -23,6 +23,10 @@
   --text-main: #333;
   --shadow-soft: 0 20px 50px rgba(0,0,0,0.05);
   --shadow-hover: 0 25px 60px rgba(91,43,130,0.15);
+  /* Radius System */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 30px;
 }
 
 * { box-sizing: border-box; }
@@ -33,7 +37,7 @@ body {
   font-family: "Poppins", sans-serif;
   background: linear-gradient(180deg, #fbf7fc, #ffffff);
   color: var(--text-main);
-  line-height: 1.7;
+  line-height: 1.8;
   overflow-x: hidden;
 }
 
@@ -59,6 +63,10 @@ body.modal-open, body.menu-open { overflow: hidden; }
   padding: 15px 5%; background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: 0.3s;
+}
+.navbar.scrolled {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.98);
 }
 
 .nav-brand {
@@ -125,10 +133,20 @@ header {
 .hero-bg {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   background:
-    linear-gradient(rgba(45, 20, 63, 0.6), rgba(0, 0, 0, 0.4)),
+    radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%),
+    linear-gradient(rgba(45, 20, 63, 0.4), rgba(20, 10, 30, 0.8)),
     url("https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098");
   background-size: cover; background-position: center;
-  z-index: -1; animation: kenBurns 20s ease-out infinite alternate;
+  z-index: -1; 
+  /* Parallax handled via JS */
+  transform: scale(1.1); /* Initial scale for parallax room */
+}
+
+/* Grain Texture */
+.hero-bg::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.08; mix-blend-mode: soft-light; pointer-events: none;
 }
 
 header h1 {
@@ -144,10 +162,9 @@ header p {
 }
 
 .hero-trust {
-  display: inline-block; font-size: 13px;
-  background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);
-  padding: 8px 16px; border-radius: 20px; margin-bottom: 35px;
-  border: 1px solid rgba(255,255,255,0.2);
+  display: block; font-size: 14px; color: rgba(255,255,255,0.9);
+  margin-top: 25px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  font-weight: 500; letter-spacing: 0.5px;
 }
 
 /* ================= BUTTON ================= */
@@ -157,33 +174,52 @@ header p {
   font-size: 16px; font-weight: 500; cursor: pointer;
   transition: all 0.3s;
   box-shadow: 0 10px 30px rgba(91,43,130,0.3);
+  text-decoration: none; display: inline-block;
 }
 .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(91,43,130,0.4); }
 .btn.disabled { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
 
+.btn-secondary {
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: none; margin-left: 10px;
+}
+.btn-secondary:hover {
+  background: white; color: var(--primary); transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
 /* ================= SECTIONS ================= */
-section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
+section { max-width: 1100px; margin: 100px auto; padding: 0 20px; }
 
 .section-card {
-  background: white; padding: 60px 50px; border-radius: 30px;
+  background: white; padding: 60px 50px; border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft); position: relative; overflow: hidden;
   border: 1px solid rgba(91, 43, 130, 0.06);
 }
 @media(max-width: 768px) {
-  section { margin: 50px auto; }
-  .section-card { padding: 40px 25px; border-radius: 20px; }
+  section { margin: 60px auto; }
+  .section-card { padding: 40px 25px; border-radius: var(--radius-md); }
 }
 
 h2 {
   font-family: "Playfair Display", serif; text-align: center;
   font-size: clamp(28px, 4vw, 36px);
-  color: var(--primary); margin-bottom: 50px; position: relative;
-  letter-spacing: 0.02em;
+  color: var(--primary); margin-bottom: 60px; position: relative;
+  letter-spacing: 0.05em;
 }
 h2::after {
-  content: ""; display: block; width: 60px; height: 3px;
-  background: linear-gradient(90deg, var(--secondary), var(--primary-light)); margin: 15px auto 0;
+  content: ""; display: block; width: 100px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--secondary), transparent); margin: 20px auto 0;
 }
+
+/* ================= SECTIONS ================= */
+section { padding: 100px 20px; }
+#experiences { background: linear-gradient(to bottom, #ffffff, var(--soft-bg)); }
+
+/* TYPOGRAPHY TWEAKS */
+strong, b { font-weight: 600; }
+h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
 
 /* ================= AMENITIES ================= */
 .features { 
@@ -192,11 +228,14 @@ h2::after {
   gap: 25px; 
 }
 .box {
-  background: #fff; padding: 30px 25px; border-radius: 20px; text-align: center;
+  background: #fff; padding: 30px 25px; border-radius: var(--radius-md); text-align: center;
   font-weight: 500; color: #555; border: 1px solid rgba(0,0,0,0.03);
   box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: 0.4s ease;
+  position: relative;
 }
 .box:hover { transform: translateY(-8px); border-color: rgba(91,43,130,0.1); box-shadow: var(--shadow-hover); color: var(--primary); }
+.box .icon { margin-bottom: 15px; display: inline-block; color: var(--secondary); }
+.box svg { width: 36px; height: 36px; stroke: currentColor; stroke-width: 1.5; fill: none; transition: 0.3s; }
 
 /* ================= EXPERIENCES & SLIDESHOW ================= */
 .exp-tabs {
@@ -224,7 +263,12 @@ h2::after {
 }
 .review-card::before { content: "\201C"; position: absolute; left: 14px; top: 22px; font-family: "Playfair Display"; font-size: 36px; color: var(--primary); opacity: 0.25; line-height: 1; }
 .review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-.review-card strong { display: block; margin-top: 20px; color: var(--primary); font-style: normal; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+.review-card strong { display: block; color: var(--primary); font-style: normal; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+.verified-badge {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  background: rgba(45, 20, 63, 0.05); color: var(--primary);
+  padding: 4px 8px; border-radius: 4px; font-weight: 600;
+}
 
 /* Slideshow Container */
 .slideshow-container {
@@ -279,24 +323,56 @@ h2::after {
 }
 .calendar-day:not(.booked):not(.empty):hover { 
   background: var(--primary); color: white; transform: scale(1.1); 
-  box-shadow: 0 8px 20px rgba(91,43,130,0.3); cursor: pointer; 
+  box-shadow: 0 0 15px var(--primary-light); cursor: pointer; z-index: 2;
 }
 .calendar-day.booked { background: #eee; color: #aaa; text-decoration: line-through; cursor: not-allowed; }
 .calendar-day.empty { background: transparent; cursor: default; }
-.calendar-day.today { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(91,43,130,0.25); }
-.calendar-day.today:hover { transform: scale(1.05); }
-.calendar-day.today.booked { background: #8b6914; color: rgba(255,255,255,0.8); }
+.calendar-day.today { 
+  background: white; border: 2px solid var(--primary); color: var(--primary); 
+  font-weight: 700; box-shadow: 0 4px 12px rgba(91,43,130,0.1); 
+}
+.calendar-day.today:hover { background: var(--primary); color: white; }
+.calendar-day.booked { background: #eee; border-color: #ddd; color: #aaa; cursor: not-allowed; }
+  .calendar-day.past { opacity: 0.3; pointer-events: none; background: #f9f9f9; border-color: transparent; }
+  
+  /* ================= TIMELINE ================= */
+.timeline-steps { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; margin-top: 50px; text-align: center; position: relative; }
+.step { flex: 1; min-width: 200px; position: relative; z-index: 1; }
+.step-num { 
+  width: 60px; height: 60px; background: white; border: 2px solid var(--secondary); color: var(--secondary); 
+  border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+  font-family: "Playfair Display"; font-size: 24px; font-weight: 700; margin: 0 auto 20px; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s;
+}
+.step:hover .step-num { background: var(--secondary); color: white; transform: scale(1.1); }
+.step h3 { color: var(--primary); margin-bottom: 10px; font-size: 18px; }
+.step p { color: #666; font-size: 14px; line-height: 1.6; max-width: 200px; margin: 0 auto; }
+
+@media(min-width: 768px) {
+  .step:not(:last-child)::after {
+    content: ""; position: absolute; top: 30px; left: 50%; width: 100%; height: 1px; 
+    background: #ddd; z-index: -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* ================= FOOTER ================= */
-footer {
-  background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #ccc;
-  text-align: center; padding: 60px 20px; margin-top: 80px;
-  position: relative;
+footer { 
+  background: #24153D; /* Slightly lighter than #1a0f2e for warmth */
+  color: white; padding: 80px 20px 40px; text-align: center; 
+  border-top: 3px solid transparent; border-image: var(--gradient-gold) 1;
 }
-footer::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, transparent, var(--secondary), transparent);
-}
+footer h3 { font-family: 'Playfair Display'; font-size: 32px; margin-bottom: 15px; color: var(--secondary); letter-spacing: 0.05em; }
+footer p.tagline { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 40px; font-weight: 300; letter-spacing: 0.5px; }
+footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 40px; }
 
 /* ================= MODAL (PREMIUM STYLE) ================= */
 .modal {
@@ -324,7 +400,8 @@ footer::before {
 }
 .modal-header h2::after {
   content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
-  width: 80px; height: 4px; background: var(--secondary); border-radius: 2px;
+  width: 100px; height: 1px; 
+  background: linear-gradient(90deg, transparent, var(--secondary), transparent);
 }
 
 .close-btn {
@@ -338,11 +415,11 @@ footer::before {
 
 /* Inputs matching Image 5 (Purple Border on Focus) */
 .modal-content input, .modal-content select, .modal-content textarea {
-  width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 12px;
+  width: 100%; padding: 14px; margin-bottom: 20px; border-radius: var(--radius-sm);
   border: 1px solid #ddd; font-family: inherit; font-size: 16px; background: white; transition: 0.3s;
 }
 .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { 
-  border: 2px solid var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.1); 
+  border: 1px solid var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.1); 
 }
 
 /* Success State (Matches Image 1) */
@@ -366,7 +443,8 @@ footer::before {
     <li><a href="#experiences" onclick="closeMenu()">Experiences</a></li>
     <li><a href="#calendar" onclick="closeMenu()">Calendar</a></li>
     <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
-    <li><button class="nav-cta" onclick="openModal(); closeMenu()">Enquire Now</button></li>
+    <li><button class="lang-toggle" onclick="toggleLang()" style="background:none; border:none; color:inherit; font:inherit; cursor:pointer; font-weight:600; opacity:0.8;">EN | AS</button></li>
+    <li><button class="nav-cta" onclick="openModal(); closeMenu()">Book Now</button></li>
   </ul>
   <div class="hamburger" onclick="toggleMenu()">
     <div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -377,8 +455,14 @@ footer::before {
   <div class="hero-bg"></div>
   <h1 class="fade-up">Gunash Padmawati Bibha Bhaban</h1>
   <p class="fade-up" style="transition-delay:0.1s">Where Timeless Elegance Meets Celebration</p>
-  <div class="hero-trust fade-up" style="transition-delay:0.2s">Trusted by 100+ families · Serving with care</div>
-  <button class="btn fade-up" style="transition-delay:0.3s" onclick="openModal()">Check Availability</button>
+  <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+    <button class="btn fade-up" style="transition-delay:0.2s" onclick="openModal()">Check Availability</button>
+    <a href="gallery.html" class="btn btn-secondary fade-up" style="transition-delay:0.25s">View Gallery</a>
+  </div>
+  <div class="hero-trust fade-up" style="transition-delay:0.3s">
+    <span style="color: var(--secondary); font-size: 18px;">★ ★ ★ ★ ★</span><br>
+    Trusted by 150+ Families · Premium Venue
+  </div>
 </header>
 
 <section id="venue">
@@ -394,12 +478,30 @@ footer::before {
   <div class="section-card">
     <h2 class="fade-up">Amenities</h2>
     <div class="features">
-      <div class="box fade-up stagger-1">Grand Seating Capacity</div>
-      <div class="box fade-up stagger-2">Spacious Stage</div>
-      <div class="box fade-up stagger-3">Power Backup (24/7)</div>
-      <div class="box fade-up stagger-4">Valet Parking Space</div>
-      <div class="box fade-up stagger-1">Decoration Friendly</div>
-      <div class="box fade-up stagger-2">Catering Support</div>
+      <div class="box fade-up stagger-1" title="Comfortable seating for large gatherings">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 10a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="19" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Grand Seating
+      </div>
+      <div class="box fade-up stagger-2" title="Large performance stage">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Spacious Stage
+      </div>
+      <div class="box fade-up stagger-3" title="Uninterrupted power supply">
+        <div class="icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Power Backup
+      </div>
+      <div class="box fade-up stagger-4" title="Hassle-free parking">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 17v-5a3 3 0 1 1 6 0v5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Valet Parking
+      </div>
+      <div class="box fade-up stagger-1" title="Customizable decoration">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke-linecap="round" stroke-linejoin="round"/><line x1="9" y1="9" x2="9.01" y2="9" stroke-linecap="round" stroke-linejoin="round"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Decor Friendly
+      </div>
+      <div class="box fade-up stagger-2" title="Food and beverage support">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" stroke-linecap="round" stroke-linejoin="round"/><line x1="6" y1="1" x2="6" y2="4" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="1" x2="10" y2="4" stroke-linecap="round" stroke-linejoin="round"/><line x1="14" y1="1" x2="14" y2="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Catering Area
+      </div>
     </div>
   </div>
 </section>
@@ -407,6 +509,9 @@ footer::before {
 <section id="experiences">
   <div class="section-card">
     <h2 class="fade-up">Experiences</h2>
+    <div style="text-align:center; color:#666; margin-top:-40px; margin-bottom:40px; font-weight:500;" class="fade-up">
+      150+ Weddings & Celebrations Hosted
+    </div>
     <div class="exp-tabs fade-up stagger-1">
       <button class="exp-tab active" onclick="switchExperience('reviews')">Guest Voices</button>
       <button class="exp-tab" onclick="switchExperience('events')">Past Events</button>
@@ -414,25 +519,49 @@ footer::before {
 
     <div id="exp-reviews" class="exp-panel active">
       <div class="reviews-mosaic">
-        <div class="review-card large fade-up stagger-1">“The ambience felt refined and welcoming. The staff was incredibly helpful.”<strong>Wedding · 2024</strong></div>
-        <div class="review-card fade-up stagger-2">“Beautifully managed venue. Parking was hassle-free.”<strong>Reception · 2023</strong></div>
-        <div class="review-card tall fade-up stagger-3">“Everything felt premium. The lighting and stage setup were perfect.”<strong>Celebration · 2024</strong></div>
-        <div class="review-card fade-up stagger-4">“Spacious and elegant hall.”<strong>Family Event · 2022</strong></div>
+        <div class="review-card large fade-up stagger-1">
+          <div style="color:var(--secondary); margin-bottom:10px;">★ ★ ★ ★ ★</div>
+          “The ambience felt refined and welcoming. The staff was incredibly helpful.”
+          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+             <strong>Wedding · 2024</strong><span class="verified-badge">Verified Guest</span>
+          </div>
+        </div>
+        <div class="review-card fade-up stagger-2">
+          <div style="color:var(--secondary); margin-bottom:10px;">★ ★ ★ ★ ★</div>
+          “Beautifully managed venue. Parking was hassle-free.”
+          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+             <strong>Reception · 2023</strong><span class="verified-badge">Verified Guest</span>
+          </div>
+        </div>
+        <div class="review-card tall fade-up stagger-3">
+          <div style="color:var(--secondary); margin-bottom:10px;">★ ★ ★ ★ ★</div>
+          “Everything felt premium. The lighting and stage setup were perfect.”
+          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+             <strong>Celebration · 2024</strong><span class="verified-badge">Verified Guest</span>
+          </div>
+        </div>
+        <div class="review-card fade-up stagger-4">
+          <div style="color:var(--secondary); margin-bottom:10px;">★ ★ ★ ★ ★</div>
+          “Spacious and elegant hall.”
+          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+             <strong>Family Event · 2022</strong><span class="verified-badge">Verified Guest</span>
+          </div>
+        </div>
       </div>
     </div>
 
     <div id="exp-events" class="exp-panel">
       <div class="slideshow-container fade-up">
         <div class="mySlides slide-fade">
-          <img src="https://images.unsplash.com/photo-1519225468359-2996bc140aaa?q=80&w=1200" alt="Reception">
+          <img src="https://images.unsplash.com/photo-1519225468359-2996bc140aaa?q=80&w=1200" alt="Reception" loading="lazy">
           <div class="slide-caption">Golden Hour Reception</div>
         </div>
         <div class="mySlides slide-fade">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200" alt="Wedding">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200" alt="Wedding" loading="lazy">
           <div class="slide-caption">Classic Floral Wedding</div>
         </div>
         <div class="mySlides slide-fade">
-          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200" alt="Haldi">
+          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200" alt="Haldi" loading="lazy">
           <div class="slide-caption">Traditional Haldi Ceremony</div>
         </div>
       </div>
@@ -453,6 +582,11 @@ footer::before {
         <button class="cal-btn" onclick="changeMonth(-1)">&#10094;</button>
         <span id="monthYear"></span>
         <button class="cal-btn" onclick="changeMonth(1)">&#10095;</button>
+      </div>
+      <div style="text-align:center; font-size:13px; color:#666; margin-bottom:20px; font-weight:500;">
+        <span style="display:inline-block; width:10px; height:10px; background:#eee; border-radius:50%; margin-right:5px;"></span>Booked
+        <span style="display:inline-block; width:10px; height:10px; border:1px solid #ddd; border-radius:50%; margin-left:15px; margin-right:5px;"></span>Available
+        <div style="margin-top:5px; color:var(--primary); font-size:12px;">Tap available dates to enquire</div>
       </div>
       <div class="calendar-grid" id="calendarGrid"></div>
     </div>
@@ -485,18 +619,62 @@ footer::before {
             <strong style="color: var(--primary); display: block; margin-bottom: 5px;">WhatsApp:</strong>
             <a href="https://wa.me/917002905175" target="_blank" style="color: #25D366; text-decoration: none; font-size: 18px; font-weight: 600;">Message us on WhatsApp</a>
           </p>
+          <div style="margin-top:15px; font-size:13px; color:#666; background:white; padding:8px 12px; border-radius:8px; display:inline-block; border:1px solid #eee; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+             ⚡ Replies within 30 minutes
+          </div>
         </div>
-        <div style="text-align: center; padding: 20px; background: white; border-radius: 15px; border: 2px dashed var(--primary-light);">
-          <p style="margin: 0 0 12px; color: #555; font-size: 14px; font-weight: 600;">Scan QR Code for Location</p>
+        <div style="text-align: center; padding: 20px; background: white; border-radius: 15px; border: 1px solid var(--secondary); box-shadow: var(--shadow-soft);">
+          <p style="margin: 0 0 12px; color: #555; font-size: 14px; font-weight: 600;">Scan to Navigate Instantly</p>
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://maps.app.goo.gl/J8UAPi5ypYaxqwR88" 
-            alt="Location QR Code" style="width: 180px; height: 180px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            alt="Location QR Code" style="width: 180px; height: 180px; border-radius: 8px; border: 2px solid var(--secondary); padding: 5px;">
+        </div>
+        <div style="margin-top:20px; text-align:center; font-size:14px; color:#555;">
+           <strong style="color:var(--primary);">Visit before booking</strong><br>We welcome you to see the venue in person.
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<footer>© 2026 Gunash Padmawati Bibha Bhaban · Crafted with Care</footer>
+<section id="timeline" style="padding: 100px 20px 60px;">
+  <div class="section-card">
+    <h2 class="fade-up">Your Journey with Us</h2>
+    <div class="timeline-steps">
+       <div class="step fade-up stagger-1">
+         <div class="step-num">1</div>
+         <h3>Enquire</h3>
+         <p>Check availability & get a transparent quote.</p>
+       </div>
+       <div class="step fade-up stagger-2">
+         <div class="step-num">2</div>
+         <h3>Visit</h3>
+         <p>Tour the venue & finalize your requirements.</p>
+       </div>
+       <div class="step fade-up stagger-3">
+         <div class="step-num">3</div>
+         <h3>Book</h3>
+         <p>Secure your date with a small advance.</p>
+       </div>
+       <div class="step fade-up stagger-4">
+         <div class="step-num">4</div>
+         <h3>Celebrate</h3>
+         <p>Enjoy your perfect day with our support.</p>
+       </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h3>Gunash Padmawati Bibha Bhaban</h3>
+  <p class="tagline">Designed for weddings, receptions & timeless celebrations</p>
+  
+  <div style="margin-bottom: 30px; color:rgba(255,255,255,0.5); font-size:15px; line-height:1.6;">
+    Near Ganesh Mandir, Khanapara, Guwahati, Assam 781022<br>
+    <a href="tel:+917002905175" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:color 0.3s;">+91 70029 05175</a>
+  </div>
+
+  <p class="copyright">&copy; 2024 Gunash Padmawati Bibha Bhaban. All rights reserved.</p>
+</footer>
 
 <!-- MODAL -->
 <div id="bookingModal" class="modal">
@@ -523,6 +701,27 @@ footer::before {
 
         <!-- Step 2 -->
         <div id="step2" style="display:none;">
+          <label class="modal-label">Event Type</label>
+          <select name="EventType">
+            <option value="Wedding">Wedding</option>
+            <option value="Reception">Reception</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Corporate">Corporate</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label class="modal-label">Guest Count (Approx)</label>
+          <input type="number" name="GuestCount" placeholder="e.g. 500">
+
+          <label class="modal-label">Budget Range (Optional)</label>
+          <select name="Budget">
+            <option value="">Select Range...</option>
+            <option value="Economy">Economy</option>
+            <option value="Standard">Standard</option>
+            <option value="Premium">Premium</option>
+            <option value="Luxury">Luxury</option>
+          </select>
+
           <label class="modal-label">Duration</label>
           <select id="daysSelect" onchange="updateDateViews()">
             <option value="1">1 Day</option>
@@ -599,7 +798,15 @@ const phoneInput=document.getElementById("phoneInput");
 const continueBtn=document.getElementById("continueBtn");
 const submitBtn=document.getElementById("submitBtn");
 
-function openModal(){ bookingModal.classList.add("active"); document.body.classList.add("modal-open"); nameInput.focus(); }
+function openModal(date){ 
+  bookingModal.classList.add("active"); document.body.classList.add("modal-open"); 
+  if(date && typeof date === 'string') {
+    document.getElementById("dateSingle").value = date;
+    document.getElementById("dateFrom").value = date;
+    calculateEndDate();
+  }
+  nameInput.focus(); 
+}
 const errorStep = document.getElementById("errorStep");
 function closeModal(){
   bookingModal.classList.remove("active"); document.body.classList.remove("modal-open");
@@ -610,6 +817,11 @@ function closeModal(){
     document.getElementById("enquiryForm").reset();
   },300);
 }
+
+function toggleLang() {
+  alert("Assamese language support coming soon!");
+}
+
 document.addEventListener("keydown",(e)=>{if(e.key==="Escape")closeModal()});
 bookingModal.addEventListener("click",(e)=>{if(e.target===bookingModal)closeModal()});
 
@@ -660,14 +872,21 @@ form.addEventListener('submit', e => {
   }
 
   const duration = isCustom ? (customDays + " Days") : (daysVal + " Day" + (daysVal === "1" ? "" : "s"));
+  const eventType = document.querySelector('select[name="EventType"]').value;
+  const guestCount = document.querySelector('input[name="GuestCount"]').value;
+  const budget = document.querySelector('select[name="Budget"]').value;
 
-  // Format WhatsApp message
-  let message = `*Booking Enquiry - Gunash Padmawati Bibha Bhaban*\n\n`;
+  // Format WhatsApp message - WARM & PROFESSIONAL
+  let message = `Hello! I'd like to enquire about a booking at *Gunash Padmawati Bibha Bhaban*.\n\n`;
   message += `*Name:* ${name}\n`;
   message += `*Phone:* ${phone}\n`;
+  message += `*Event:* ${eventType}\n`;
+  if(guestCount) message += `*Guests:* ~${guestCount}\n`;
+  if(budget) message += `*Budget:* ${budget}\n`;
   message += `*Duration:* ${duration}\n`;
-  message += `*Event Date:* ${eventDate}\n`;
-  if (details) message += `*Details:* ${details}\n`;
+  message += `*Date:* ${eventDate}\n`;
+  if (details) message += `\n*Note:* ${details}\n`;
+  message += `\nPlease let me know if this date is available.`;
 
   // Open WhatsApp
   const whatsappURL = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
@@ -761,6 +980,24 @@ function renderCalendar() {
   grid.innerHTML = "";
   monthLabel.textContent = currentDate.toLocaleString("default",{month:"long",year:"numeric"});
   
+  // Peak Season Warning
+  const m = currentDate.getMonth();
+  const header = document.querySelector('.calendar-header');
+  const existingWarning = document.getElementById('peakWarning');
+  if(existingWarning) existingWarning.remove();
+  
+  if ([0, 1, 9, 10, 11].includes(m)) {
+      const peakMsg = document.createElement("div");
+      peakMsg.id = "peakWarning";
+      peakMsg.textContent = "🔥 Limited availability in peak season";
+      peakMsg.style.cssText = "font-size:12px; color:#d32f2f; text-align:center; width:100%; position:absolute; bottom:-20px; left:0; font-weight:600;";
+      header.style.position = "relative";
+      header.style.marginBottom = "35px"; 
+      header.appendChild(peakMsg);
+  } else {
+      header.style.marginBottom = "25px";
+  }
+  
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const firstDay = new Date(year, month, 1).getDay();
@@ -777,8 +1014,22 @@ function renderCalendar() {
     const el = document.createElement("div");
     el.className = "calendar-day"; el.textContent = d;
     const dateStr = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-    if (bookedDates.includes(dateStr)) el.classList.add("booked");
-    else if (dateStr === todayStr) el.classList.add("today");
+    
+    // Check if past
+    if (dateStr < todayStr) {
+      el.classList.add("past");
+    } 
+    else if (bookedDates.includes(dateStr)) {
+      el.classList.add("booked");
+    }
+    else {
+      if (dateStr === todayStr) {
+         el.classList.add("today");
+         el.title = "Today";
+      }
+      el.onclick = () => openModal(dateStr);
+      el.title = "Tap to enquire";
+    }
     grid.appendChild(el);
   }
 }
@@ -792,6 +1043,23 @@ renderCalendar();
 /* ANIMATIONS */
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")}),{threshold:0.1});
 document.querySelectorAll(".fade-up").forEach(el=>obs.observe(el));
+
+/* Parallax & Navbar Scroll */
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const heroBg = document.querySelector('.hero-bg');
+  const nav = document.querySelector('.navbar');
+  
+  if (heroBg && scrolled < window.innerHeight) {
+    heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.3}px)`;
+  }
+  
+  if (scrolled > 50) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
 </script>
 
 </body>
