@@ -18,7 +18,7 @@
   --dark-bg: #2d143f;
   --text-main: #333;
   --shadow-soft: 0 20px 50px rgba(0,0,0,0.05);
-  --shadow-hover: 0 25px 60px rgba(91,43,130,0.25); /* Stronger Shadow */
+  --shadow-hover: 0 25px 60px rgba(91,43,130,0.15);
 }
 
 * { box-sizing: border-box; }
@@ -36,112 +36,165 @@ body {
 body.modal-open, body.menu-open { overflow: hidden; }
 
 /* ================= ANIMATIONS ================= */
-.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-@keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+@keyframes kenBurns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
 
 /* ================= NAVBAR ================= */
 .navbar {
-  position: sticky; top: 0; z-index: 1000;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 15px 5%; background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: 0.3s;
 }
-.nav-brand { font-family: "Playfair Display", serif; font-size: clamp(20px, 4vw, 24px); font-weight: 700; color: var(--primary); text-decoration: none; z-index: 1002; }
-.nav-links { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center; }
-.nav-links a { text-decoration: none; color: #444; font-size: 14px; font-weight: 500; position: relative; transition: 0.3s; }
-.nav-links a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--secondary); transition: 0.3s ease; }
+
+.nav-brand {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(20px, 4vw, 24px);
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  z-index: 1002;
+}
+
+.nav-links {
+  list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none; color: #444; font-size: 14px; font-weight: 500;
+  position: relative; transition: 0.3s;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px;
+  background: var(--secondary); transition: 0.3s ease;
+}
 .nav-links a:hover { color: var(--primary); }
 .nav-links a:hover::after { width: 100%; }
-.nav-cta {
-  background: var(--primary); color: white; border: none; padding: 12px 28px;
-  border-radius: 50px; cursor: pointer; font-family: inherit; font-weight: 500; transition: 0.3s;
-}
-.nav-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(91,43,130,0.3); }
 
-/* Hamburger */
-.hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1002; }
+.nav-cta {
+  background: var(--primary); color: white; border: none;
+  padding: 12px 28px; border-radius: 50px; cursor: pointer;
+  font-family: inherit; font-weight: 500; transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(91,43,130,0.2);
+}
+.nav-cta:hover { background: var(--primary-light); transform: translateY(-2px); }
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1002;
+}
 .bar { width: 25px; height: 3px; background: var(--primary); border-radius: 2px; transition: 0.3s; }
+
 @media(max-width: 900px) {
   .hamburger { display: flex; }
   .nav-links {
     position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
     background: white; flex-direction: column; justify-content: center;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
   }
   .nav-links.active { right: 0; }
   .nav-links li { margin: 15px 0; opacity: 0; transform: translateX(20px); transition: 0.4s; }
   .nav-links.active li { opacity: 1; transform: translateX(0); }
-  .nav-links a { font-size: 20px; }
+  .nav-links a { font-size: 20px; color: #333; }
+  .nav-cta { width: 80%; padding: 15px; font-size: 16px; margin-top: 10px; }
   .hamburger.active .bar:nth-child(2) { opacity: 0; }
   .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
   .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 }
 
-/* ================= HERO (UPDATED SPACING) ================= */
+/* ================= HERO ================= */
 header {
-  position: relative; height: 90vh; min-height: 600px;
+  position: relative;
+  height: 90vh; min-height: 500px;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  text-align: center; color: white; padding: 20px; overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(rgba(45, 20, 63, 0.65), rgba(0, 0, 0, 0.45)), url("https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098");
-  background-size: cover; background-position: center; animation: kenBurns 20s ease-out infinite alternate;
-}
-/* Increased Margins for better spacing */
-header h1 {
-  font-family: "Playfair Display", serif; font-size: clamp(36px, 6vw, 64px); 
-  margin: 0 0 25px; text-shadow: 0 4px 15px rgba(0,0,0,0.4); line-height: 1.2;
-}
-header p { 
-  font-size: clamp(16px, 2vw, 20px); margin: 0 0 45px; opacity: 0.95; max-width: 650px; 
-}
-.hero-trust {
-  display: inline-block; font-size: 14px; letter-spacing: 0.5px;
-  background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
-  padding: 10px 20px; border-radius: 30px; margin-bottom: 45px;
-  border: 1px solid rgba(255,255,255,0.25);
+  text-align: center; padding: 0 20px; overflow: hidden; color: white;
 }
 
-/* ================= BUTTON (ENHANCED HOVER) ================= */
+.hero-bg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background:
+    linear-gradient(rgba(45, 20, 63, 0.6), rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098");
+  background-size: cover; background-position: center;
+  z-index: -1; animation: kenBurns 20s ease-out infinite alternate;
+}
+
+header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 6vw, 60px); 
+  margin: 0 0 20px; text-shadow: 0 4px 15px rgba(0,0,0,0.4); line-height: 1.1;
+}
+
+header p { 
+  font-size: clamp(16px, 2vw, 18px); 
+  margin: 0 0 45px; opacity: 0.95; max-width: 600px; 
+}
+
+.hero-trust {
+  display: inline-block; font-size: 13px;
+  background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);
+  padding: 8px 16px; border-radius: 20px; margin-bottom: 35px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ================= BUTTON ================= */
 .btn {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: white; padding: 18px 45px; border-radius: 50px; border: none;
+  color: white; padding: 16px 42px; border-radius: 50px; border: none;
   font-size: 16px; font-weight: 500; cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
-  box-shadow: 0 10px 25px rgba(91,43,130,0.3);
+  transition: all 0.3s;
+  box-shadow: 0 10px 30px rgba(91,43,130,0.3);
 }
-.btn:hover {
-  transform: translateY(-5px) scale(1.05); /* Lifts up and grows */
-  box-shadow: 0 20px 50px rgba(91,43,130,0.5); /* Strong Glow */
-  background: linear-gradient(135deg, var(--primary-light), var(--primary));
-}
+.btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(91,43,130,0.4); }
 .btn.disabled { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
 
 /* ================= SECTIONS ================= */
-section { max-width: 1100px; margin: 90px auto; padding: 0 20px; }
+section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
+
 .section-card {
-  background: white; padding: 70px 50px; border-radius: 30px;
+  background: white; padding: 60px 50px; border-radius: 30px;
   box-shadow: var(--shadow-soft); position: relative; overflow: hidden;
 }
-@media(max-width: 768px) { section { margin: 60px auto; } .section-card { padding: 50px 25px; } }
+@media(max-width: 768px) {
+  section { margin: 50px auto; }
+  .section-card { padding: 40px 25px; border-radius: 20px; }
+}
 
 h2 {
   font-family: "Playfair Display", serif; text-align: center;
-  font-size: clamp(28px, 4vw, 38px); color: var(--primary); margin-bottom: 50px; position: relative;
+  font-size: clamp(28px, 4vw, 36px); 
+  color: var(--primary); margin-bottom: 50px; position: relative;
 }
 h2::after {
-  content: ""; display: block; width: 70px; height: 3px;
+  content: ""; display: block; width: 60px; height: 3px;
   background: var(--secondary); margin: 15px auto 0;
 }
 
 /* ================= AMENITIES ================= */
-.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+.features { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+  gap: 25px; 
+}
 .box {
-  background: #fff; padding: 35px 25px; border-radius: 20px; text-align: center;
+  background: #fff; padding: 30px 25px; border-radius: 20px; text-align: center;
   font-weight: 500; color: #555; border: 1px solid rgba(0,0,0,0.03);
   box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: 0.4s ease;
 }
@@ -149,35 +202,37 @@ h2::after {
 
 /* ================= EXPERIENCES & SLIDESHOW ================= */
 .exp-tabs {
-  display: flex; justify-content: center; gap: 15px; margin-bottom: 60px; 
+  display: flex; justify-content: center; gap: 10px; margin-bottom: 50px; 
   background: #f4eff9; width: fit-content; margin-left: auto; margin-right: auto;
-  padding: 8px; border-radius: 50px;
+  padding: 6px; border-radius: 50px;
 }
-.exp-tab { background: none; border: none; font-size: 15px; cursor: pointer; color: #666; padding: 10px 28px; border-radius: 40px; transition: 0.3s; }
+.exp-tab { background: none; border: none; font-size: 15px; cursor: pointer; color: #666; padding: 10px 24px; border-radius: 40px; transition: 0.3s; }
 .exp-tab.active { background: white; color: var(--primary); font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
 .exp-panel { display: none; animation: fadeIn 0.6s ease; }
 .exp-panel.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-/* REVIEWS */
-.reviews-mosaic { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
-.review-card { background: var(--soft-bg); padding: 35px; border-radius: 22px; font-size: 15px; font-style: italic; color: #555; transition: 0.4s; }
+/* Reviews */
+.reviews-mosaic { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+  gap: 25px; 
+}
+.review-card { background: var(--soft-bg); padding: 30px; border-radius: 22px; font-size: 15px; font-style: italic; color: #555; transition: 0.4s; }
 .review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
 .review-card strong { display: block; margin-top: 20px; color: var(--primary); font-style: normal; font-size: 13px; font-weight: 600; text-transform: uppercase; }
 
-/* SLIDESHOW STYLES (NEW) */
+/* Slideshow Container */
 .slideshow-container {
   max-width: 800px; position: relative; margin: auto; border-radius: 25px; overflow: hidden;
   box-shadow: 0 20px 50px rgba(0,0,0,0.1); background: #000;
 }
 .mySlides { display: none; width: 100%; height: 400px; position: relative; }
 .mySlides img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
-/* Fade Animation */
 .slide-fade { animation-name: fade; animation-duration: 2s; }
 @keyframes fade { from {opacity: .4} to {opacity: 1} }
 
-/* Caption */
 .slide-caption {
   position: absolute; bottom: 0; left: 0; width: 100%;
   background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
@@ -188,15 +243,15 @@ h2::after {
 /* Dots */
 .dot-container { text-align: center; margin-top: 20px; }
 .dot {
-  height: 10px; width: 10px; margin: 0 5px; background-color: #ddd;
-  border-radius: 50%; display: inline-block; transition: background-color 0.6s ease; cursor: pointer;
+  height: 12px; width: 12px; margin: 0 6px; background-color: #ddd;
+  border-radius: 50%; display: inline-block; transition: background-color 0.3s ease; cursor: pointer;
 }
 .dot.active { background-color: var(--primary); transform: scale(1.2); }
 
 @media(max-width:600px) { .mySlides { height: 250px; } .slide-caption { font-size: 18px; padding: 20px; } }
 
 /* ================= CALENDAR ================= */
-.calendar-wrapper { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
+.calendar-wrapper { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
 .calendar-header { font-family: "Playfair Display"; font-size: 24px; margin-bottom: 25px; color: var(--primary); text-align: center; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
 .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 13px; background: #fbf9fd; transition: 0.3s; }
@@ -208,27 +263,35 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 
 /* ================= MODAL ================= */
 .modal {
-  display: none; position: fixed; inset: 0; background: rgba(45, 20, 63, 0.85); backdrop-filter: blur(8px); z-index: 2000; overflow-y: auto; padding: 10px;
+  display: none; position: fixed; inset: 0;
+  background: rgba(45, 20, 63, 0.85); backdrop-filter: blur(8px);
+  z-index: 2000; overflow-y: auto; padding: 10px;
   opacity: 0; transition: opacity 0.3s ease;
 }
 .modal.active { display: block; opacity: 1; }
+
 .modal-content {
-  background: white; max-width: 480px; width: 100%; margin: 5vh auto; padding: 40px; border-radius: 26px; transform: translateY(20px);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  background: white; max-width: 480px; width: 100%; margin: 5vh auto; padding: 35px;
+  border-radius: 26px; transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
 }
-@media(max-width: 480px) { .modal-content { padding: 30px; margin: 10px auto; border-radius: 20px; } }
+@media(max-width: 480px) { .modal-content { padding: 25px; margin: 10px auto; border-radius: 20px; } }
 .modal.active .modal-content { transform: translateY(0); }
 
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.modal-header h2 { margin: 0; font-size: 24px; color: var(--text-main); text-align: left; font-family: "Playfair Display"; }
+.modal-header h2 { margin: 0; font-size: 22px; color: var(--text-main); text-align: left; }
+
 .close-btn {
-  background: #f4f4f4; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
+  background: #f4f4f4; border: none; width: 36px; height: 36px; border-radius: 50%;
+  font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
 }
 .close-btn:hover { background: #ffebeb; color: #d32f2f; }
 
 .modal-label { font-size: 13px; font-weight: 600; color: #666; margin-bottom: 6px; display: block; }
 .modal-content input, .modal-content select, .modal-content textarea {
-  width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 14px; border: 2px solid #f0f0f0; font-family: inherit; font-size: 16px; background: #fdfdfd; transition: 0.3s;
+  width: 100%; padding: 14px; margin-bottom: 18px; border-radius: 12px;
+  border: 2px solid #f0f0f0; font-family: inherit; font-size: 16px; background: #fdfdfd; transition: 0.3s;
 }
 .modal-content input:focus { background: white; border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.08); }
 
@@ -240,7 +303,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <a href="index.html" class="nav-brand">Gunash Padmawati Bibha Bhaban</a>
   <ul class="nav-links" id="navLinks">
@@ -257,7 +319,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   </div>
 </nav>
 
-<!-- HERO -->
 <header id="home">
   <div class="hero-bg"></div>
   <h1 class="fade-up">Gunash Padmawati Bibha Bhaban</h1>
@@ -266,18 +327,15 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   <button class="btn fade-up" style="transition-delay:0.3s" onclick="openModal()">Check Availability</button>
 </header>
 
-<!-- VENUE -->
 <section id="venue">
   <div class="section-card fade-up">
     <h2>Venue Overview</h2>
-    <p style="text-align:center; max-width:750px; margin:auto; font-size:17px; color:#555; line-height: 1.8;">
+    <p style="text-align:center; max-width:750px; margin:auto; font-size:17px; color:#555; line-height:1.8;">
       A premium venue crafted for refined celebrations, combining elegance, comfort, and thoughtful design.
-      Whether it is a grand wedding or an intimate reception, our space transforms to match your vision.
     </p>
   </div>
 </section>
 
-<!-- AMENITIES -->
 <section id="amenities">
   <div class="section-card">
     <h2 class="fade-up">Amenities</h2>
@@ -292,11 +350,9 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   </div>
 </section>
 
-<!-- EXPERIENCES -->
 <section id="experiences">
   <div class="section-card">
     <h2 class="fade-up">Experiences</h2>
-
     <div class="exp-tabs fade-up stagger-1">
       <button class="exp-tab active" onclick="switchExperience('reviews')">Guest Voices</button>
       <button class="exp-tab" onclick="switchExperience('events')">Past Events</button>
@@ -312,27 +368,22 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
       </div>
     </div>
 
-    <!-- SLIDESHOW (Replaces Grid) -->
+    <!-- SLIDESHOW -->
     <div id="exp-events" class="exp-panel">
       <div class="slideshow-container fade-up">
-        
         <div class="mySlides slide-fade">
           <img src="https://images.unsplash.com/photo-1519225468359-2996bc140aaa" alt="Reception">
           <div class="slide-caption">Golden Hour Reception</div>
         </div>
-
         <div class="mySlides slide-fade">
           <img src="https://images.unsplash.com/photo-1529634899401-3c3e5a0a9f1c" alt="Wedding">
           <div class="slide-caption">Classic Floral Wedding</div>
         </div>
-
         <div class="mySlides slide-fade">
           <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b" alt="Haldi">
           <div class="slide-caption">Traditional Haldi Ceremony</div>
         </div>
-
       </div>
-      
       <div class="dot-container">
         <span class="dot" onclick="currentSlide(1)"></span> 
         <span class="dot" onclick="currentSlide(2)"></span> 
@@ -342,7 +393,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   </div>
 </section>
 
-<!-- CALENDAR -->
 <section id="calendar">
   <div class="fade-up">
     <h2>Availability</h2>
@@ -353,7 +403,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   </div>
 </section>
 
-<!-- LOCATION -->
 <section id="location">
   <div class="section-card fade-up" style="padding:0; overflow:hidden;">
     <iframe src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
@@ -361,9 +410,7 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   </div>
 </section>
 
-<footer>
-  © 2026 Gunash Padmawati Bibha Bhaban · Crafted with Care
-</footer>
+<footer>© 2026 Gunash Padmawati Bibha Bhaban · Crafted with Care</footer>
 
 <!-- MODAL -->
 <div id="bookingModal" class="modal">
@@ -433,14 +480,14 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 </div>
 
 <script>
-/* CONFIGURATION */
+/* URL */
 const scriptURL = "https://script.google.com/macros/s/AKfycbyGsTQXMR6PyFdJnxvtVDh7QqI5tJSnAZ3s54t1zv48sGHr2mtoiutor46K88tzDjE/exec";
 
-/* NAV & MENU */
+/* NAV */
 function toggleMenu(){ document.getElementById("navLinks").classList.toggle("active"); document.querySelector(".hamburger").classList.toggle("active"); document.body.classList.toggle("menu-open"); }
 function closeMenu(){ document.getElementById("navLinks").classList.remove("active"); document.querySelector(".hamburger").classList.remove("active"); document.body.classList.remove("menu-open"); }
 
-/* MODAL LOGIC */
+/* MODAL */
 const bookingModal=document.getElementById("bookingModal");
 const step1=document.getElementById("step1");
 const step2=document.getElementById("step2");
@@ -471,7 +518,7 @@ function validateStep1(){
 function goToStep2(){ step1.style.display="none"; step2.style.display="block"; }
 function backToStep1(){ step1.style.display="block"; step2.style.display="none"; }
 
-/* FORM SUBMIT */
+/* SUBMIT */
 const form = document.getElementById('enquiryForm');
 form.addEventListener('submit', e => {
   e.preventDefault();
@@ -490,12 +537,11 @@ form.addEventListener('submit', e => {
   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
   .then(response => {
     step2.style.display = "none";
-    successStep.style.display = "flex"; // Flex ensures centering
+    successStep.style.display = "flex";
     submitBtn.textContent = "Submit";
     submitBtn.classList.remove("disabled");
   })
   .catch(error => {
-    console.error('Error!', error.message);
     step2.style.display = "none";
     successStep.style.display = "flex";
     submitBtn.textContent = "Submit";
@@ -503,7 +549,7 @@ form.addEventListener('submit', e => {
   });
 });
 
-/* DATE LOGIC */
+/* DATES */
 const daysSelect=document.getElementById("daysSelect");
 const customDaysDiv=document.getElementById("customDaysDiv");
 const customDaysInput=document.getElementById("customDaysInput");
@@ -545,26 +591,33 @@ function switchExperience(type){
   }
 }
 
-/* SLIDESHOW LOGIC */
+/* SLIDESHOW (FIXED) */
 let slideIndex = 0;
-showSlides();
+let slideTimer;
+
+showSlides(); // Start
 
 function showSlides() {
   let i;
   let slides = document.getElementsByClassName("mySlides");
   let dots = document.getElementsByClassName("dot");
+  
   for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
   slideIndex++;
   if (slideIndex > slides.length) {slideIndex = 1}    
   for (i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
+  
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 3500); // Change image every 3.5 seconds
+  
+  slideTimer = setTimeout(showSlides, 3500); 
 }
 
+// Manual Click Function
 function currentSlide(n) {
-  // Manual navigation logic could be added here if needed, 
-  // but auto-slideshow is usually sufficient.
+  clearTimeout(slideTimer); // Stop auto timer
+  slideIndex = n - 1; // Set index (showSlides adds 1 immediately)
+  showSlides(); // Restart
 }
 
 /* CALENDAR */
