@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Gunash Padmawati Bibha Bhaban | Premium Wedding Venue</title>
+<title>Gunash Padmawati Bibha Bhaban | Wedding & Celebration Venue</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Gunash Padmawati Bibha Bhaban – A premium venue for weddings and celebrations. Check availability and book your event with elegance.">
 
@@ -22,9 +23,6 @@
   --text-main: #333;
   --shadow-soft: 0 20px 50px rgba(0,0,0,0.05);
   --shadow-hover: 0 25px 60px rgba(91,43,130,0.15);
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 30px;
 }
 
 * { box-sizing: border-box; }
@@ -116,7 +114,7 @@ body.modal-open, body.menu-open { overflow: hidden; }
   .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 }
 
-/* ================= HERO (Enhanced Depth) ================= */
+/* ================= HERO ================= */
 header {
   position: relative;
   height: 90vh; min-height: 500px;
@@ -126,9 +124,7 @@ header {
 
 .hero-bg {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  /* Added Vignette for Depth */
   background:
-    radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 80%),
     linear-gradient(rgba(45, 20, 63, 0.6), rgba(0, 0, 0, 0.4)),
     url("https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098");
   background-size: cover; background-position: center;
@@ -169,20 +165,13 @@ header p {
 section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
 
 .section-card {
-  background: white; padding: 60px 50px; border-radius: var(--radius-lg);
+  background: white; padding: 60px 50px; border-radius: 30px;
   box-shadow: var(--shadow-soft); position: relative; overflow: hidden;
   border: 1px solid rgba(91, 43, 130, 0.06);
 }
-/* Gold Top Border for premium feel */
-.section-card::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, transparent, var(--secondary), transparent);
-  opacity: 0.7;
-}
-
 @media(max-width: 768px) {
   section { margin: 50px auto; }
-  .section-card { padding: 40px 25px; border-radius: var(--radius-md); }
+  .section-card { padding: 40px 25px; border-radius: 20px; }
 }
 
 h2 {
@@ -196,22 +185,16 @@ h2::after {
   background: linear-gradient(90deg, var(--secondary), var(--primary-light)); margin: 15px auto 0;
 }
 
-/* ================= AMENITIES (Improved Icons) ================= */
+/* ================= AMENITIES ================= */
 .features { 
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
   gap: 25px; 
 }
 .box {
-  background: #fff; padding: 30px 25px; border-radius: var(--radius-md); 
-  text-align: center; font-weight: 500; color: #555; 
-  border: 1px solid rgba(0,0,0,0.03);
+  background: #fff; padding: 30px 25px; border-radius: 20px; text-align: center;
+  font-weight: 500; color: #555; border: 1px solid rgba(0,0,0,0.03);
   box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: 0.4s ease;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-}
-/* Subtle Icons using CSS/Unicode for lightweight */
-.box::before {
-  content: "✦"; font-size: 24px; color: var(--secondary); margin-bottom: 5px; opacity: 0.8;
 }
 .box:hover { transform: translateY(-8px); border-color: rgba(91,43,130,0.1); box-shadow: var(--shadow-hover); color: var(--primary); }
 
@@ -235,7 +218,7 @@ h2::after {
   gap: 25px; 
 }
 .review-card {
-  background: var(--soft-bg); padding: 30px 30px 30px 38px; border-radius: var(--radius-md);
+  background: var(--soft-bg); padding: 30px 30px 30px 38px; border-radius: 22px;
   font-size: 15px; font-style: italic; color: #555; transition: 0.4s;
   position: relative; border-left: 3px solid var(--secondary);
 }
@@ -245,7 +228,7 @@ h2::after {
 
 /* Slideshow Container */
 .slideshow-container {
-  max-width: 800px; position: relative; margin: auto; border-radius: var(--radius-lg); overflow: hidden;
+  max-width: 800px; position: relative; margin: auto; border-radius: 25px; overflow: hidden;
   box-shadow: 0 20px 50px rgba(0,0,0,0.1); background: #000;
 }
 .mySlides { display: none; width: 100%; height: 400px; position: relative; }
@@ -304,11 +287,6 @@ h2::after {
 .calendar-day.today:hover { transform: scale(1.05); }
 .calendar-day.today.booked { background: #8b6914; color: rgba(255,255,255,0.8); }
 
-/* Legend for Calendar */
-.cal-legend { display: flex; gap: 15px; justify-content: center; margin-top: 15px; font-size: 12px; color: #666; }
-.legend-item { display: flex; align-items: center; gap: 5px; }
-.dot-legend { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-
 /* ================= FOOTER ================= */
 footer {
   background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #ccc;
@@ -338,7 +316,7 @@ footer::before {
 @media(max-width: 480px) { .modal-content { padding: 30px 20px; } }
 .modal.active .modal-content { transform: translateY(0); }
 
-/* Left aligned header with gold underline */
+/* Modal header – title and gold line centered under "Booking Enquiry" */
 .modal-header { margin-bottom: 25px; text-align: center; }
 .modal-header h2 { 
   margin: 0; font-size: 28px; color: var(--text-main); font-family: "Playfair Display"; 
@@ -358,7 +336,7 @@ footer::before {
 
 .modal-label { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 8px; display: block; }
 
-/* Inputs matching Image 5 */
+/* Inputs matching Image 5 (Purple Border on Focus) */
 .modal-content input, .modal-content select, .modal-content textarea {
   width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 12px;
   border: 1px solid #ddd; font-family: inherit; font-size: 16px; background: white; transition: 0.3s;
@@ -367,7 +345,7 @@ footer::before {
   border: 2px solid var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.1); 
 }
 
-/* Success State */
+/* Success State (Matches Image 1) */
 .success-box { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 0; }
 .success-check { font-size: 60px; color: #4CAF50; margin-bottom: 15px; animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .success-title { font-family: "Playfair Display"; font-size: 28px; color: var(--primary); margin-bottom: 15px; }
@@ -387,6 +365,7 @@ footer::before {
     <li><a href="#amenities" onclick="closeMenu()">Amenities</a></li>
     <li><a href="#experiences" onclick="closeMenu()">Experiences</a></li>
     <li><a href="#calendar" onclick="closeMenu()">Calendar</a></li>
+    <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
     <li><button class="nav-cta" onclick="openModal(); closeMenu()">Enquire Now</button></li>
   </ul>
   <div class="hamburger" onclick="toggleMenu()">
@@ -407,7 +386,6 @@ footer::before {
     <h2>Venue Overview</h2>
     <p style="text-align:center; max-width:750px; margin:auto; font-size:17px; color:#555; line-height:1.8;">
       A premium venue crafted for refined celebrations, combining elegance, comfort, and thoughtful design.
-      Whether it is a grand wedding or an intimate reception, our space transforms to match your vision.
     </p>
   </div>
 </section>
@@ -434,7 +412,6 @@ footer::before {
       <button class="exp-tab" onclick="switchExperience('events')">Past Events</button>
     </div>
 
-    <!-- Reviews -->
     <div id="exp-reviews" class="exp-panel active">
       <div class="reviews-mosaic">
         <div class="review-card large fade-up stagger-1">“The ambience felt refined and welcoming. The staff was incredibly helpful.”<strong>Wedding · 2024</strong></div>
@@ -444,7 +421,6 @@ footer::before {
       </div>
     </div>
 
-    <!-- SLIDESHOW -->
     <div id="exp-events" class="exp-panel">
       <div class="slideshow-container fade-up">
         <div class="mySlides slide-fade">
@@ -479,11 +455,6 @@ footer::before {
         <button class="cal-btn" onclick="changeMonth(1)">&#10095;</button>
       </div>
       <div class="calendar-grid" id="calendarGrid"></div>
-      <div class="cal-legend">
-        <div class="legend-item"><span class="dot-legend" style="background:#eee"></span>Booked</div>
-        <div class="legend-item"><span class="dot-legend" style="background:var(--primary)"></span>Today</div>
-        <div class="legend-item"><span class="dot-legend" style="background:#fbf9fd; border:1px solid #ddd"></span>Available</div>
-      </div>
     </div>
   </div>
 </section>
@@ -538,7 +509,7 @@ footer::before {
       <div class="modal-header">
         <h2>Booking Enquiry</h2>
       </div>
-      <p style="color:#666; font-size:14px; margin-bottom:25px; text-align:center;">Please share your details to proceed.</p>
+      <p style="color:#666; font-size:14px; margin-bottom:25px;">Please share your details to proceed.</p>
 
       <form id="enquiryForm" name="google-sheet">
         <!-- Step 1 -->
@@ -596,11 +567,11 @@ footer::before {
       <h2 class="success-title">Booking Enquiry</h2>
       <div class="success-check">✔</div>
       <h2 class="success-title" style="color: var(--primary);">Thank you!</h2>
-      <p style="color:#555; margin-bottom:20px;">We have received your enquiry.<br>Our team will review your request and message you on WhatsApp shortly.</p>
+      <p style="color:#555; margin-bottom:20px;">WhatsApp will open with your enquiry details.<br>Send the message to complete your booking request.<br><small style="opacity:0.85;">Or call us directly at <a href="tel:+917002905175" style="color: var(--primary);">+91 70029 05175</a></small></p>
       <button class="btn" onclick="closeModal()" style="min-width:150px; background: var(--primary);">Close</button>
     </div>
 
-    <!-- ERROR SECTION -->
+    <!-- ERROR SECTION (shown when sheet submit fails) -->
     <div id="errorStep" style="display:none;" class="success-box">
       <h2 class="success-title" style="color: #c62828;">Could not send</h2>
       <p style="color:#555; margin-bottom:20px;">Something went wrong. Please note your details and contact us directly by phone or WhatsApp.</p>
@@ -611,8 +582,7 @@ footer::before {
 </div>
 
 <script>
-/* URL */
-const scriptURL = "https://script.google.com/macros/s/AKfycbyGsTQXMR6PyFdJnxvtVDh7QqI5tJSnAZ3s54t1zv48sGHr2mtoiutor46K88tzDjE/exec";
+/* WhatsApp submission - no server needed, reliable and instant */
 
 /* NAV */
 function toggleMenu(){ document.getElementById("navLinks").classList.toggle("active"); document.querySelector(".hamburger").classList.toggle("active"); document.body.classList.toggle("menu-open"); }
@@ -624,18 +594,19 @@ const formSection=document.getElementById("formSection");
 const step1=document.getElementById("step1");
 const step2=document.getElementById("step2");
 const successStep=document.getElementById("successStep");
-const errorStep = document.getElementById("errorStep");
 const nameInput=document.getElementById("nameInput");
 const phoneInput=document.getElementById("phoneInput");
 const continueBtn=document.getElementById("continueBtn");
 const submitBtn=document.getElementById("submitBtn");
 
 function openModal(){ bookingModal.classList.add("active"); document.body.classList.add("modal-open"); nameInput.focus(); }
+const errorStep = document.getElementById("errorStep");
 function closeModal(){
   bookingModal.classList.remove("active"); document.body.classList.remove("modal-open");
-  setTimeout(()=>{ 
-    formSection.style.display="block"; step1.style.display="block"; step2.style.display="none"; successStep.style.display="none"; errorStep.style.display="none";
-    nameInput.value=""; phoneInput.value=""; validateStep1(); 
+  setTimeout(()=>{
+    formSection.style.display="block"; step1.style.display="block"; step2.style.display="none";
+    successStep.style.display="none"; errorStep.style.display="none";
+    nameInput.value=""; phoneInput.value=""; validateStep1();
     document.getElementById("enquiryForm").reset();
   },300);
 }
@@ -651,35 +622,63 @@ function validateStep1(){
 function goToStep2(){ step1.style.display="none"; step2.style.display="block"; }
 function backToStep1(){ step1.style.display="block"; step2.style.display="none"; }
 
-/* SUBMIT */
+/* SUBMIT – WhatsApp (Reliable, no server needed) */
 const form = document.getElementById('enquiryForm');
+const whatsappPhone = "917002905175"; // Your phone number with country code
+
 form.addEventListener('submit', e => {
   e.preventDefault();
-  submitBtn.textContent = "Sending...";
-  submitBtn.classList.add("disabled");
 
-  const isCustom = document.getElementById("daysSelect").value === 'custom';
-  document.getElementById("hiddenDuration").value = isCustom ? document.getElementById("customDaysInput").value + " Days" : document.getElementById("daysSelect").value + " Days";
+  const daysVal = document.getElementById("daysSelect").value;
+  const isCustom = daysVal === 'custom';
+  const customDays = document.getElementById("customDaysInput").value.trim();
+  const dateSingle = document.getElementById("dateSingle");
+  const dateFrom = document.getElementById("dateFrom");
+  const dateTo = document.getElementById("dateTo");
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const details = document.querySelector('textarea[name="Details"]').value.trim();
+
+  if (isCustom && (!customDays || isNaN(parseInt(customDays)) || parseInt(customDays) < 1)) {
+    alert("Please enter a valid number of days (1 or more).");
+    return;
+  }
   
-  if(document.getElementById("daysSelect").value === '1') {
-    document.getElementById("hiddenDate").value = document.getElementById("dateSingle").value;
+  let eventDate = "";
+  if (daysVal === '1') {
+    if (!dateSingle.value) {
+      alert("Please select an event date.");
+      return;
+    }
+    eventDate = dateSingle.value;
   } else {
-    document.getElementById("hiddenDate").value = document.getElementById("dateFrom").value + " to " + document.getElementById("dateTo").value;
+    if (!dateFrom.value) {
+      alert("Please select a start date.");
+      return;
+    }
+    eventDate = dateFrom.value + " to " + (dateTo.value || dateFrom.value);
   }
 
-  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-  .then(response => {
-    formSection.style.display = "none";
-    successStep.style.display = "flex";
-    submitBtn.textContent = "Submit";
-    submitBtn.classList.remove("disabled");
-  })
-  .catch(error => {
-    formSection.style.display = "none";
-    errorStep.style.display = "flex";
-    submitBtn.textContent = "Submit";
-    submitBtn.classList.remove("disabled");
-  });
+  const duration = isCustom ? (customDays + " Days") : (daysVal + " Day" + (daysVal === "1" ? "" : "s"));
+
+  // Format WhatsApp message
+  let message = `*Booking Enquiry - Gunash Padmawati Bibha Bhaban*\n\n`;
+  message += `*Name:* ${name}\n`;
+  message += `*Phone:* ${phone}\n`;
+  message += `*Duration:* ${duration}\n`;
+  message += `*Event Date:* ${eventDate}\n`;
+  if (details) message += `*Details:* ${details}\n`;
+
+  // Open WhatsApp
+  const whatsappURL = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, '_blank');
+
+  // Show success
+  formSection.style.display = "none";
+  successStep.style.display = "flex";
+  errorStep.style.display = "none";
+  submitBtn.textContent = "Submit";
+  submitBtn.classList.remove("disabled");
 });
 
 /* DATES */
@@ -793,281 +792,6 @@ renderCalendar();
 /* ANIMATIONS */
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")}),{threshold:0.1});
 document.querySelectorAll(".fade-up").forEach(el=>obs.observe(el));
-</script>
-
-</body>
-</html>
-
-### File 2: `gallery.html` (Dedicated Gallery Page)
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Gallery - Gunash Padmawati Bibha Bhaban</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* RESET & VARS */
-:root { --primary: #5b2b82; --secondary: #d4af37; --text-main: #333; }
-* { box-sizing: border-box; }
-body { margin: 0; font-family: "Poppins", sans-serif; background: #fbf7fc; color: var(--text-main); }
-
-/* NAVBAR */
-.navbar {
-  padding: 15px 5%; background: rgba(255,255,255,0.95);
-  display: flex; justify-content: space-between; align-items: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;
-}
-.nav-brand { font-family: "Playfair Display"; font-size: clamp(18px, 4vw, 22px); font-weight: 700; color: var(--primary); text-decoration: none; }
-.back-btn {
-  text-decoration: none; color: #555; font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.3s;
-}
-.back-btn:hover { color: var(--primary); transform: translateX(-3px); }
-
-/* HEADER */
-.gallery-header { text-align: center; padding: 60px 20px; background: var(--primary); color: white; }
-.gallery-header h1 { font-family: "Playfair Display"; font-size: clamp(32px, 5vw, 48px); margin: 0; }
-.gallery-header p { opacity: 0.9; margin-top: 10px; font-size: 16px; }
-
-/* GRID */
-.gallery-container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-.gallery-grid {
-  display: grid; gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-.gallery-item {
-  border-radius: 15px; overflow: hidden; position: relative; height: 300px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05); cursor: pointer;
-}
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-.gallery-item:hover img { transform: scale(1.1); }
-
-/* OVERLAY */
-.overlay {
-  position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-  opacity: 0; transition: 0.3s; display: flex; align-items: flex-end; padding: 25px;
-  color: white; font-family: "Playfair Display"; font-size: 20px;
-}
-.gallery-item:hover .overlay { opacity: 1; }
-
-/* MOBILE TWEAKS */
-@media(max-width: 600px) {
-  .gallery-grid { grid-template-columns: 1fr; }
-  .gallery-item { height: 250px; }
-  .overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); }
-}
-
-/* ================= LIGHTBOX ================= */
-.lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.92);
-  z-index: 2000;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.lightbox.active {
-  display: flex;
-  opacity: 1;
-}
-
-.lightbox-content {
-  position: relative;
-  max-width: 95vw;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.lightbox-content img {
-  max-width: 100%;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-
-.lightbox-caption {
-  color: #fff;
-  font-family: "Playfair Display", serif;
-  font-size: clamp(18px, 3vw, 24px);
-  margin-top: 15px;
-  text-align: center;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: -45px;
-  right: 0;
-  background: rgba(255,255,255,0.15);
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s;
-  line-height: 1;
-}
-.lightbox-close:hover {
-  background: rgba(255,255,255,0.25);
-}
-
-.lightbox-prev,
-.lightbox-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.15);
-  border: none;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s;
-}
-.lightbox-prev:hover,
-.lightbox-next:hover {
-  background: rgba(255,255,255,0.3);
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-
-@media(max-width: 600px) {
-  .lightbox-prev { left: 10px; width: 40px; height: 40px; font-size: 20px; }
-  .lightbox-next { right: 10px; width: 40px; height: 40px; font-size: 20px; }
-  .lightbox-close { top: -40px; right: 50%; transform: translateX(50%); }
-}
-
-footer { text-align: center; padding: 40px; color: #777; font-size: 13px; margin-top: 40px; }
-</style>
-</head>
-<body>
-
-<nav class="navbar">
-  <a href="index.html" class="nav-brand">Gunash Padmawati Bibha Bhaban</a>
-  <a href="index.html" class="back-btn">← Back</a>
-</nav>
-
-<header class="gallery-header">
-  <h1>Photo Gallery</h1>
-  <p>Capturing memories, crafting elegance.</p>
-</header>
-
-<div class="gallery-container">
-  <div class="gallery-grid">
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200" data-caption="Floral Decor">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600" alt="Decor">
-      <div class="overlay">Floral Decor</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200" data-caption="Grand Entrance">
-      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=600" alt="Entrance">
-      <div class="overlay">Grand Entrance</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200" data-caption="Seating Area">
-      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600" alt="Seating">
-      <div class="overlay">Seating Area</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1507915977619-6ccfe8003ae6?q=80&w=1200" data-caption="Main Stage">
-      <img src="https://images.unsplash.com/photo-1507915977619-6ccfe8003ae6?q=80&w=600" alt="Stage">
-      <div class="overlay">Main Stage</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1464366400600-7168b8af0bc3?q=80&w=1200" data-caption="Fine Dining">
-      <img src="https://images.unsplash.com/photo-1464366400600-7168b8af0bc3?q=80&w=600" alt="Dining">
-      <div class="overlay">Fine Dining</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1520854221256-17451cc330e7?q=80&w=1200" data-caption="Ambient Lighting">
-      <img src="https://images.unsplash.com/photo-1520854221256-17451cc330e7?q=80&w=600" alt="Lighting">
-      <div class="overlay">Ambient Lighting</div>
-    </div>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div id="lightbox" class="lightbox" onclick="closeLightboxOnBackdrop(event)">
-  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
-  <button class="lightbox-prev" onclick="event.stopPropagation(); prevImage()" aria-label="Previous">&#10094;</button>
-  <div class="lightbox-content" onclick="event.stopPropagation()">
-    <img id="lightbox-img" src="" alt="">
-    <p class="lightbox-caption" id="lightbox-caption"></p>
-  </div>
-  <button class="lightbox-next" onclick="event.stopPropagation(); nextImage()" aria-label="Next">&#10095;</button>
-</div>
-
-<footer>© 2026 Gunash Padmawati Bibha Bhaban</footer>
-
-<script>
-(function() {
-  const items = document.querySelectorAll('.gallery-item');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  let currentIndex = 0;
-
-  function openLightbox(index) {
-    currentIndex = index;
-    const item = items[index];
-    const src = item.getAttribute('data-src') || item.querySelector('img').src;
-    const caption = item.getAttribute('data-caption') || item.querySelector('.overlay').textContent;
-    lightboxImg.src = src;
-    lightboxImg.alt = caption;
-    lightboxCaption.textContent = caption;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function closeLightboxOnBackdrop(e) {
-    if (e.target === lightbox) closeLightbox();
-  }
-
-  function prevImage() {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
-    openLightbox(currentIndex);
-  }
-
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % items.length;
-    openLightbox(currentIndex);
-  }
-
-  items.forEach(function(item, index) {
-    item.addEventListener('click', function() { openLightbox(index); });
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') prevImage();
-    if (e.key === 'ArrowRight') nextImage();
-  });
-
-  window.closeLightbox = closeLightbox;
-  window.closeLightboxOnBackdrop = closeLightboxOnBackdrop;
-  window.prevImage = prevImage;
-  window.nextImage = nextImage;
-})();
 </script>
 
 </body>
