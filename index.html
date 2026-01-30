@@ -309,14 +309,15 @@ footer::before {
 @media(max-width: 480px) { .modal-content { padding: 30px 20px; } }
 .modal.active .modal-content { transform: translateY(0); }
 
-/* Left aligned header with gold underline (Matches Image 5) */
-.modal-header { margin-bottom: 25px; text-align: left; }
+/* Modal header – title and gold line centered under "Booking Enquiry" */
+.modal-header { margin-bottom: 25px; text-align: center; }
 .modal-header h2 { 
   margin: 0; font-size: 28px; color: var(--text-main); font-family: "Playfair Display"; 
-  position: relative; padding-bottom: 10px;
+  position: relative; padding-bottom: 14px; display: inline-block;
 }
 .modal-header h2::after {
-  content: ""; position: absolute; left: 0; bottom: 0; width: 40px; height: 4px; background: var(--secondary);
+  content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 80px; height: 4px; background: var(--secondary); border-radius: 2px;
 }
 
 .close-btn {
