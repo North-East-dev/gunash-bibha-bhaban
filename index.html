@@ -36,11 +36,7 @@ body {
 body.modal-open, body.menu-open { overflow: hidden; }
 
 /* ================= ANIMATIONS ================= */
-.fade-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
+.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
 @keyframes kenBurns {
@@ -50,25 +46,16 @@ body.modal-open, body.menu-open { overflow: hidden; }
 
 /* ================= NAVBAR ================= */
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 5%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky; top: 0; z-index: 1000;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 5%; background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: 0.3s;
 }
 
 .nav-brand {
   font-family: "Playfair Display", serif;
-  font-size: clamp(20px, 4vw, 24px);
-  font-weight: 700;
-  color: var(--primary);
-  text-decoration: none;
+  font-size: clamp(20px, 4vw, 24px); font-weight: 700; color: var(--primary); text-decoration: none;
   z-index: 1002;
 }
 
@@ -250,18 +237,34 @@ h2::after {
 
 @media(max-width:600px) { .mySlides { height: 250px; } .slide-caption { font-size: 18px; padding: 20px; } }
 
-/* ================= CALENDAR ================= */
-.calendar-wrapper { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
-.calendar-header { font-family: "Playfair Display"; font-size: 24px; margin-bottom: 25px; color: var(--primary); text-align: center; }
+/* ================= CALENDAR (OPTIMIZED) ================= */
+.calendar-wrapper { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
+.calendar-header { 
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: "Playfair Display"; font-size: 22px; margin-bottom: 25px; color: var(--primary); 
+}
+.cal-btn {
+  background: none; border: none; font-size: 20px; cursor: pointer; color: var(--primary);
+  padding: 5px 10px; border-radius: 50%; transition: 0.3s;
+}
+.cal-btn:hover { background: #f4eff9; }
+
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-.calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 13px; background: #fbf9fd; transition: 0.3s; }
-.calendar-day:not(.booked):hover { background: var(--primary); color: white; transform: scale(1.1); box-shadow: 0 8px 20px rgba(91,43,130,0.3); cursor: pointer; }
+.calendar-day { 
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center; 
+  border-radius: 12px; font-size: 13px; background: #fbf9fd; transition: 0.3s; 
+}
+.calendar-day:not(.booked):not(.empty):hover { 
+  background: var(--primary); color: white; transform: scale(1.1); 
+  box-shadow: 0 8px 20px rgba(91,43,130,0.3); cursor: pointer; 
+}
 .calendar-day.booked { background: #eee; color: #aaa; text-decoration: line-through; cursor: not-allowed; }
+.calendar-day.empty { background: transparent; cursor: default; }
 
 /* ================= FOOTER ================= */
 footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #ccc; text-align: center; padding: 60px 20px; margin-top: 80px; }
 
-/* ================= MODAL ================= */
+/* ================= MODAL (PREMIUM STYLE) ================= */
 .modal {
   display: none; position: fixed; inset: 0;
   background: rgba(45, 20, 63, 0.85); backdrop-filter: blur(8px);
@@ -271,33 +274,48 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 .modal.active { display: block; opacity: 1; }
 
 .modal-content {
-  background: white; max-width: 480px; width: 100%; margin: 5vh auto; padding: 35px;
+  background: white; max-width: 450px; width: 100%; margin: 5vh auto; padding: 40px;
   border-radius: 26px; transform: translateY(20px);
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3); position: relative;
 }
-@media(max-width: 480px) { .modal-content { padding: 25px; margin: 10px auto; border-radius: 20px; } }
+@media(max-width: 480px) { .modal-content { padding: 30px 20px; } }
 .modal.active .modal-content { transform: translateY(0); }
 
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.modal-header h2 { margin: 0; font-size: 22px; color: var(--text-main); text-align: left; }
+/* Left aligned header with gold underline (Matches Image 5) */
+.modal-header { margin-bottom: 25px; text-align: left; }
+.modal-header h2 { 
+  margin: 0; font-size: 28px; color: var(--text-main); font-family: "Playfair Display"; 
+  position: relative; padding-bottom: 10px;
+}
+.modal-header h2::after {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 40px; height: 4px; background: var(--secondary);
+}
 
 .close-btn {
+  position: absolute; right: 30px; top: 30px;
   background: #f4f4f4; border: none; width: 36px; height: 36px; border-radius: 50%;
-  font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
+  font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
 }
 .close-btn:hover { background: #ffebeb; color: #d32f2f; }
 
-.modal-label { font-size: 13px; font-weight: 600; color: #666; margin-bottom: 6px; display: block; }
-.modal-content input, .modal-content select, .modal-content textarea {
-  width: 100%; padding: 14px; margin-bottom: 18px; border-radius: 12px;
-  border: 2px solid #f0f0f0; font-family: inherit; font-size: 16px; background: #fdfdfd; transition: 0.3s;
-}
-.modal-content input:focus { background: white; border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.08); }
+.modal-label { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 8px; display: block; }
 
-.success-box { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px 0; }
-.success-check { font-size: 60px; color: #4CAF50; margin-bottom: 20px; animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+/* Inputs matching Image 5 (Purple Border on Focus) */
+.modal-content input, .modal-content select, .modal-content textarea {
+  width: 100%; padding: 14px; margin-bottom: 20px; border-radius: 12px;
+  border: 1px solid #ddd; font-family: inherit; font-size: 16px; background: white; transition: 0.3s;
+}
+.modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { 
+  border: 2px solid var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(91,43,130,0.1); 
+}
+
+/* Success State (Matches Image 1) */
+.success-box { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 0; }
+.success-check { font-size: 60px; color: #4CAF50; margin-bottom: 15px; animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.success-title { font-family: "Playfair Display"; font-size: 28px; color: var(--primary); margin-bottom: 15px; }
 @keyframes popIn { 0%{transform:scale(0);} 100%{transform:scale(1);} }
+
 </style>
 </head>
 
@@ -358,7 +376,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
       <button class="exp-tab" onclick="switchExperience('events')">Past Events</button>
     </div>
 
-    <!-- Reviews -->
     <div id="exp-reviews" class="exp-panel active">
       <div class="reviews-mosaic">
         <div class="review-card large fade-up stagger-1">“The ambience felt refined and welcoming. The staff was incredibly helpful.”<strong>Wedding · 2024</strong></div>
@@ -368,7 +385,6 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
       </div>
     </div>
 
-    <!-- SLIDESHOW -->
     <div id="exp-events" class="exp-panel">
       <div class="slideshow-container fade-up">
         <div class="mySlides slide-fade">
@@ -397,7 +413,11 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
   <div class="fade-up">
     <h2>Availability</h2>
     <div class="calendar-wrapper">
-      <div class="calendar-header" id="monthYear"></div>
+      <div class="calendar-header">
+        <button class="cal-btn" onclick="changeMonth(-1)">&#10094;</button>
+        <span id="monthYear"></span>
+        <button class="cal-btn" onclick="changeMonth(1)">&#10095;</button>
+      </div>
       <div class="calendar-grid" id="calendarGrid"></div>
     </div>
   </div>
@@ -405,7 +425,7 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 
 <section id="location">
   <div class="section-card fade-up" style="padding:0; overflow:hidden;">
-    <iframe src=<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d802.8681713498077!2d90.9686873740315!3d26.51301810558221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sgunash%20padmawati%20bibah%20bhaban%20location!5e0!3m2!1sen!2sin!4v1769749606872!5m2!1sen!2sin"
+    <iframe src="https://www.google.com/maps?q=Gunash%20Padmawati%20Bibha%20Bhaban&output=embed"
       width="100%" height="400" style="border:0;" loading="lazy"></iframe>
   </div>
 </section>
@@ -415,67 +435,76 @@ footer { background: linear-gradient(135deg, var(--dark-bg), #1a0826); color: #c
 <!-- MODAL -->
 <div id="bookingModal" class="modal">
   <div class="modal-content">
-    <div class="modal-header">
-      <h2>Booking Enquiry</h2>
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-    </div>
+    
+    <button class="close-btn" onclick="closeModal()">&times;</button>
 
-    <!-- FORM -->
-    <form id="enquiryForm" name="google-sheet">
-      <div id="step1">
-        <p style="color:#666; font-size:14px; margin-bottom:25px;">Please share your details to proceed.</p>
-        <label class="modal-label">Full Name</label>
-        <input id="nameInput" type="text" name="Name" placeholder="e.g. Rahul Sharma" required>
-        <label class="modal-label">Phone Number</label>
-        <input id="phoneInput" type="tel" name="Phone" placeholder="e.g. 9876543210" maxlength="10" required>
-        <button type="button" id="continueBtn" class="btn disabled" style="width:100%" onclick="goToStep2()">Continue to Dates</button>
+    <!-- FORM SECTION -->
+    <div id="formSection">
+      <div class="modal-header">
+        <h2>Booking Enquiry</h2>
       </div>
+      <p style="color:#666; font-size:14px; margin-bottom:25px;">Please share your details to proceed.</p>
 
-      <div id="step2" style="display:none;">
-        <label class="modal-label">Duration</label>
-        <select id="daysSelect" onchange="updateDateViews()">
-          <option value="1">1 Day</option>
-          <option value="2">2 Days</option>
-          <option value="3">3 Days</option>
-          <option value="4">4 Days</option>
-          <option value="custom">Custom...</option>
-        </select>
-        <input type="hidden" name="Duration" id="hiddenDuration" value="1 Day">
-
-        <div id="customDaysDiv" style="display:none;">
-          <input type="number" id="customDaysInput" placeholder="Days" oninput="calculateEndDate()">
+      <form id="enquiryForm" name="google-sheet">
+        <!-- Step 1 -->
+        <div id="step1">
+          <label class="modal-label">Full Name</label>
+          <input id="nameInput" type="text" name="Name" placeholder="e.g. Rahul Sharma" required>
+          <label class="modal-label">Phone Number</label>
+          <input id="phoneInput" type="tel" name="Phone" placeholder="e.g. 9876543210" maxlength="10" required>
+          <button type="button" id="continueBtn" class="btn disabled" style="width:100%" onclick="goToStep2()">Continue to Dates</button>
         </div>
 
-        <div id="singleDate">
-          <label class="modal-label">Event Date</label>
-          <input type="date" id="dateSingle">
-        </div>
+        <!-- Step 2 -->
+        <div id="step2" style="display:none;">
+          <label class="modal-label">Duration</label>
+          <select id="daysSelect" onchange="updateDateViews()">
+            <option value="1">1 Day</option>
+            <option value="2">2 Days</option>
+            <option value="3">3 Days</option>
+            <option value="4">4 Days</option>
+            <option value="custom">Custom...</option>
+          </select>
+          <input type="hidden" name="Duration" id="hiddenDuration" value="1 Day">
 
-        <div id="rangeDate" style="display:none;">
-          <div style="display:flex; gap:10px;">
-            <div style="flex:1;"><input type="date" id="dateFrom" onchange="calculateEndDate()"></div>
-            <div style="flex:1;"><input type="date" id="dateTo" readonly style="background:#f4f4f4;"></div>
+          <div id="customDaysDiv" style="display:none;">
+            <label class="modal-label">Enter Number of Days</label>
+            <input type="number" id="customDaysInput" placeholder="Days" oninput="calculateEndDate()">
+          </div>
+
+          <div id="singleDate">
+            <label class="modal-label">Event Date</label>
+            <input type="date" id="dateSingle">
+          </div>
+
+          <div id="rangeDate" style="display:none;">
+            <div style="display:flex; gap:10px;">
+              <div style="flex:1;"><label class="modal-label">Start Date</label><input type="date" id="dateFrom" onchange="calculateEndDate()"></div>
+              <div style="flex:1;"><label class="modal-label">End Date</label><input type="date" id="dateTo" readonly style="background:#f4f4f4;"></div>
+            </div>
+          </div>
+          <input type="hidden" name="Date" id="hiddenDate">
+
+          <label class="modal-label">Details</label>
+          <textarea name="Details" placeholder="Event details..." rows="3"></textarea>
+          
+          <div style="display:flex; gap:10px; margin-top:10px;">
+             <button type="button" class="btn" onclick="backToStep1()" style="background:#ddd; color:#333; flex:1;">Back</button>
+             <button type="submit" class="btn" id="submitBtn" style="flex:2;">Submit</button>
           </div>
         </div>
-        <input type="hidden" name="Date" id="hiddenDate">
-
-        <label class="modal-label">Details</label>
-        <textarea name="Details" placeholder="Event details..." rows="3"></textarea>
-        
-        <div style="display:flex; gap:10px; margin-top:10px;">
-           <button type="button" class="btn" onclick="backToStep1()" style="background:#eee; color:#333; flex:1;">Back</button>
-           <button type="submit" class="btn" id="submitBtn" style="flex:2;">Submit</button>
-        </div>
-      </div>
-    </form>
-
-    <div id="successStep" style="display:none;" class="success-box">
-      <div class="success-check">✔</div>
-      <h2>Thank you!</h2>
-      <p style="margin-bottom:10px;">We have received your enquiry.</p>
-      <p style="font-size:14px; color:#555;">Our team will review your request and message you on WhatsApp shortly.</p>
-      <button class="btn" onclick="closeModal()" style="margin-top:25px; min-width:150px;">Close</button>
+      </form>
     </div>
+
+    <!-- SUCCESS SECTION (Center aligned) -->
+    <div id="successStep" style="display:none;" class="success-box">
+      <h2 class="success-title">Booking Enquiry</h2>
+      <div class="success-check">✔</div>
+      <h2 class="success-title" style="color: var(--primary);">Thank you!</h2>
+      <p style="color:#555; margin-bottom:20px;">We have received your enquiry.<br>Our team will review your request and message you on WhatsApp shortly.</p>
+      <button class="btn" onclick="closeModal()" style="min-width:150px; background: var(--primary);">Close</button>
+    </div>
+
   </div>
 </div>
 
@@ -487,8 +516,9 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbyGsTQXMR6PyFdJnxvtVD
 function toggleMenu(){ document.getElementById("navLinks").classList.toggle("active"); document.querySelector(".hamburger").classList.toggle("active"); document.body.classList.toggle("menu-open"); }
 function closeMenu(){ document.getElementById("navLinks").classList.remove("active"); document.querySelector(".hamburger").classList.remove("active"); document.body.classList.remove("menu-open"); }
 
-/* MODAL */
+/* MODAL LOGIC */
 const bookingModal=document.getElementById("bookingModal");
+const formSection=document.getElementById("formSection");
 const step1=document.getElementById("step1");
 const step2=document.getElementById("step2");
 const successStep=document.getElementById("successStep");
@@ -501,7 +531,7 @@ function openModal(){ bookingModal.classList.add("active"); document.body.classL
 function closeModal(){
   bookingModal.classList.remove("active"); document.body.classList.remove("modal-open");
   setTimeout(()=>{ 
-    step1.style.display="block"; step2.style.display="none"; successStep.style.display="none"; 
+    formSection.style.display="block"; step1.style.display="block"; step2.style.display="none"; successStep.style.display="none"; 
     nameInput.value=""; phoneInput.value=""; validateStep1(); 
     document.getElementById("enquiryForm").reset();
   },300);
@@ -536,13 +566,14 @@ form.addEventListener('submit', e => {
 
   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
   .then(response => {
-    step2.style.display = "none";
+    formSection.style.display = "none";
     successStep.style.display = "flex";
     submitBtn.textContent = "Submit";
     submitBtn.classList.remove("disabled");
   })
   .catch(error => {
-    step2.style.display = "none";
+    // Google Script often returns error for CORS even if successful
+    formSection.style.display = "none";
     successStep.style.display = "flex";
     submitBtn.textContent = "Submit";
     submitBtn.classList.remove("disabled");
@@ -595,7 +626,7 @@ function switchExperience(type){
 let slideIndex = 0;
 let slideTimer;
 
-showSlides(); // Start
+showSlides(); 
 
 function showSlides() {
   let i;
@@ -613,30 +644,53 @@ function showSlides() {
   slideTimer = setTimeout(showSlides, 3500); 
 }
 
-// Manual Click Function
 function currentSlide(n) {
-  clearTimeout(slideTimer); // Stop auto timer
-  slideIndex = n - 1; // Set index (showSlides adds 1 immediately)
-  showSlides(); // Restart
+  clearTimeout(slideTimer);
+  slideIndex = n - 1;
+  showSlides();
 }
 
-/* CALENDAR */
-const grid=document.getElementById("calendarGrid");
-const now=new Date();
-document.getElementById("monthYear").textContent=now.toLocaleString("default",{month:"long",year:"numeric"});
-const days=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-const booked=["2024-01-12","2024-01-18"];
-for(let d=1;d<=days;d++){
-  const el=document.createElement("div"); el.className="calendar-day"; el.textContent=d;
-  const str=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-  if(booked.includes(str)) el.classList.add("booked");
-  grid.appendChild(el);
+/* CALENDAR (WITH NAVIGATION) */
+const grid = document.getElementById("calendarGrid");
+const monthLabel = document.getElementById("monthYear");
+let currentDate = new Date();
+const bookedDates = ["2024-01-12", "2024-01-18", "2024-11-05"];
+
+function renderCalendar() {
+  grid.innerHTML = "";
+  monthLabel.textContent = currentDate.toLocaleString("default",{month:"long",year:"numeric"});
+  
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement("div");
+    el.className = "calendar-day empty";
+    grid.appendChild(el);
+  }
+
+  for(let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement("div");
+    el.className = "calendar-day"; el.textContent = d;
+    
+    const dateStr = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    if (bookedDates.includes(dateStr)) { el.classList.add("booked"); }
+    grid.appendChild(el);
+  }
 }
 
+function changeMonth(dir) {
+  currentDate.setMonth(currentDate.getMonth() + dir);
+  renderCalendar();
+}
+renderCalendar();
+
+/* ANIMATIONS */
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")}),{threshold:0.1});
 document.querySelectorAll(".fade-up").forEach(el=>obs.observe(el));
 </script>
 
 </body>
 </html>
-
