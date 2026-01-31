@@ -4,8 +4,8 @@
     "subtitle": "Where Timeless Elegance Meets Celebration",
     "trustText": "★ ★ ★ ★ ★<br>Trusted by 150+ Families · Premium Venue",
     "slideshow": [
-       { "id": "hero1", "src": "images/hero1.jpg", "caption": "Grand Entrance" },
-       { "id": "hero2", "src": "images/hero2.jpg", "caption": "Evening Ambience" }
+       { "id": "hero1", "src": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098", "caption": "Grand Entrance" },
+       { "id": "hero2", "src": "https://images.unsplash.com/photo-1519225468359-2996bc140aaa?q=80&w=2098", "caption": "Evening Ambience" }
     ]
   },
   "venue": {
@@ -111,6 +111,27 @@
         "end": "2025-01-18",
         "status": "tentative",
         "note": "Wedding Inquiry"
+      },
+      {
+        "id": "feb_booking_1",
+        "start": "2026-02-10",
+        "end": "2026-02-12",
+        "status": "booked",
+        "note": "Wedding Ceremony"
+      },
+      {
+        "id": "feb_booking_2",
+        "start": "2026-02-20",
+        "end": "2026-02-20",
+        "status": "tentative",
+        "note": "Reception Inquiry"
+      },
+      {
+        "id": "feb_booking_3",
+        "start": "2026-02-25",
+        "end": "2026-02-25",
+        "status": "blocked",
+        "note": "Maintenance"
       }
     ]
   },

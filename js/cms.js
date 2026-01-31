@@ -42,10 +42,23 @@ async function fetchContent() {
     if (document.getElementById('calendarGrid')) {
         initCalendar();
     }
+    
+    // Re-trigger animations for new content
+    initAnimations();
 
   } catch (error) {
     console.error('CMS Error:', error);
   }
+}
+
+// Initialize animations for dynamic content
+function initAnimations() {
+    const observer = window.fadeObserver || new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")}),{threshold:0.1});
+    
+    document.querySelectorAll(".fade-up").forEach(el => {
+        // Only observe if not already visible (optional optimization)
+        observer.observe(el);
+    });
 }
 
 // Update DOM elements with data-cms attributes
@@ -188,18 +201,75 @@ function renderGallery(container, items) {
       <img src="${item.src}" alt="${item.caption}" loading="lazy">
       <div class="slide-caption">${item.caption}</div>
     </div>
-  `).join('') + `
-    <div class="dot-container">
-      ${items.map((_, i) => `<span class="dot" onclick="currentSlide(${i+1})"></span>`).join('')}
-    </div>
-  `;
+  `).join('');
   
-  // Re-initialize slideshow if needed (assuming showSlides is global)
-  if (typeof showSlides === 'function') {
-    slideIndex = 1;
-    showSlides(slideIndex);
+  // Re-initialize slideshow if needed
+    if (typeof showSlides === 'function') {
+      slideIndex = 1;
+      showSlides(slideIndex);
+    }
+}
+
+// --- GALLERY SLIDESHOW LOGIC ---
+let slideIndex = 1;
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (slides.length === 0) return; // Safety check
+
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  
+  slides[slideIndex-1].style.display = "block";
+  if (dots.length > 0) {
+      dots[slideIndex-1].className += " active";
   }
 }
+
+// Make functions global
+window.plusSlides = plusSlides;
+window.currentSlide = currentSlide;
+window.showSlides = showSlides;
+
+
+// --- TAB SWITCHING LOGIC ---
+function switchExperience(tabName) {
+    // Update Tabs
+    const tabs = document.querySelectorAll('.exp-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    // Find the button that was clicked (approximate matching)
+    const activeTab = Array.from(tabs).find(t => t.innerText.toLowerCase().includes(tabName === 'reviews' ? 'guest' : 'event'));
+    if (activeTab) activeTab.classList.add('active');
+
+    // Update Panels
+    const panels = document.querySelectorAll('.exp-panel');
+    panels.forEach(panel => panel.classList.remove('active'));
+    
+    const activePanel = document.getElementById(`exp-${tabName}`);
+    if (activePanel) activePanel.classList.add('active');
+}
+window.switchExperience = switchExperience;
+
 
 // Initialize
 document.addEventListener('DOMContentLoaded', fetchContent);
@@ -254,17 +324,23 @@ function renderCalendar(date) {
 
         // Check bookings
         for (const b of bookings) {
-            const start = new Date(b.start);
-            start.setHours(0,0,0,0);
+            // Parse "YYYY-MM-DD" manually to avoid UTC conversion issues
+            const [sYear, sMonth, sDay] = b.start.split('-').map(Number);
+            const start = new Date(sYear, sMonth - 1, sDay);
             
             // If it's a range
             if (b.end && b.end !== b.start) {
-                const end = new Date(b.end);
-                end.setHours(0,0,0,0);
-                if (checkDate >= start && checkDate <= end) return b.status || 'booked';
+                const [eYear, eMonth, eDay] = b.end.split('-').map(Number);
+                const end = new Date(eYear, eMonth - 1, eDay);
+                // Compare timestamps to be safe (ignoring time)
+                if (checkDate.getTime() >= start.getTime() && checkDate.getTime() <= end.getTime()) {
+                    return b.status || 'booked';
+                }
             } else {
                 // Single date
-                if (checkDate.getTime() === start.getTime()) return b.status || 'booked';
+                if (checkDate.getTime() === start.getTime()) {
+                    return b.status || 'booked';
+                }
             }
         }
         return 'available';

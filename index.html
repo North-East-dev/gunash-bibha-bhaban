@@ -590,11 +590,6 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
           <div class="slide-caption">Traditional Haldi Ceremony</div>
         </div>
       </div>
-      <div class="dot-container">
-        <span class="dot" onclick="currentSlide(1)"></span> 
-        <span class="dot" onclick="currentSlide(2)"></span> 
-        <span class="dot" onclick="currentSlide(3)"></span> 
-      </div>
     </div>
   </div>
 </section>
@@ -707,7 +702,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 <script src="js/firebase-config.js"></script>
 
 <!-- CMS Logic -->
-<script src="js/cms.js"></script>
+<script src="js/cms.js?v=2"></script>
 
 <!-- MODAL -->
 <div id="bookingModal" class="modal">
@@ -962,118 +957,9 @@ daysSelect.addEventListener("change",updateDateViews);
 customDaysInput.addEventListener("input",calculateEndDate);
 dateFrom.addEventListener("change",calculateEndDate);
 
-/* TABS */
-function switchExperience(type){
-  document.querySelectorAll(".exp-tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".exp-panel").forEach(p=>p.classList.remove("active"));
-  if(type==="reviews"){
-    document.querySelectorAll(".exp-tab")[0].classList.add("active");
-    document.getElementById("exp-reviews").classList.add("active");
-  }else{
-    document.querySelectorAll(".exp-tab")[1].classList.add("active");
-    document.getElementById("exp-events").classList.add("active");
-  }
-}
-
-/* SLIDESHOW (FIXED) */
-let slideIndex = 0;
-let slideTimer;
-
-showSlides(); 
-
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  
-  for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
-  
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  
-  slideTimer = setTimeout(showSlides, 3500); 
-}
-
-function currentSlide(n) {
-  clearTimeout(slideTimer);
-  slideIndex = n - 1;
-  showSlides();
-}
-
-/* CALENDAR (WITH NAVIGATION) */
-const grid = document.getElementById("calendarGrid");
-const monthLabel = document.getElementById("monthYear");
-let currentDate = new Date();
-const bookedDates = ["2024-01-12", "2024-01-18", "2024-11-05"];
-
-function renderCalendar() {
-  grid.innerHTML = "";
-  monthLabel.textContent = currentDate.toLocaleString("default",{month:"long",year:"numeric"});
-  
-  // Peak Season Warning
-  const m = currentDate.getMonth();
-  const header = document.querySelector('.calendar-header');
-  const existingWarning = document.getElementById('peakWarning');
-  if(existingWarning) existingWarning.remove();
-  
-  if ([0, 1, 9, 10, 11].includes(m)) {
-      const peakMsg = document.createElement("div");
-      peakMsg.id = "peakWarning";
-      peakMsg.textContent = "🔥 Limited availability in peak season";
-      peakMsg.style.cssText = "font-size:12px; color:#d32f2f; text-align:center; width:100%; position:absolute; bottom:-20px; left:0; font-weight:600;";
-      header.style.position = "relative";
-      header.style.marginBottom = "35px"; 
-      header.appendChild(peakMsg);
-  } else {
-      header.style.marginBottom = "25px";
-  }
-  
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  for (let i = 0; i < firstDay; i++) {
-    const el = document.createElement("div");
-    el.className = "calendar-day empty";
-    grid.appendChild(el);
-  }
-
-  const todayStr = new Date().toISOString().split("T")[0];
-  for(let d = 1; d <= daysInMonth; d++) {
-    const el = document.createElement("div");
-    el.className = "calendar-day"; el.textContent = d;
-    const dateStr = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-    
-    // Check if past
-    if (dateStr < todayStr) {
-      el.classList.add("past");
-    } 
-    else if (bookedDates.includes(dateStr)) {
-      el.classList.add("booked");
-    }
-    else {
-      if (dateStr === todayStr) {
-         el.classList.add("today");
-         el.title = "Today";
-      }
-      el.onclick = () => openModal(dateStr);
-      el.title = "Tap to enquire";
-    }
-    grid.appendChild(el);
-  }
-}
-
-function changeMonth(dir) {
-  currentDate.setMonth(currentDate.getMonth() + dir);
-  renderCalendar();
-}
-renderCalendar();
-
-/* ANIMATIONS */
+/* REMOVED: Conflicting TABS, SLIDESHOW, and CALENDAR logic. 
+   These are now handled by js/cms.js to ensure content from the Admin Panel is used. */
+</script>
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")}),{threshold:0.1});
 document.querySelectorAll(".fade-up").forEach(el=>obs.observe(el));
 

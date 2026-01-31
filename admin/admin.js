@@ -178,6 +178,10 @@ function populateForms(data) {
   } catch (e) { errors.push('Slideshows: ' + e.message); console.error(e); }
 
   try {
+      renderBookingList(data.bookings.bookedDates || []);
+  } catch (e) { errors.push('Bookings: ' + e.message); console.error(e); }
+
+  try {
     setVal('contact.phone', data.contact.phone);
     setVal('contact.whatsapp', data.contact.whatsapp);
     setVal('contact.address', data.contact.address);
