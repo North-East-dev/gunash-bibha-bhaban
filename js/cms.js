@@ -38,6 +38,11 @@ async function fetchContent() {
     // Dispatch event so other scripts know content is loaded
     window.dispatchEvent(new CustomEvent('cms-loaded', { detail: data }));
     
+    // Initialize Calendar if element exists
+    if (document.getElementById('calendarGrid')) {
+        initCalendar();
+    }
+
   } catch (error) {
     console.error('CMS Error:', error);
   }
@@ -79,7 +84,7 @@ function updateDOM(data, prefix = '') {
   }
 }
 
-// Helper to render lists (Reviews, Amenities, Gallery)
+// Helper to render lists (Reviews, Amenities, Gallery, Slideshows)
 function renderList(container, items, key) {
   if (key === 'amenities.items') {
      renderAmenities(container, items);
@@ -87,7 +92,63 @@ function renderList(container, items, key) {
      renderReviews(container, items);
   } else if (key === 'experiences.gallery') {
      renderGallery(container, items);
+  } else if (key === 'hero.slideshow') {
+     renderHeroSlideshow(container, items);
   }
+}
+
+function renderHeroSlideshow(container, items) {
+  if (!items || items.length === 0) return;
+
+  // Gradients from CSS to maintain style
+  const gradients = `
+    radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%),
+    linear-gradient(rgba(45, 20, 63, 0.4), rgba(20, 10, 30, 0.8))
+  `;
+
+  // Grain overlay SVG data
+  const grainSvg = "data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E";
+
+  // Create slides
+  const slidesHtml = items.map((item, index) => `
+    <div class="hero-slide ${index === 0 ? 'active' : ''}" 
+         style="
+           position: absolute; inset: 0; 
+           background: ${gradients}, url('${item.src}'); 
+           background-size: cover; background-position: center; 
+           opacity: ${index === 0 ? 1 : 0}; 
+           transition: opacity 1.5s ease-in-out;
+           z-index: 0;
+         ">
+    </div>
+  `).join('');
+
+  // Re-add grain overlay on top
+  const grainHtml = `
+    <div style="
+      position: absolute; inset: 0; 
+      background-image: url('${grainSvg}'); 
+      opacity: 0.08; mix-blend-mode: soft-light; pointer-events: none; 
+      z-index: 1;
+    "></div>
+  `;
+
+  container.innerHTML = slidesHtml + grainHtml;
+
+  // Start slideshow loop
+  let currentSlide = 0;
+  const slides = container.querySelectorAll('.hero-slide');
+  
+  // Clear any existing interval to prevent duplicates
+  if (container.dataset.interval) clearInterval(container.dataset.interval);
+
+  const interval = setInterval(() => {
+    slides[currentSlide].style.opacity = 0;
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].style.opacity = 1;
+  }, 5000); // 5 seconds per slide
+
+  container.dataset.interval = interval;
 }
 
 function renderAmenities(container, items) {
@@ -142,3 +203,111 @@ function renderGallery(container, items) {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', fetchContent);
+
+
+/* --- CALENDAR LOGIC --- */
+let currentCalDate = new Date();
+
+function initCalendar() {
+    renderCalendar(currentCalDate);
+}
+
+function changeMonth(delta) {
+    currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+    renderCalendar(currentCalDate);
+}
+
+// Make changeMonth global so onclick works
+window.changeMonth = changeMonth;
+
+function renderCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const grid = document.getElementById('calendarGrid');
+    const label = document.getElementById('monthYear');
+    
+    if (!grid || !label) return;
+
+    // Update Header
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    label.textContent = `${monthNames[month]} ${year}`;
+
+    // Calculate days
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    // Get bookings from CMS content
+    const bookings = (window.cmsContent && window.cmsContent.bookings && window.cmsContent.bookings.bookedDates) 
+                     ? window.cmsContent.bookings.bookedDates 
+                     : [];
+
+    // Helper to check date status
+    const getDateStatus = (y, m, d) => {
+        const checkDate = new Date(y, m, d);
+        // Reset time for accurate comparison
+        checkDate.setHours(0,0,0,0);
+        
+        // Check past dates
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        if (checkDate < today) return 'past';
+
+        // Check bookings
+        for (const b of bookings) {
+            const start = new Date(b.start);
+            start.setHours(0,0,0,0);
+            
+            // If it's a range
+            if (b.end && b.end !== b.start) {
+                const end = new Date(b.end);
+                end.setHours(0,0,0,0);
+                if (checkDate >= start && checkDate <= end) return b.status || 'booked';
+            } else {
+                // Single date
+                if (checkDate.getTime() === start.getTime()) return b.status || 'booked';
+            }
+        }
+        return 'available';
+    };
+
+    let html = '';
+    
+    // Day Headers
+    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    days.forEach(d => html += `<div class="cal-day-header">${d}</div>`);
+
+    // Empty slots
+    for (let i = 0; i < firstDay; i++) {
+        html += `<div></div>`;
+    }
+
+    // Days
+    for (let i = 1; i <= daysInMonth; i++) {
+        const status = getDateStatus(year, month, i);
+        let className = 'cal-day';
+        let onclick = '';
+
+        if (status === 'past') {
+            className += ' disabled';
+        } else if (status === 'booked') {
+            className += ' booked';
+        } else if (status === 'blocked') {
+            className += ' blocked'; // Gray
+        } else if (status === 'tentative') {
+            className += ' tentative'; // Yellow/Orange
+        } else {
+            // Available
+            onclick = `onclick="openModal('${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}')"`;
+        }
+        
+        // Highlight today
+        const today = new Date();
+        if (today.getDate() === i && today.getMonth() === month && today.getFullYear() === year) {
+            className += ' today';
+        }
+
+        html += `<div class="${className}" ${onclick}>${i}</div>`;
+    }
+
+    grid.innerHTML = html;
+}

@@ -317,23 +317,45 @@ h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
 .cal-btn:hover { background: #f4eff9; }
 
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-.calendar-day { 
+
+.cal-day-header {
+  text-align: center; font-weight: 600; font-size: 14px; color: #888; padding-bottom: 10px;
+}
+
+.cal-day { 
   aspect-ratio: 1; display: flex; align-items: center; justify-content: center; 
   border-radius: 12px; font-size: 13px; background: #fbf9fd; transition: 0.3s; 
+  cursor: pointer; position: relative;
 }
-.calendar-day:not(.booked):not(.empty):hover { 
+
+/* Available State (Default) */
+.cal-day:not(.disabled):not(.booked):not(.blocked):not(.tentative):hover { 
   background: var(--primary); color: white; transform: scale(1.1); 
-  box-shadow: 0 0 15px var(--primary-light); cursor: pointer; z-index: 2;
+  box-shadow: 0 0 15px var(--primary-light); z-index: 2;
 }
-.calendar-day.booked { background: #eee; color: #aaa; text-decoration: line-through; cursor: not-allowed; }
-.calendar-day.empty { background: transparent; cursor: default; }
-.calendar-day.today { 
-  background: white; border: 2px solid var(--primary); color: var(--primary); 
-  font-weight: 700; box-shadow: 0 4px 12px rgba(91,43,130,0.1); 
+
+/* Statuses */
+.cal-day.booked { 
+  background: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; 
+  cursor: not-allowed; 
 }
-.calendar-day.today:hover { background: var(--primary); color: white; }
-.calendar-day.booked { background: #eee; border-color: #ddd; color: #aaa; cursor: not-allowed; }
-  .calendar-day.past { opacity: 0.3; pointer-events: none; background: #f9f9f9; border-color: transparent; }
+.cal-day.blocked { 
+  background: #f5f5f5; color: #9e9e9e; border: 1px solid #e0e0e0; 
+  cursor: not-allowed; 
+}
+.cal-day.tentative { 
+  background: #fff8e1; color: #ff8f00; border: 1px solid #ffecb3; 
+  cursor: not-allowed; 
+}
+.cal-day.disabled { 
+  opacity: 0.3; pointer-events: none; background: #f9f9f9; 
+}
+.cal-day.today { 
+  border: 2px solid var(--primary); font-weight: 700;
+}
+.cal-day.today:hover {
+    background: var(--primary); color: white;
+}
   
   /* ================= TIMELINE ================= */
 .timeline-steps { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; margin-top: 50px; text-align: center; position: relative; }
@@ -452,7 +474,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 </nav>
 
 <header id="home">
-  <div class="hero-bg"></div>
+  <div class="hero-bg" data-cms="hero.slideshow"></div>
   <h1 class="fade-up" data-cms="hero.title">Gunash Padmawati Bibha Bhaban</h1>
   <p class="fade-up" style="transition-delay:0.1s" data-cms="hero.subtitle">Where Timeless Elegance Meets Celebration</p>
   <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">

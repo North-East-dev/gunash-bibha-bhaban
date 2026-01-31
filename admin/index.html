@@ -102,13 +102,14 @@
   /* Forms */
   .form-group { margin-bottom: 25px; }
   label { display: block; font-weight: 600; margin-bottom: 8px; color: #555; font-size: 14px; }
-  input[type="text"], textarea {
+  input[type="text"], textarea, input[type="date"] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-family: inherit;
     font-size: 15px;
+    box-sizing: border-box;
   }
   textarea { height: 100px; resize: vertical; }
   input:focus, textarea:focus { border-color: var(--primary); outline: none; }
@@ -187,6 +188,10 @@
         GPBB Admin
       </div>
       <div style="display:flex; align-items:center; gap:20px;">
+        <div id="connectionStatus" style="display:flex; align-items:center; gap:8px; font-size:12px; color:#666;" title="Checking connection...">
+           <span style="width:10px; height:10px; background:#ccc; border-radius:50%; display:inline-block;" id="statusDot"></span>
+           <span id="statusText">Connecting...</span>
+        </div>
         <a href="../index.html" target="_blank" style="text-decoration:none; color:#666; font-size:14px;">View Site ↗</a>
         <button class="btn-outline btn" onclick="logout()" style="padding: 8px 18px; font-size:14px;">Logout</button>
       </div>
@@ -199,6 +204,7 @@
         <div class="nav-item" onclick="showSection('venue')">Venue Overview</div>
         <div class="nav-item" onclick="showSection('amenities')">Amenities</div>
         <div class="nav-item" onclick="showSection('experiences')">Experiences & Reviews</div>
+        <div class="nav-item" onclick="showSection('bookings')">📅 Booking Calendar</div>
         <div class="nav-item" onclick="showSection('contact')">Contact & Footer</div>
         <div class="nav-item" onclick="showSection('settings')">⚙️ Settings & Tools</div>
       </div>
@@ -215,6 +221,8 @@
             <div style="display:flex; gap:10px; margin-top:15px; flex-wrap:wrap;">
               <button class="btn" onclick="downloadBackup()">⬇️ Download Backup (JSON)</button>
               <button class="btn btn-outline" onclick="document.getElementById('restoreFile').click()">⬆️ Restore from File</button>
+              <button class="btn btn-outline" style="color:#d32f2f; border-color:#d32f2f;" onclick="discardChanges()">⚠️ Discard Unsaved Changes</button>
+              <button class="btn btn-outline" onclick="loadContent()">🔄 Reload Data</button>
               <input type="file" id="restoreFile" style="display:none" onchange="restoreBackup(this)">
             </div>
           </div>
@@ -242,6 +250,12 @@
             <textarea id="hero.trustText"></textarea>
             <div class="help-text">Use &lt;br&gt; for line breaks.</div>
           </div>
+
+          <h3 style="margin-top:30px; border-bottom:1px solid #eee; padding-bottom:10px;">Hero Slideshow</h3>
+          <p style="font-size:13px; color:#666; margin-bottom:15px;">Images displayed in the background of the main section.</p>
+          <div id="hero-slideshow-list"></div>
+          <button class="btn-outline btn" style="margin-top:15px;" onclick="addSlide('hero.slideshow')">+ Add Slide</button>
+
           <div class="action-bar">
             <button class="btn" onclick="saveContent()">Save Changes</button>
           </div>
@@ -306,6 +320,48 @@
           </div>
         </div>
 
+        <!-- BOOKING CALENDAR MANAGER -->
+        <div id="bookings" class="section-editor">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Booking Calendar</h2>
+            <p style="color:#666;">Manage dates that appear as "Booked" on the public calendar.</p>
+            
+            <div class="list-item">
+                <h4 style="margin-top:0;">Add New Booking</h4>
+                <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <div style="flex:1; min-width: 150px;">
+                        <label>Start Date</label>
+                        <input type="date" id="booking-start">
+                    </div>
+                    <div style="flex:1; min-width: 150px;">
+                        <label>End Date (Optional)</label>
+                        <input type="date" id="booking-end" placeholder="Same as start">
+                    </div>
+                    <div style="flex:1; min-width: 150px;">
+                        <label>Status</label>
+                        <select id="booking-status" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px;">
+                            <option value="booked">Booked (Red)</option>
+                            <option value="blocked">Blocked (Gray)</option>
+                            <option value="tentative">Tentative (Yellow)</option>
+                        </select>
+                    </div>
+                    <div style="flex:2; min-width: 200px;">
+                        <label>Note (Internal)</label>
+                        <input type="text" id="booking-note" placeholder="e.g. Smith Wedding">
+                    </div>
+                    <div style="display:flex; align-items:flex-end;">
+                        <button class="btn" onclick="addBooking()">Add Date(s)</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top:30px; border-bottom:1px solid #eee; padding-bottom:10px;">Current Bookings</h3>
+            <div id="booking-list"></div>
+
+            <div class="action-bar">
+                <button class="btn" onclick="saveContent()">Save Changes</button>
+            </div>
+        </div>
+
         <!-- CONTACT EDITOR -->
         <div id="contact" class="section-editor">
           <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Contact & Footer</h2>
@@ -350,6 +406,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   
   <script src="../js/firebase-config.js"></script>
   <script src="admin.js"></script>

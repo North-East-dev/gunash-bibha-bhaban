@@ -2,7 +2,11 @@
   "hero": {
     "title": "Gunash Padmawati Bibha Bhaban",
     "subtitle": "Where Timeless Elegance Meets Celebration",
-    "trustText": "★ ★ ★ ★ ★<br>Trusted by 150+ Families · Premium Venue"
+    "trustText": "★ ★ ★ ★ ★<br>Trusted by 150+ Families · Premium Venue",
+    "slideshow": [
+       { "id": "hero1", "src": "images/hero1.jpg", "caption": "Grand Entrance" },
+       { "id": "hero2", "src": "images/hero2.jpg", "caption": "Evening Ambience" }
+    ]
   },
   "venue": {
     "title": "Venue Overview",
@@ -12,31 +16,37 @@
     "title": "Amenities",
     "items": [
       {
+        "id": "am1",
         "title": "Grand Seating",
         "tooltip": "Comfortable seating for large gatherings",
         "icon": "M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8|M19 10a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2|line x1='12' y1='19' x2='12' y2='21'"
       },
       {
+        "id": "am2",
         "title": "Spacious Stage",
         "tooltip": "Large performance stage",
         "icon": "rect x='2' y='3' width='20' height='14' rx='2' ry='2'|line x1='8' y1='21' x2='16' y2='21'|line x1='12' y1='17' x2='12' y2='21'"
       },
       {
+        "id": "am3",
         "title": "Power Backup",
         "tooltip": "Uninterrupted power supply",
         "icon": "polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'"
       },
       {
+        "id": "am4",
         "title": "Ample Parking Space",
         "tooltip": "Hassle-free parking",
         "icon": "rect x='2' y='5' width='20' height='14' rx='2' ry='2'|path d='M9 17v-5a3 3 0 1 1 6 0v5'"
       },
       {
+        "id": "am5",
         "title": "Decor Friendly",
         "tooltip": "Customizable decoration",
         "icon": "circle cx='12' cy='12' r='10'|path d='M8 14s1.5 2 4 2 4-2 4-2'|line x1='9' y1='9' x2='9.01' y2='9'|line x1='15' y1='9' x2='15.01' y2='9'"
       },
       {
+        "id": "am6",
         "title": "Catering Area",
         "tooltip": "Food and beverage support",
         "icon": "path d='M18 8h1a4 4 0 0 1 0 8h-1'|path d='M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z'|line x1='6' y1='1' x2='6' y2='4'|line x1='10' y1='1' x2='10' y2='4'|line x1='14' y1='1' x2='14' y2='4'"
@@ -48,34 +58,59 @@
     "authorityLine": "150+ Weddings & Celebrations Hosted",
     "reviews": [
       {
+        "id": "rev1",
         "text": "The ambience felt refined and welcoming. The staff was incredibly helpful.",
         "author": "Wedding · 2024"
       },
       {
+        "id": "rev2",
         "text": "Beautifully managed venue. Parking was hassle-free.",
         "author": "Reception · 2023"
       },
       {
+        "id": "rev3",
         "text": "Everything felt premium. The lighting and stage setup were perfect.",
         "author": "Celebration · 2024"
       },
       {
+        "id": "rev4",
         "text": "Spacious and elegant hall.",
         "author": "Family Event · 2022"
       }
     ],
     "gallery": [
       {
+        "id": "gal1",
         "src": "https://images.unsplash.com/photo-1519225468359-2996bc140aaa?q=80&w=1200",
         "caption": "Golden Hour Reception"
       },
       {
-        "src": "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200",
-        "caption": "Classic Floral Wedding"
+        "id": "gal2",
+        "caption": "Classic Floral Wedding",
+        "src": "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200"
       },
       {
+        "id": "gal3",
         "src": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200",
         "caption": "Traditional Haldi Ceremony"
+      }
+    ]
+  },
+  "bookings": {
+    "bookedDates": [
+      {
+        "id": "sample_booking_1",
+        "start": "2024-12-25",
+        "end": "2024-12-25",
+        "status": "booked",
+        "note": "Christmas Event"
+      },
+      {
+        "id": "sample_booking_2",
+        "start": "2025-01-15",
+        "end": "2025-01-18",
+        "status": "tentative",
+        "note": "Wedding Inquiry"
       }
     ]
   },
