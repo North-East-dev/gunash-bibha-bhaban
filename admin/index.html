@@ -1,66 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - Gunash Padmawati Bibha Bhaban</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Firebase SDKs (using CDN) -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-  <script src="../js/firebase-config.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Gunash Padmawati Bibha Bhaban</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Reuse core variables */
+  :root {
+    --primary: #5b2b82;
+    --primary-light: #7a3fa8;
+    --secondary: #d4af37;
+    --soft-bg: #faf8ff;
+    --text-main: #333;
+    --radius-sm: 12px;
+    --radius-md: 20px;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #f4f6f8;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Login Screen */
+  #login-screen {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary), #2d143f);
+  }
+  .login-box {
+    background: white;
+    padding: 40px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Dashboard */
+  #dashboard { display: none; }
+  
+  header {
+    background: white;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    background: white;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+  }
+  .nav-item {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 500;
+  }
+  .nav-item:hover { background: var(--soft-bg); color: var(--primary); }
+  .nav-item.active { background: var(--primary); color: white; }
+  
+  /* Content Area */
+  .content-area {
+    background: white;
+    padding: 40px;
+    border-radius: var(--radius-md);
+    min-height: 500px;
+  }
+  
+  .section-editor { display: none; }
+  .section-editor.active { display: block; animation: fadeIn 0.3s; }
+  
+  /* Forms */
+  .form-group { margin-bottom: 25px; }
+  label { display: block; font-weight: 600; margin-bottom: 8px; color: #555; font-size: 14px; }
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+  }
+  textarea { height: 100px; resize: vertical; }
+  input:focus, textarea:focus { border-color: var(--primary); outline: none; }
+  
+  .help-text { font-size: 12px; color: #888; margin-top: 5px; }
+  
+  /* Buttons */
+  .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+  .btn-outline { background: transparent; border: 1px solid #ddd; color: #555; }
+  .btn-outline:hover { background: #f4f4f4; color: #333; transform: none; }
+  
+  .action-bar {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+
+  /* List Items (Amenities/Reviews) */
+  .list-item {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    position: relative;
+  }
+  .remove-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  /* Responsive */
+  @media(max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+    .sidebar { display: flex; overflow-x: auto; padding: 10px; gap: 10px; position: static; margin-bottom: 20px; }
+    .nav-item { white-space: nowrap; }
+  }
+</style>
 </head>
 <body>
 
   <!-- LOGIN SCREEN -->
   <div id="login-screen">
-    <h2>Admin Login</h2>
-    <p style="color:#666; font-size:0.9rem;">Enter password to manage website content</p>
-    <form id="login-form">
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit" class="btn">Login</button>
-    </form>
-    <div id="login-error" style="color:red; margin-top:10px; font-size:0.9rem;"></div>
+    <div class="login-box">
+      <h2 style="font-family:'Playfair Display'; color:var(--primary);">Admin Login</h2>
+      <p style="color:#666; margin-bottom:30px;">Enter password to manage website</p>
+      <input type="password" id="passwordInput" placeholder="Password" style="margin-bottom:20px;">
+      <button class="btn" onclick="adminLogin()" style="width:100%;">Login</button>
+      <p id="loginError" style="color:#d32f2f; font-size:14px; margin-top:15px; display:none;">Invalid password</p>
+    </div>
   </div>
 
   <!-- DASHBOARD -->
   <div id="dashboard">
     <header>
-      <h1>Admin Dashboard</h1>
-      <div>
-        <span style="font-size:0.8rem; margin-right:10px;">Status: <span id="connection-status">Offline (JSON Mode)</span></span>
-        <button onclick="logout()">Logout</button>
+      <div style="font-weight:700; font-size:20px; font-family:'Playfair Display'; color:var(--primary);">
+        GPBB Admin
+      </div>
+      <div style="display:flex; align-items:center; gap:20px;">
+        <a href="../index.html" target="_blank" style="text-decoration:none; color:#666; font-size:14px;">View Site ↗</a>
+        <button class="btn-outline btn" onclick="logout()" style="padding: 8px 18px; font-size:14px;">Logout</button>
       </div>
     </header>
-    
-    <div class="container">
-      <aside>
-        <ul>
-          <li class="active" onclick="showSection('hero')">Hero Section</li>
-          <li onclick="showSection('experiences')">Experiences</li>
-          <li onclick="showSection('amenities')">Amenities</li>
-          <li onclick="showSection('reviews')">Reviews</li>
-          <li onclick="showSection('contact')">Contact</li>
-          <li onclick="showSection('footer')">Footer</li>
-          <li onclick="showSection('firebase-setup')">⚙️ Setup</li>
-        </ul>
-      </aside>
-      
-      <main>
-        <form id="content-form">
-          <!-- Dynamic Content Loaded Here -->
-          <div id="editors-container"></div>
-        </form>
-      </main>
-    </div>
 
-    <div class="save-bar">
-      <button type="button" class="btn" onclick="saveChanges()">Save Changes</button>
+    <div class="container">
+      <!-- Sidebar Navigation -->
+      <div class="sidebar">
+        <div class="nav-item active" onclick="showSection('hero')">Hero Section</div>
+        <div class="nav-item" onclick="showSection('venue')">Venue Overview</div>
+        <div class="nav-item" onclick="showSection('amenities')">Amenities</div>
+        <div class="nav-item" onclick="showSection('experiences')">Experiences & Reviews</div>
+        <div class="nav-item" onclick="showSection('contact')">Contact & Footer</div>
+        <div class="nav-item" onclick="showSection('settings')">⚙️ Settings & Tools</div>
+      </div>
+
+      <!-- Editors -->
+      <div class="content-area">
+
+        <!-- SETTINGS EDITOR -->
+        <div id="settings" class="section-editor">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Settings & Tools</h2>
+          <div class="list-item">
+            <h4 style="margin-top:0;">Backup & Restore</h4>
+            <p style="font-size:14px; color:#666;">Download a backup of your content or restore from a file.</p>
+            <div style="display:flex; gap:10px; margin-top:15px; flex-wrap:wrap;">
+              <button class="btn" onclick="downloadBackup()">⬇️ Download Backup (JSON)</button>
+              <button class="btn btn-outline" onclick="document.getElementById('restoreFile').click()">⬆️ Restore from File</button>
+              <input type="file" id="restoreFile" style="display:none" onchange="restoreBackup(this)">
+            </div>
+          </div>
+          <div class="list-item">
+            <h4 style="margin-top:0;">Activity Log</h4>
+            <ul id="activity-log" style="list-style:none; padding:0; max-height:200px; overflow-y:auto; font-size:13px; color:#555;">
+              <li style="padding:8px 0; border-bottom:1px solid #eee;">No recent activity.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- HERO EDITOR -->
+        <div id="hero" class="section-editor active">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Hero Section</h2>
+          <div class="form-group">
+            <label>Main Title</label>
+            <input type="text" id="hero.title">
+          </div>
+          <div class="form-group">
+            <label>Subtitle</label>
+            <input type="text" id="hero.subtitle">
+          </div>
+          <div class="form-group">
+            <label>Trust Badge Text (HTML allowed)</label>
+            <textarea id="hero.trustText"></textarea>
+            <div class="help-text">Use &lt;br&gt; for line breaks.</div>
+          </div>
+          <div class="action-bar">
+            <button class="btn" onclick="saveContent()">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- VENUE EDITOR -->
+        <div id="venue" class="section-editor">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Venue Overview</h2>
+          <div class="form-group">
+            <label>Section Title</label>
+            <input type="text" id="venue.title">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="venue.description" style="height:150px;"></textarea>
+          </div>
+          <div class="action-bar">
+            <button class="btn" onclick="saveContent()">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- AMENITIES EDITOR -->
+        <div id="amenities" class="section-editor">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Amenities</h2>
+          <div class="form-group">
+            <label>Section Title</label>
+            <input type="text" id="amenities.title">
+          </div>
+          
+          <h3 style="margin-top:30px; border-bottom:1px solid #eee; padding-bottom:10px;">Items List</h3>
+          <div id="amenities-list"></div>
+          
+          <button class="btn-outline btn" style="margin-top:15px; width:100%;" onclick="addAmenity()">+ Add New Amenity</button>
+
+          <div class="action-bar">
+            <button class="btn" onclick="saveContent()">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- EXPERIENCES EDITOR -->
+        <div id="experiences" class="section-editor">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Experiences</h2>
+          <div class="form-group">
+            <label>Section Title</label>
+            <input type="text" id="experiences.title">
+          </div>
+          <div class="form-group">
+            <label>Authority Line (e.g. "150+ Weddings Hosted")</label>
+            <input type="text" id="experiences.authorityLine">
+          </div>
+
+          <h3 style="margin-top:40px; border-bottom:1px solid #eee; padding-bottom:10px;">Guest Reviews</h3>
+          <div id="reviews-list"></div>
+          <button class="btn-outline btn" style="margin-top:15px; width:100%;" onclick="addReview()">+ Add New Review</button>
+
+          <h3 style="margin-top:40px; border-bottom:1px solid #eee; padding-bottom:10px;">Gallery Images</h3>
+          <div id="gallery-list"></div>
+          <button class="btn-outline btn" style="margin-top:15px; width:100%;" onclick="addGalleryImage()">+ Add New Image</button>
+
+          <div class="action-bar">
+            <button class="btn" onclick="saveContent()">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- CONTACT EDITOR -->
+        <div id="contact" class="section-editor">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Contact & Footer</h2>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="contact.phone">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Link Text</label>
+            <input type="text" id="contact.whatsapp">
+          </div>
+          <div class="form-group">
+            <label>Address (HTML allowed)</label>
+            <textarea id="contact.address"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Google Maps Link</label>
+            <input type="text" id="contact.mapLink">
+          </div>
+          
+          <hr style="margin:40px 0; border:0; border-top:1px solid #eee;">
+          
+          <div class="form-group">
+            <label>Footer Tagline</label>
+            <input type="text" id="footer.tagline">
+          </div>
+          <div class="form-group">
+            <label>Copyright Text</label>
+            <input type="text" id="footer.copyright">
+          </div>
+
+          <div class="action-bar">
+            <button class="btn" onclick="saveContent()">Save Changes</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-  <div id="toast">Changes Saved!</div>
-
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  
+  <script src="../js/firebase-config.js"></script>
   <script src="admin.js"></script>
+
 </body>
 </html>

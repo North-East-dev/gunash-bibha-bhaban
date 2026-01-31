@@ -1,31 +1,23 @@
-// GUNASH PADMAWATI BIBHA BHABAN - FIREBASE CONFIGURATION
-// To enable "Instant Updates" without redeploying code:
-// 1. Create a project at https://console.firebase.google.com/
-// 2. Create a Realtime Database (Start in Test Mode).
-// 3. Copy your "web app" config object.
-// 4. Paste it below inside the variable.
 
-// If this remains null, the site will just read from content.json (Static Mode).
+// js/firebase-config.js
+// Replace with your Firebase Project Configuration
+// 1. Go to Firebase Console -> Project Settings -> General
+// 2. Scroll down to "Your apps" -> Select "Web"
+// 3. Copy the firebaseConfig object and paste it below
 
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyDJvHiVf_qcw8O2WDDsFpWjC8NJLrgTqto",
-  authDomain: "gpbb-7838c.firebaseapp.com",
-  databaseURL: "https://gpbb-7838c-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "gpbb-7838c",
-  storageBucket: "gpbb-7838c.firebasestorage.app",
-  messagingSenderId: "578970150197",
-  appId: "1:578970150197:web:8eee2fb8877c241c14987c",
-  measurementId: "G-6HK5WZQ0PH"
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "your-project-id.firebaseapp.com",
+  databaseURL: "https://your-project-id-default-rtdb.firebaseio.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project-id.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
 };
 
-/* EXAMPLE:
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSy...",
-  authDomain: "project-id.firebaseapp.com",
-  databaseURL: "https://project-id-default-rtdb.firebaseio.com",
-  projectId: "project-id",
-  storageBucket: "project-id.appspot.com",
-  messagingSenderId: "...",
-  appId: "..."
-};
-*/
+// Initialize Firebase
+if (typeof firebase !== 'undefined') {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  console.warn('Firebase SDK not loaded.');
+}

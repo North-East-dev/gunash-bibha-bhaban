@@ -467,8 +467,8 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 
 <section id="venue">
   <div class="section-card fade-up">
-    <h2>Venue Overview</h2>
-    <p style="text-align:center; max-width:750px; margin:auto; font-size:17px; color:#555; line-height:1.8;">
+    <h2 data-cms="venue.title">Venue Overview</h2>
+    <p style="text-align:center; max-width:750px; margin:auto; font-size:17px; color:#555; line-height:1.8;" data-cms="venue.description">
       A premium venue crafted for refined celebrations, combining elegance, comfort, and thoughtful design.
     </p>
   </div>
@@ -476,8 +476,9 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 
 <section id="amenities">
   <div class="section-card">
-    <h2 class="fade-up">Amenities</h2>
-    <div class="features">
+    <h2 data-cms="amenities.title">Amenities</h2>
+    <div class="features" data-cms="amenities.items">
+      <!-- Fallback content will be replaced by CMS -->
       <div class="box fade-up stagger-1" title="Comfortable seating for large gatherings">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 10a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="19" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         Grand Seating
@@ -508,7 +509,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 
 <section id="experiences">
   <div class="section-card">
-    <h2 class="fade-up">Experiences</h2>
+    <h2 class="fade-up" data-cms="experiences.title">Experiences</h2>
     <div style="text-align:center; color:#666; margin-top:-40px; margin-bottom:40px; font-weight:500;" class="fade-up" data-cms="experiences.authorityLine">
       150+ Weddings & Celebrations Hosted
     </div>
@@ -518,7 +519,8 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
     </div>
 
     <div id="exp-reviews" class="exp-panel active">
-      <div class="reviews-mosaic">
+      <div class="reviews-mosaic" data-cms="experiences.reviews">
+        <!-- Fallback content -->
         <div class="review-card large fade-up stagger-1">
           <div style="color:var(--secondary); margin-bottom:10px;">★ ★ ★ ★ ★</div>
           “The ambience felt refined and welcoming. The staff was incredibly helpful.”
@@ -551,7 +553,8 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
     </div>
 
     <div id="exp-events" class="exp-panel">
-      <div class="slideshow-container fade-up">
+      <div class="slideshow-container fade-up" data-cms="experiences.gallery">
+        <!-- Fallback content -->
         <div class="mySlides slide-fade">
           <img src="https://images.unsplash.com/photo-1519225468359-2996bc140aaa?q=80&w=1200" alt="Reception" loading="lazy">
           <div class="slide-caption">Golden Hour Reception</div>
@@ -598,27 +601,27 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
     <h2>Location & Contact</h2>
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; margin-top: 30px;">
       <div>
-        <h3 style="font-family: 'Playfair Display'; font-size: 22px; color: var(--primary); margin-bottom: 15px;">Find Us</h3>
-        <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 300px;">
-          <iframe src="https://www.google.com/maps?q=Gunash+Padmawati+Bibha+Bhaban&output=embed" 
-            width="100%" height="100%" style="border: 0;" 
-            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <a href="https://maps.app.goo.gl/J8UAPi5ypYaxqwR88" target="_blank" style="display: inline-block; margin-top: 15px; color: var(--primary); text-decoration: none; font-weight: 500; font-size: 14px;">
-          📍 Open in Google Maps →
-        </a>
-      </div>
-      <div>
-        <h3 style="font-family: 'Playfair Display'; font-size: 22px; color: var(--primary); margin-bottom: 15px;">Contact</h3>
-        <div style="background: var(--soft-bg); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
-          <p style="margin: 0 0 15px; color: #555; font-size: 15px;">
-            <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Phone:</strong>
-            <a href="tel:+917002905175" style="color: var(--primary); text-decoration: none; font-size: 18px; font-weight: 600;" data-cms="contact.phone">+91 70029 05175</a>
-          </p>
-          <p style="margin: 0; color: #555; font-size: 15px;">
-            <strong style="color: var(--primary); display: block; margin-bottom: 5px;">WhatsApp:</strong>
-            <a href="https://wa.me/917002905175" target="_blank" style="color: #25D366; text-decoration: none; font-size: 18px; font-weight: 600;" data-cms="contact.whatsapp">Message us on WhatsApp</a>
-          </p>
+            <h3 style="font-family: 'Playfair Display'; font-size: 22px; color: var(--primary); margin-bottom: 15px;">Find Us</h3>
+            <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 300px;">
+              <iframe src="https://www.google.com/maps?q=Gunash+Padmawati+Bibha+Bhaban&output=embed" 
+                width="100%" height="100%" style="border: 0;" 
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/J8UAPi5ypYaxqwR88" target="_blank" style="display: inline-block; margin-top: 15px; color: var(--primary); text-decoration: none; font-weight: 500; font-size: 14px;" data-cms="contact.mapLink">
+              📍 Open in Google Maps →
+            </a>
+          </div>
+          <div>
+            <h3 style="font-family: 'Playfair Display'; font-size: 22px; color: var(--primary); margin-bottom: 15px;">Contact</h3>
+            <div style="background: var(--soft-bg); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+              <p style="margin: 0 0 15px; color: #555; font-size: 15px;">
+                <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Phone:</strong>
+                <a href="tel:+917002905175" style="color: var(--primary); text-decoration: none; font-size: 18px; font-weight: 600;" data-cms="contact.phone">+91 70029 05175</a>
+              </p>
+              <p style="margin: 0; color: #555; font-size: 15px;">
+                <strong style="color: var(--primary); display: block; margin-bottom: 5px;">WhatsApp:</strong>
+                <a href="https://wa.me/917002905175" target="_blank" style="color: #25D366; text-decoration: none; font-size: 18px; font-weight: 600;" data-cms="contact.whatsapp">Message us on WhatsApp</a>
+              </p>
           <div style="margin-top:15px; font-size:13px; color:#666; background:white; padding:8px 12px; border-radius:8px; display:inline-block; border:1px solid #eee; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
              ⚡ Replies within 30 minutes
           </div>
@@ -676,10 +679,12 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
   <p class="copyright" data-cms="footer.copyright">&copy; 2024 Gunash Padmawati Bibha Bhaban. All rights reserved.</p>
 </footer>
 
-<!-- FIREBASE SDKs & CONFIG -->
+<!-- Firebase SDK (for dynamic content) -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 <script src="js/firebase-config.js"></script>
+
+<!-- CMS Logic -->
 <script src="js/cms.js"></script>
 
 <!-- MODAL -->

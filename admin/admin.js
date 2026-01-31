@@ -1,351 +1,333 @@
-// ADMIN PANEL LOGIC
 
-// --- CONFIGURATION ---
-let firebaseApp = null;
-let db = null;
+// admin/admin.js
 
-// --- STATE ---
-let currentContent = {}; // Holds the full JSON object
+// Auth State
+let isAuthenticated = sessionStorage.getItem('adminAuth') === 'true';
+const ADMIN_PASS = 'admin123'; // Simple protection as requested
 
-// --- INITIALIZATION ---
+// Current Content State
+let currentContent = {};
+
+// DOM Elements
+const loginScreen = document.getElementById('login-screen');
+const dashboard = document.getElementById('dashboard');
+const loginError = document.getElementById('loginError');
+
+// Initialization
 document.addEventListener('DOMContentLoaded', () => {
-  checkLogin();
-  initFirebase();
-  loadContent();
-  
-  document.getElementById('login-form').addEventListener('submit', handleLogin);
+  if (isAuthenticated) {
+    showDashboard();
+  } else {
+    loginScreen.style.display = 'flex';
+  }
 });
 
-// --- LOGIN / AUTH ---
-function checkLogin() {
-  if (sessionStorage.getItem('isLoggedIn') === 'true') {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'flex';
+function adminLogin() {
+  const input = document.getElementById('passwordInput').value;
+  if (input === ADMIN_PASS) {
+    sessionStorage.setItem('adminAuth', 'true');
+    isAuthenticated = true;
+    showDashboard();
   } else {
-    document.getElementById('login-screen').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
-  }
-}
-
-function handleLogin(e) {
-  e.preventDefault();
-  const password = document.getElementById('password').value;
-  // Simple hardcoded password for the requested "Session-based access"
-  if (password === 'Mriganav10@') {
-    sessionStorage.setItem('isLoggedIn', 'true');
-    checkLogin();
-  } else {
-    document.getElementById('login-error').textContent = 'Invalid password';
+    loginError.style.display = 'block';
   }
 }
 
 function logout() {
-  sessionStorage.removeItem('isLoggedIn');
-  window.location.reload();
+  sessionStorage.removeItem('adminAuth');
+  location.reload();
 }
 
-// --- FIREBASE SETUP ---
-function initFirebase() {
-  if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG) {
-    try {
-      if (firebase && firebase.apps.length === 0) {
-        firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
-        db = firebase.database();
-        document.getElementById('connection-status').textContent = 'Online (Firebase)';
-        document.getElementById('connection-status').style.color = 'green';
-      }
-    } catch (e) {
-      console.error('Firebase init error', e);
-    }
-  }
+function showDashboard() {
+  loginScreen.style.display = 'none';
+  dashboard.style.display = 'block';
+  loadContent();
 }
 
-// --- DATA LOADING ---
-async function loadContent() {
-  try {
-    // 1. Try fetching from Firebase first if connected
-    if (db) {
-      const snapshot = await db.ref('content').once('value');
-      const val = snapshot.val();
-      if (val) {
-        currentContent = val;
-        renderEditors();
-        return;
-      }
-    }
-
-    // 2. Fallback to local content.json
-    const response = await fetch('../content.json');
-    if (!response.ok) throw new Error('Failed to load local JSON');
-    currentContent = await response.json();
-    renderEditors();
-
-  } catch (error) {
-    console.error('Error loading content:', error);
-    alert('Could not load content. Check console.');
-  }
-}
-
-// --- UI RENDERING ---
-function renderEditors() {
-  const container = document.getElementById('editors-container');
-  container.innerHTML = '';
-
-  // Render sections
-  renderHeroEditor(container);
-  renderExperiencesEditor(container);
-  renderAmenitiesEditor(container);
-  renderReviewsEditor(container);
-  renderContactEditor(container);
-  renderFooterEditor(container);
-  renderSetupEditor(container); // Special setup tab
-
-  // Show the first section by default
-  showSection('hero');
-}
-
+// Navigation
 function showSection(sectionId) {
   // Update sidebar
-  document.querySelectorAll('aside li').forEach(li => li.classList.remove('active'));
-  const activeLi = Array.from(document.querySelectorAll('aside li')).find(li => li.textContent.toLowerCase().includes(sectionId) || (sectionId === 'firebase-setup' && li.textContent.includes('Setup')));
-  if (activeLi) activeLi.classList.add('active');
-
-  // Update main area
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  // Update content area
   document.querySelectorAll('.section-editor').forEach(el => el.classList.remove('active'));
-  const activeEditor = document.getElementById(`editor-${sectionId}`);
-  if (activeEditor) activeEditor.classList.add('active');
+  document.getElementById(sectionId).classList.add('active');
 }
 
-// --- EDITOR GENERATORS ---
-
-function createSection(id, title) {
-  const div = document.createElement('div');
-  div.id = `editor-${id}`;
-  div.className = 'section-editor';
-  div.innerHTML = `<h2>${title}</h2>`;
-  return div;
-}
-
-function createInput(label, key, value, type = 'text', help = '') {
-  return `
-    <div class="form-group">
-      <label>${label}</label>
-      <input type="${type}" value="${escapeHtml(value || '')}" onchange="updateField('${key}', this.value)">
-      ${help ? `<div class="help-text">${help}</div>` : ''}
-    </div>
-  `;
-}
-
-function createTextarea(label, key, value) {
-  return `
-    <div class="form-group">
-      <label>${label}</label>
-      <textarea onchange="updateField('${key}', this.value)">${escapeHtml(value || '')}</textarea>
-    </div>
-  `;
-}
-
-// 1. HERO
-function renderHeroEditor(container) {
-  const div = createSection('hero', 'Hero Section');
-  const data = currentContent.hero || {};
-  
-  div.innerHTML += createInput('Main Title', 'hero.title', data.title);
-  div.innerHTML += createInput('Subtitle', 'hero.subtitle', data.subtitle);
-  div.innerHTML += createInput('Trust Text', 'hero.trustText', data.trustText);
-  div.innerHTML += createInput('Background Image URL', 'hero.backgroundImage', data.backgroundImage, 'text', 'Paste a link to your image');
-  
-  container.appendChild(div);
-}
-
-// 2. EXPERIENCES
-function renderExperiencesEditor(container) {
-  const div = createSection('experiences', 'Experiences Section');
-  const data = currentContent.experiences || {};
-  div.innerHTML += createInput('Authority Line', 'experiences.authorityLine', data.authorityLine, 'text', 'e.g. "150+ Weddings Hosted"');
-  container.appendChild(div);
-}
-
-// 3. AMENITIES (Array)
-function renderAmenitiesEditor(container) {
-  const div = createSection('amenities', 'Amenities');
-  const list = currentContent.amenities || [];
-  
-  let html = '<div id="amenities-list">';
-  list.forEach((item, index) => {
-    html += `
-      <div class="array-item">
-        <div class="form-group">
-          <label>Title</label>
-          <input type="text" value="${escapeHtml(item.text)}" onchange="updateArrayItem('amenities', ${index}, 'text', this.value)">
-        </div>
-        <div class="form-group">
-          <label>Tooltip (Hover Text)</label>
-          <input type="text" value="${escapeHtml(item.tooltip)}" onchange="updateArrayItem('amenities', ${index}, 'tooltip', this.value)">
-        </div>
-        <div class="form-group">
-          <label>SVG Icon Code</label>
-          <textarea style="height:60px; font-family:monospace; font-size:12px;" onchange="updateArrayItem('amenities', ${index}, 'icon', this.value)">${escapeHtml(item.icon)}</textarea>
-        </div>
-      </div>
-    `;
-  });
-  html += '</div>';
-  html += '<p style="color:#666; font-size:0.9rem;">To add/remove amenities, advanced mode is needed. For now, edit existing ones.</p>';
-  
-  div.innerHTML += html;
-  container.appendChild(div);
-}
-
-// 4. REVIEWS (Array)
-function renderReviewsEditor(container) {
-  const div = createSection('reviews', 'Reviews');
-  const list = currentContent.reviews || [];
-  
-  let html = '<div id="reviews-list">';
-  list.forEach((item, index) => {
-    html += `
-      <div class="array-item">
-        <div class="form-group">
-          <label>Review Text</label>
-          <textarea onchange="updateArrayItem('reviews', ${index}, 'text', this.value)">${escapeHtml(item.text)}</textarea>
-        </div>
-        <div class="form-group">
-          <label>Author</label>
-          <input type="text" value="${escapeHtml(item.author)}" onchange="updateArrayItem('reviews', ${index}, 'author', this.value)">
-        </div>
-        <div class="form-group">
-          <label>Stars (1-5)</label>
-          <input type="number" min="1" max="5" value="${item.stars}" onchange="updateArrayItem('reviews', ${index}, 'stars', parseInt(this.value))">
-        </div>
-      </div>
-    `;
-  });
-  html += '</div>';
-  
-  div.innerHTML += html;
-  container.appendChild(div);
-}
-
-// 5. CONTACT
-function renderContactEditor(container) {
-  const div = createSection('contact', 'Contact Info');
-  const data = currentContent.contact || {};
-  
-  div.innerHTML += createInput('Phone Number', 'contact.phone', data.phone);
-  div.innerHTML += createInput('WhatsApp Link', 'contact.whatsappLink', data.whatsappLink);
-  div.innerHTML += createInput('Address Line 1', 'contact.addressLine1', data.addressLine1);
-  div.innerHTML += createInput('Address Line 2', 'contact.addressLine2', data.addressLine2);
-  div.innerHTML += createInput('Google Maps Link', 'contact.mapLink', data.mapLink);
-  
-  container.appendChild(div);
-}
-
-// 6. FOOTER
-function renderFooterEditor(container) {
-  const div = createSection('footer', 'Footer');
-  const data = currentContent.footer || {};
-  div.innerHTML += createInput('Tagline', 'footer.tagline', data.tagline);
-  div.innerHTML += createInput('Copyright Text', 'footer.copyright', data.copyright);
-  container.appendChild(div);
-}
-
-// 7. SETUP (Firebase Config)
-function renderSetupEditor(container) {
-  const div = createSection('firebase-setup', 'Setup & Connection');
-  
-  div.innerHTML += `
-    <p>To enable <strong>Instant Updates</strong>, you need to connect a free Firebase database.</p>
-    <ol style="font-size:0.9rem; line-height:1.6; margin-bottom:20px;">
-      <li>Go to <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a>.</li>
-      <li>Create a new project.</li>
-      <li>Go to "Realtime Database" and create a database (start in <strong>Test Mode</strong>).</li>
-      <li>Go to Project Settings > General > "Your apps" > Web App.</li>
-      <li>Copy the \`firebaseConfig\` object code.</li>
-      <li><strong>Open the file \`js/firebase-config.js\` in your project folder.</strong></li>
-      <li>Paste the config object into the \`FIREBASE_CONFIG\` variable.</li>
-      <li>Save the file and reload this page.</li>
-    </ol>
+// Data Handling
+async function loadContent() {
+  try {
+    // Try fetching from Firebase first (if configured)
+    // const snapshot = await firebase.database().ref('content').once('value');
+    // const data = snapshot.val();
     
-    <div style="background:#f0f0f0; padding:15px; border-radius:4px;">
-      <strong>Current Status:</strong> 
-      ${db ? '<span style="color:green">Connected ✅</span>' : '<span style="color:orange">Not Configured (Using content.json)</span>'}
-    </div>
-  `;
+    // Fallback to local JSON
+    const response = await fetch('../content.json');
+    const data = await response.json();
+    
+    currentContent = data;
+    populateForms(data);
+    
+  } catch (error) {
+    console.error('Error loading content:', error);
+    alert('Error loading content. Check console.');
+  }
+}
+
+function populateForms(data) {
+  // Simple Text Inputs
+  setVal('hero.title', data.hero.title);
+  setVal('hero.subtitle', data.hero.subtitle);
+  setVal('hero.trustText', data.hero.trustText);
   
-  container.appendChild(div);
+  setVal('venue.title', data.venue.title);
+  setVal('venue.description', data.venue.description);
+  
+  setVal('amenities.title', data.amenities.title);
+  renderAmenitiesList(data.amenities.items);
+  
+  setVal('experiences.title', data.experiences.title);
+  setVal('experiences.authorityLine', data.experiences.authorityLine);
+  renderReviewsList(data.experiences.reviews);
+  renderGalleryList(data.experiences.gallery);
+  
+  setVal('contact.phone', data.contact.phone);
+  setVal('contact.whatsapp', data.contact.whatsapp);
+  setVal('contact.address', data.contact.address);
+  setVal('contact.mapLink', data.contact.mapLink);
+  
+  setVal('footer.tagline', data.footer.tagline);
+  setVal('footer.copyright', data.footer.copyright);
 }
 
-// --- DATA HANDLING HELPERS ---
-
-function updateField(path, value) {
-  const keys = path.split('.');
-  let obj = currentContent;
-  for (let i = 0; i < keys.length - 1; i++) {
-    if (!obj[keys[i]]) obj[keys[i]] = {};
-    obj = obj[keys[i]];
-  }
-  obj[keys[keys.length - 1]] = value;
+// Helper to set values safely
+function setVal(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value || '';
 }
 
-function updateArrayItem(arrayName, index, field, value) {
-  if (currentContent[arrayName] && currentContent[arrayName][index]) {
-    currentContent[arrayName][index][field] = value;
-  }
+// List Renderers
+function renderAmenitiesList(items) {
+  const container = document.getElementById('amenities-list');
+  container.innerHTML = items.map((item, index) => `
+    <div class="list-item">
+      <div class="remove-btn" onclick="removeItem('amenities.items', ${index})">&times;</div>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" value="${item.title}" onchange="updateItem('amenities.items', ${index}, 'title', this.value)">
+      </div>
+      <div class="form-group">
+        <label>Tooltip</label>
+        <input type="text" value="${item.tooltip}" onchange="updateItem('amenities.items', ${index}, 'tooltip', this.value)">
+      </div>
+      <div class="form-group">
+        <label>SVG Icon Path (Advanced)</label>
+        <input type="text" value="${item.icon}" onchange="updateItem('amenities.items', ${index}, 'icon', this.value)">
+      </div>
+    </div>
+  `).join('');
+  initSortable('amenities-list', 'amenities.items');
 }
 
-async function saveChanges() {
-  const btn = document.querySelector('.save-bar .btn');
-  const originalText = btn.textContent;
-  btn.textContent = 'Saving...';
-  btn.disabled = true;
+function renderReviewsList(items) {
+  const container = document.getElementById('reviews-list');
+  container.innerHTML = items.map((item, index) => `
+    <div class="list-item">
+      <div class="remove-btn" onclick="removeItem('experiences.reviews', ${index})">&times;</div>
+      <div class="form-group">
+        <label>Review Text</label>
+        <textarea onchange="updateItem('experiences.reviews', ${index}, 'text', this.value)">${item.text}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Author (e.g. Wedding · 2024)</label>
+        <input type="text" value="${item.author}" onchange="updateItem('experiences.reviews', ${index}, 'author', this.value)">
+      </div>
+    </div>
+  `).join('');
+  initSortable('reviews-list', 'experiences.reviews');
+}
+
+function renderGalleryList(items) {
+  const container = document.getElementById('gallery-list');
+  container.innerHTML = items.map((item, index) => `
+    <div class="list-item">
+      <div class="remove-btn" onclick="removeItem('experiences.gallery', ${index})">&times;</div>
+      <div style="display:flex; gap:15px; align-items:center; margin-bottom:15px;">
+        <img src="${item.src}" style="width:80px; height:80px; object-fit:cover; border-radius:8px;">
+        <div style="flex:1;">
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>Image URL</label>
+            <input type="text" value="${item.src}" onchange="updateItem('experiences.gallery', ${index}, 'src', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Caption</label>
+            <input type="text" value="${item.caption}" onchange="updateItem('experiences.gallery', ${index}, 'caption', this.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  initSortable('gallery-list', 'experiences.gallery');
+}
+
+// List Management
+function updateItem(path, index, key, value) {
+  const parts = path.split('.');
+  currentContent[parts[0]][parts[1]][index][key] = value;
+}
+
+function removeItem(path, index) {
+  if (!confirm('Are you sure you want to remove this item?')) return;
+  const parts = path.split('.');
+  currentContent[parts[0]][parts[1]].splice(index, 1);
+  populateForms(currentContent); // Re-render
+}
+
+function addAmenity() {
+  currentContent.amenities.items.push({ title: 'New Amenity', tooltip: '', icon: '' });
+  populateForms(currentContent);
+}
+
+function addReview() {
+  currentContent.experiences.reviews.push({ text: 'New review...', author: 'Event · Year' });
+  populateForms(currentContent);
+}
+
+function addGalleryImage() {
+  currentContent.experiences.gallery.push({ src: 'https://via.placeholder.com/1200x800', caption: 'New Image' });
+  populateForms(currentContent);
+}
+
+// Helper to upload image (Convert to Base64)
+function uploadImage(input, index) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    // Size check (limit to ~500KB for Base64 performance)
+    if (file.size > 500 * 1024) {
+        alert('Image is too large for direct embedding (>500KB). Please use an external URL or compress it first.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const base64 = e.target.result;
+        updateItem('experiences.gallery', index, 'src', base64);
+        
+        // Update UI
+        // We need to re-render to show the new image preview
+        // But re-rendering loses focus. So we just update the specific DOM elements if possible,
+        // or just re-render. Re-render is safer.
+        renderGalleryList(currentContent.experiences.gallery);
+        
+        logActivity('Image uploaded (Base64)');
+    };
+    reader.readAsDataURL(file);
+}
+
+// Saving
+async function saveContent() {
+  // Collect all non-list inputs
+  currentContent.hero.title = document.getElementById('hero.title').value;
+  currentContent.hero.subtitle = document.getElementById('hero.subtitle').value;
+  currentContent.hero.trustText = document.getElementById('hero.trustText').value;
+  
+  currentContent.venue.title = document.getElementById('venue.title').value;
+  currentContent.venue.description = document.getElementById('venue.description').value;
+  
+  currentContent.amenities.title = document.getElementById('amenities.title').value;
+  
+  currentContent.experiences.title = document.getElementById('experiences.title').value;
+  currentContent.experiences.authorityLine = document.getElementById('experiences.authorityLine').value;
+  
+  currentContent.contact.phone = document.getElementById('contact.phone').value;
+  currentContent.contact.whatsapp = document.getElementById('contact.whatsapp').value;
+  currentContent.contact.address = document.getElementById('contact.address').value;
+  currentContent.contact.mapLink = document.getElementById('contact.mapLink').value;
+  
+  currentContent.footer.tagline = document.getElementById('footer.tagline').value;
+  currentContent.footer.copyright = document.getElementById('footer.copyright').value;
 
   try {
-    if (db) {
-      // Option A: Save to Firebase
-      await db.ref('content').set(currentContent);
-      showToast('Changes published live!', 'success');
+    // Firebase Save
+    if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+      await firebase.database().ref('content').set(currentContent);
+      logActivity('Content saved to Firebase');
     } else {
-      // Option B: Download JSON (Fallback)
-      downloadJSON(currentContent, 'content.json');
-      showToast('Downloaded content.json. Please upload to GitHub.', 'success');
-      alert('Since Firebase is not connected, you must manually replace "content.json" in your website folder with this downloaded file.');
+      console.warn('Firebase not initialized. Local save only.');
     }
+    
+    console.log('Saved Content:', currentContent);
+    alert('Changes saved successfully!');
+    logActivity('Content saved locally');
+    
   } catch (error) {
-    console.error(error);
-    showToast('Error saving changes', 'error');
-  } finally {
-    btn.textContent = originalText;
-    btn.disabled = false;
+    console.error('Save Error:', error);
+    alert('Failed to save changes: ' + error.message);
+    logActivity('Error saving content: ' + error.message);
   }
 }
 
-function downloadJSON(data, filename) {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+// --- Tools & Settings ---
+
+function logActivity(msg) {
+  const log = JSON.parse(localStorage.getItem('adminActivityLog') || '[]');
+  const entry = { time: new Date().toLocaleString(), msg };
+  log.unshift(entry);
+  if (log.length > 50) log.pop(); // Keep last 50
+  localStorage.setItem('adminActivityLog', JSON.stringify(log));
+  renderActivityLog();
 }
 
-function showToast(message, type = 'success') {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.className = type;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3000);
+function renderActivityLog() {
+  const log = JSON.parse(localStorage.getItem('adminActivityLog') || '[]');
+  const container = document.getElementById('activity-log');
+  if (!container) return;
+  
+  if (log.length === 0) {
+    container.innerHTML = '<li style="padding:8px 0; border-bottom:1px solid #eee;">No recent activity.</li>';
+    return;
+  }
+  
+  container.innerHTML = log.map(entry => `
+    <li style="padding:8px 0; border-bottom:1px solid #eee;">
+      <span style="color:#888; font-size:12px;">${entry.time}</span><br>
+      ${entry.msg}
+    </li>
+  `).join('');
 }
 
-function escapeHtml(text) {
-  if (typeof text !== 'string') return text;
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function downloadBackup() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentContent, null, 2));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "website-content-backup-" + new Date().toISOString().slice(0,10) + ".json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+  logActivity('Backup downloaded');
+}
+
+function restoreBackup(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      // Basic validation
+      if (!data.hero || !data.venue) throw new Error('Invalid content format');
+      
+      currentContent = data;
+      populateForms(data);
+      alert('Backup restored successfully! Review and click Save Changes.');
+      logActivity('Backup restored');
+    } catch (err) {
+      alert('Error parsing backup file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  input.value = ''; // Reset
 }

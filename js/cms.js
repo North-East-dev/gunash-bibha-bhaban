@@ -1,159 +1,144 @@
-// Gunash Padmawati Bibha Bhaban - Simple CMS
-// Reads content.json OR Firebase Realtime Database and updates the DOM
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadContent();
-});
+// js/cms.js - Simple JSON-based CMS
 
-async function loadContent() {
+const contentUrl = 'content.json';
+
+// Fetch content and update DOM
+async function fetchContent() {
   try {
-    let data = null;
+    let data;
 
-    // 1. Try Firebase if Configured (Instant Updates Mode)
-    if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG) {
-      console.log('CMS: Connecting to Firebase...');
-      if (firebase.apps.length === 0) {
-        firebase.initializeApp(FIREBASE_CONFIG);
-      }
-      const db = firebase.database();
-      const snapshot = await db.ref('content').once('value');
-      data = snapshot.val();
-      
-      if (data) {
-        console.log('CMS: Loaded content from Firebase');
+    // Try fetching from Firebase first (if configured)
+    if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+      try {
+        const snapshot = await firebase.database().ref('content').once('value');
+        const firebaseData = snapshot.val();
+        if (firebaseData) {
+          data = firebaseData;
+          console.log('Content loaded from Firebase');
+        }
+      } catch (err) {
+        console.warn('Firebase load failed, falling back to JSON:', err);
       }
     }
 
-    // 2. Fallback to local content.json (Static Mode)
+    // Fallback to local JSON if no Firebase data
     if (!data) {
-      console.log('CMS: Loading local content.json...');
-      const response = await fetch('content.json');
+      const response = await fetch(contentUrl);
       if (!response.ok) throw new Error('Failed to load content');
       data = await response.json();
+      console.log('Content loaded from JSON');
     }
 
-    // 3. Apply content to the page
-    if (data) {
-      applyContent(data);
-    }
-
+    updateDOM(data);
+    
+    // Store content globally for other scripts if needed
+    window.cmsContent = data;
+    
+    // Dispatch event so other scripts know content is loaded
+    window.dispatchEvent(new CustomEvent('cms-loaded', { detail: data }));
+    
   } catch (error) {
-    console.warn('CMS: Could not load dynamic content. Using default HTML.', error);
+    console.error('CMS Error:', error);
   }
 }
 
-function applyContent(data) {
-  // Helper to safely set text content
-  const setText = (id, value) => {
-    const el = document.querySelector(`[data-cms="${id}"]`);
-    if (el && value) el.textContent = value;
-  };
+// Update DOM elements with data-cms attributes
+function updateDOM(data, prefix = '') {
+  for (const key in data) {
+    const value = data[key];
+    const currentKey = prefix ? `${prefix}.${key}` : key;
 
-  // Helper to safely set HTML content (for icons/formatting)
-  const setHTML = (id, value) => {
-    const el = document.querySelector(`[data-cms="${id}"]`);
-    if (el && value) el.innerHTML = value;
-  };
-
-  // Helper to safely set attributes (src, href)
-  const setAttr = (id, attr, value) => {
-    const el = document.querySelector(`[data-cms="${id}"]`);
-    if (el && value) el.setAttribute(attr, value);
-  };
-
-  // --- HERO SECTION ---
-  if (data.hero) {
-    setText('hero.title', data.hero.title);
-    setText('hero.subtitle', data.hero.subtitle);
-    if (data.hero.backgroundImage) {
-      const heroBg = document.querySelector('.hero-bg');
-      if (heroBg) {
-        // Keep the gradient overlay, just update the image url
-        heroBg.style.backgroundImage = `
-          radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%),
-          linear-gradient(rgba(45, 20, 63, 0.4), rgba(20, 10, 30, 0.8)),
-          url("${data.hero.backgroundImage}")
-        `;
-      }
-    }
-    setText('hero.trustText', data.hero.trustText);
-  }
-
-  // --- EXPERIENCES ---
-  if (data.experiences) {
-    setText('experiences.authorityLine', data.experiences.authorityLine);
-  }
-
-  // --- AMENITIES ---
-  // If data exists, we assume the structure matches.
-  // We can't easily map by index without wiping the container unless we had IDs.
-  // For robustness, let's target the containers if we want to support adding/removing.
-  // But strictly following "No Redesign" constraints, let's just update existing boxes if possible.
-  if (data.amenities && Array.isArray(data.amenities)) {
-    const amenityBoxes = document.querySelectorAll('.features .box');
-    data.amenities.forEach((item, index) => {
-      if (amenityBoxes[index]) {
-        // Update Icon
-        const iconContainer = amenityBoxes[index].querySelector('.icon');
-        if (iconContainer && item.icon) iconContainer.innerHTML = item.icon;
-        
-        // Update Text (This is tricky because text is a direct node in the current HTML)
-        // Let's assume the HTML structure: <div class="box"> <div class="icon">...</div> Text </div>
-        // We need to replace the text node without killing the icon.
-        if (item.text) {
-           // Find the text node (nodeType 3)
-           let textNode = Array.from(amenityBoxes[index].childNodes).find(n => n.nodeType === 3 && n.textContent.trim().length > 0);
-           if (textNode) {
-             textNode.textContent = ` ${item.text} `;
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      // Recursive call for nested objects
+      updateDOM(value, currentKey);
+    } else {
+      // Find elements with matching data-cms attribute
+      const elements = document.querySelectorAll(`[data-cms="${currentKey}"]`);
+      
+      elements.forEach(element => {
+        if (Array.isArray(value)) {
+           // Handle arrays (lists, galleries) - customized logic based on parent
+           renderList(element, value, currentKey);
+        } else {
+           // Handle text/html content
+           if (element.tagName === 'IMG') {
+             element.src = value;
+           } else if (element.tagName === 'A' && key === 'phone') {
+             element.href = `tel:${value.replace(/\s/g, '')}`;
+             element.textContent = value;
+           } else if (element.tagName === 'A' && key === 'whatsapp') {
+             // Keep href static or update if needed
+             element.textContent = value;
            } else {
-             // Fallback if structure is different
-             amenityBoxes[index].appendChild(document.createTextNode(item.text));
+             element.innerHTML = value;
            }
         }
-        
-        // Tooltip
-        if (item.tooltip) {
-          amenityBoxes[index].setAttribute('title', item.tooltip);
-        }
-      }
-    });
-  }
-
-  // --- REVIEWS ---
-  if (data.reviews && Array.isArray(data.reviews)) {
-    const reviewCards = document.querySelectorAll('.review-card');
-    data.reviews.forEach((review, index) => {
-      if (reviewCards[index]) {
-        reviewCards[index].innerHTML = `
-          <div style="color:var(--secondary); margin-bottom:10px;">${"★ ".repeat(review.stars || 5)}</div>
-          “${review.text}”
-          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
-             <strong>${review.author}</strong>
-             ${review.verified ? '<span class="verified-badge">Verified Guest</span>' : ''}
-          </div>
-        `;
-      }
-    });
-  }
-
-  // --- CONTACT ---
-  if (data.contact) {
-    setText('contact.phone', data.contact.phone);
-    setAttr('contact.phone', 'href', `tel:${data.contact.phone.replace(/\s+/g, '')}`);
-    
-    setAttr('contact.whatsapp', 'href', data.contact.whatsappLink);
-    
-    // Address
-    const addressDiv = document.querySelector('[data-cms="contact.address"]');
-    if (addressDiv && data.contact.addressLine1) {
-      addressDiv.innerHTML = `${data.contact.addressLine1}<br>${data.contact.addressLine2}<br>
-      <a href="tel:${data.contact.phone.replace(/\s+/g, '')}" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:color 0.3s;">${data.contact.phone}</a>`;
+      });
     }
   }
+}
 
-  // --- FOOTER ---
-  if (data.footer) {
-    setText('footer.tagline', data.footer.tagline);
-    setText('footer.copyright', data.footer.copyright);
+// Helper to render lists (Reviews, Amenities, Gallery)
+function renderList(container, items, key) {
+  if (key === 'amenities.items') {
+     renderAmenities(container, items);
+  } else if (key === 'experiences.reviews') {
+     renderReviews(container, items);
+  } else if (key === 'experiences.gallery') {
+     renderGallery(container, items);
   }
 }
+
+function renderAmenities(container, items) {
+  // Clear existing static content if any (or we could just replace)
+  container.innerHTML = items.map((item, index) => `
+    <div class="box fade-up stagger-${(index % 4) + 1}" title="${item.tooltip}">
+      <div class="icon">
+        <svg viewBox="0 0 24 24">
+          ${item.icon.split('|').map(path => 
+            path.startsWith('circle') || path.startsWith('rect') || path.startsWith('line') || path.startsWith('polygon') 
+            ? `<${path} stroke-linecap="round" stroke-linejoin="round"/>`
+            : `<path d="${path}" stroke-linecap="round" stroke-linejoin="round"/>`
+          ).join('')}
+        </svg>
+      </div>
+      ${item.title}
+    </div>
+  `).join('');
+}
+
+function renderReviews(container, items) {
+  container.innerHTML = items.map((item, index) => `
+    <div class="review-card ${index === 0 ? 'large' : ''} ${index === 2 ? 'tall' : ''} fade-up stagger-${(index % 4) + 1}">
+      <div style="color:var(--secondary); margin-bottom:10px;">★ ★ ★ ★ ★</div>
+      “${item.text}”
+      <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+         <strong>${item.author}</strong><span class="verified-badge">Verified Guest</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGallery(container, items) {
+  // Preserve the container structure, just update slides
+  container.innerHTML = items.map(item => `
+    <div class="mySlides slide-fade">
+      <img src="${item.src}" alt="${item.caption}" loading="lazy">
+      <div class="slide-caption">${item.caption}</div>
+    </div>
+  `).join('') + `
+    <div class="dot-container">
+      ${items.map((_, i) => `<span class="dot" onclick="currentSlide(${i+1})"></span>`).join('')}
+    </div>
+  `;
+  
+  // Re-initialize slideshow if needed (assuming showSlides is global)
+  if (typeof showSlides === 'function') {
+    slideIndex = 1;
+    showSlides(slideIndex);
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', fetchContent);

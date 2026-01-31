@@ -2,71 +2,91 @@
   "hero": {
     "title": "Gunash Padmawati Bibha Bhaban",
     "subtitle": "Where Timeless Elegance Meets Celebration",
-    "backgroundImage": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098",
-    "trustText": "Trusted by 150+ Families · Premium Venue"
+    "trustText": "★ ★ ★ ★ ★<br>Trusted by 150+ Families · Premium Venue"
+  },
+  "venue": {
+    "title": "Venue Overview",
+    "description": "A premium venue crafted for refined celebrations, combining elegance, comfort, and thoughtful design."
+  },
+  "amenities": {
+    "title": "Amenities",
+    "items": [
+      {
+        "title": "Grand Seating",
+        "tooltip": "Comfortable seating for large gatherings",
+        "icon": "M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8|M19 10a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2|line x1='12' y1='19' x2='12' y2='21'"
+      },
+      {
+        "title": "Spacious Stage",
+        "tooltip": "Large performance stage",
+        "icon": "rect x='2' y='3' width='20' height='14' rx='2' ry='2'|line x1='8' y1='21' x2='16' y2='21'|line x1='12' y1='17' x2='12' y2='21'"
+      },
+      {
+        "title": "Power Backup",
+        "tooltip": "Uninterrupted power supply",
+        "icon": "polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'"
+      },
+      {
+        "title": "Ample Parking Space",
+        "tooltip": "Hassle-free parking",
+        "icon": "rect x='2' y='5' width='20' height='14' rx='2' ry='2'|path d='M9 17v-5a3 3 0 1 1 6 0v5'"
+      },
+      {
+        "title": "Decor Friendly",
+        "tooltip": "Customizable decoration",
+        "icon": "circle cx='12' cy='12' r='10'|path d='M8 14s1.5 2 4 2 4-2 4-2'|line x1='9' y1='9' x2='9.01' y2='9'|line x1='15' y1='9' x2='15.01' y2='9'"
+      },
+      {
+        "title": "Catering Area",
+        "tooltip": "Food and beverage support",
+        "icon": "path d='M18 8h1a4 4 0 0 1 0 8h-1'|path d='M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z'|line x1='6' y1='1' x2='6' y2='4'|line x1='10' y1='1' x2='10' y2='4'|line x1='14' y1='1' x2='14' y2='4'"
+      }
+    ]
   },
   "experiences": {
-    "authorityLine": "150+ Weddings & Celebrations Hosted"
+    "title": "Experiences",
+    "authorityLine": "150+ Weddings & Celebrations Hosted",
+    "reviews": [
+      {
+        "text": "The ambience felt refined and welcoming. The staff was incredibly helpful.",
+        "author": "Wedding · 2024"
+      },
+      {
+        "text": "Beautifully managed venue. Parking was hassle-free.",
+        "author": "Reception · 2023"
+      },
+      {
+        "text": "Everything felt premium. The lighting and stage setup were perfect.",
+        "author": "Celebration · 2024"
+      },
+      {
+        "text": "Spacious and elegant hall.",
+        "author": "Family Event · 2022"
+      }
+    ],
+    "gallery": [
+      {
+        "src": "https://images.unsplash.com/photo-1519225468359-2996bc140aaa?q=80&w=1200",
+        "caption": "Golden Hour Reception"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200",
+        "caption": "Classic Floral Wedding"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200",
+        "caption": "Traditional Haldi Ceremony"
+      }
+    ]
   },
-  "amenities": [
-    {
-      "text": "Grand Seating",
-      "tooltip": "Comfortable seating for large gatherings",
-      "icon": "<svg viewBox='0 0 24 24'><path d='M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8' stroke-linecap='round' stroke-linejoin='round'/><path d='M19 10a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2' stroke-linecap='round' stroke-linejoin='round'/><line x1='12' y1='19' x2='12' y2='21' stroke-linecap='round' stroke-linejoin='round'/></svg>"
-    },
-    {
-      "text": "Premium Decor",
-      "tooltip": "Customizable themes for your dream event",
-      "icon": "<svg viewBox='0 0 24 24'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' stroke-linecap='round' stroke-linejoin='round'/></svg>"
-    },
-    {
-      "text": "Bridal Suite",
-      "tooltip": "Private luxury room for bride & family",
-      "icon": "<svg viewBox='0 0 24 24'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' stroke-linecap='round' stroke-linejoin='round'/><polyline points='9 22 9 12 15 12 15 22' stroke-linecap='round' stroke-linejoin='round'/></svg>"
-    },
-    {
-      "text": "Large Parking",
-      "tooltip": "Secure parking for 50+ cars",
-      "icon": "<svg viewBox='0 0 24 24'><rect x='2' y='5' width='20' height='14' rx='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M2 10h20' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 15h2' stroke-linecap='round' stroke-linejoin='round'/><path d='M15 15h2' stroke-linecap='round' stroke-linejoin='round'/></svg>"
-    }
-  ],
-  "reviews": [
-    {
-      "text": "The ambience felt refined and welcoming. The staff was incredibly helpful.",
-      "author": "Wedding · 2024",
-      "verified": true,
-      "stars": 5
-    },
-    {
-      "text": "Beautifully managed venue. Parking was hassle-free.",
-      "author": "Reception · 2023",
-      "verified": true,
-      "stars": 5
-    },
-    {
-      "text": "Everything felt premium. The lighting and stage setup were perfect.",
-      "author": "Celebration · 2024",
-      "verified": true,
-      "stars": 5
-    },
-    {
-      "text": "Spacious and elegant hall.",
-      "author": "Family Event · 2022",
-      "verified": true,
-      "stars": 5
-    }
-  ],
   "contact": {
     "phone": "+91 70029 05175",
-    "whatsappLink": "https://wa.me/917002905175",
-    "addressLine1": "State Highway 2, Dolibari",
-    "addressLine2": "Sarmosali Gaon, Assam 781022",
-    "mapLink": "https://maps.app.goo.gl/J8UAPi5ypYaxqwR88",
-    "responsePromise": "⚡ Replies within 30 minutes"
+    "whatsapp": "Message us on WhatsApp",
+    "address": "State Highway 2, Dolibari, Sarmosali Gaon, Assam 781104",
+    "mapLink": "https://maps.app.goo.gl/J8UAPi5ypYaxqwR88"
   },
   "footer": {
     "tagline": "Designed for weddings, receptions & timeless celebrations",
-    "copyright": "© 2024 Gunash Padmawati Bibha Bhaban. All rights reserved."
+    "copyright": "&copy; 2024 Gunash Padmawati Bibha Bhaban. All rights reserved."
   }
-
 }
