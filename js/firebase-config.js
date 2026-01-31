@@ -6,13 +6,14 @@
 // 3. Copy the firebaseConfig object and paste it below
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-project-id.firebaseapp.com",
-  databaseURL: "https://your-project-id-default-rtdb.firebaseio.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID"
+  apiKey: "AIzaSyDJvHiVf_qcw8O2WDDsFpWjC8NJLrgTqto",
+  authDomain: "gpbb-7838c.firebaseapp.com",
+  databaseURL: "https://gpbb-7838c-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "gpbb-7838c",
+  storageBucket: "gpbb-7838c.firebasestorage.app",
+  messagingSenderId: "578970150197",
+  appId: "1:578970150197:web:8eee2fb8877c241c14987c",
+  measurementId: "G-6HK5WZQ0PH"
 };
 
 // Initialize Firebase
