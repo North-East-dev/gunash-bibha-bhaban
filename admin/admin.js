@@ -31,7 +31,7 @@ function handleLogin(e) {
   e.preventDefault();
   const password = document.getElementById('password').value;
   // Simple hardcoded password for the requested "Session-based access"
-  if (password === 'admin123') {
+  if (password === 'Mriganav10@') {
     sessionStorage.setItem('isLoggedIn', 'true');
     checkLogin();
   } else {
