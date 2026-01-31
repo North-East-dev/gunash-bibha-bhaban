@@ -1,0 +1,71 @@
+{
+  "hero": {
+    "title": "Gunash Padmawati Bibha Bhaban",
+    "subtitle": "Where Timeless Elegance Meets Celebration",
+    "backgroundImage": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098",
+    "trustText": "Trusted by 150+ Families · Premium Venue"
+  },
+  "experiences": {
+    "authorityLine": "150+ Weddings & Celebrations Hosted"
+  },
+  "amenities": [
+    {
+      "text": "Grand Seating",
+      "tooltip": "Comfortable seating for large gatherings",
+      "icon": "<svg viewBox='0 0 24 24'><path d='M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8' stroke-linecap='round' stroke-linejoin='round'/><path d='M19 10a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2' stroke-linecap='round' stroke-linejoin='round'/><line x1='12' y1='19' x2='12' y2='21' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    },
+    {
+      "text": "Premium Decor",
+      "tooltip": "Customizable themes for your dream event",
+      "icon": "<svg viewBox='0 0 24 24'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    },
+    {
+      "text": "Bridal Suite",
+      "tooltip": "Private luxury room for bride & family",
+      "icon": "<svg viewBox='0 0 24 24'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' stroke-linecap='round' stroke-linejoin='round'/><polyline points='9 22 9 12 15 12 15 22' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    },
+    {
+      "text": "Large Parking",
+      "tooltip": "Secure parking for 50+ cars",
+      "icon": "<svg viewBox='0 0 24 24'><rect x='2' y='5' width='20' height='14' rx='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M2 10h20' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 15h2' stroke-linecap='round' stroke-linejoin='round'/><path d='M15 15h2' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    }
+  ],
+  "reviews": [
+    {
+      "text": "The ambience felt refined and welcoming. The staff was incredibly helpful.",
+      "author": "Wedding · 2024",
+      "verified": true,
+      "stars": 5
+    },
+    {
+      "text": "Beautifully managed venue. Parking was hassle-free.",
+      "author": "Reception · 2023",
+      "verified": true,
+      "stars": 5
+    },
+    {
+      "text": "Everything felt premium. The lighting and stage setup were perfect.",
+      "author": "Celebration · 2024",
+      "verified": true,
+      "stars": 5
+    },
+    {
+      "text": "Spacious and elegant hall.",
+      "author": "Family Event · 2022",
+      "verified": true,
+      "stars": 5
+    }
+  ],
+  "contact": {
+    "phone": "+91 70029 05175",
+    "whatsappLink": "https://wa.me/917002905175",
+    "addressLine1": "Near Ganesh Mandir, Khanapara",
+    "addressLine2": "Guwahati, Assam 781022",
+    "mapLink": "https://maps.app.goo.gl/J8UAPi5ypYaxqwR88",
+    "responsePromise": "⚡ Replies within 30 minutes"
+  },
+  "footer": {
+    "tagline": "Designed for weddings, receptions & timeless celebrations",
+    "copyright": "© 2024 Gunash Padmawati Bibha Bhaban. All rights reserved."
+  }
+}

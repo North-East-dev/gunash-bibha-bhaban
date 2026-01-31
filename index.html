@@ -434,7 +434,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 <body>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-brand">Gunash Padmawati Bibha Bhaban</a>
+  <a href="index.html" class="nav-brand">Gunash Padmawati Bibah Bhaban</a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#home" onclick="closeMenu()">Home</a></li>
     <li><a href="gallery.html" onclick="closeMenu()">Gallery</a></li>
@@ -453,13 +453,13 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 
 <header id="home">
   <div class="hero-bg"></div>
-  <h1 class="fade-up">Gunash Padmawati Bibha Bhaban</h1>
-  <p class="fade-up" style="transition-delay:0.1s">Where Timeless Elegance Meets Celebration</p>
+  <h1 class="fade-up" data-cms="hero.title">Gunash Padmawati Bibha Bhaban</h1>
+  <p class="fade-up" style="transition-delay:0.1s" data-cms="hero.subtitle">Where Timeless Elegance Meets Celebration</p>
   <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
     <button class="btn fade-up" style="transition-delay:0.2s" onclick="openModal()">Check Availability</button>
     <a href="gallery.html" class="btn btn-secondary fade-up" style="transition-delay:0.25s">View Gallery</a>
   </div>
-  <div class="hero-trust fade-up" style="transition-delay:0.3s">
+  <div class="hero-trust fade-up" style="transition-delay:0.3s" data-cms="hero.trustText">
     <span style="color: var(--secondary); font-size: 18px;">★ ★ ★ ★ ★</span><br>
     Trusted by 150+ Families · Premium Venue
   </div>
@@ -492,7 +492,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
       </div>
       <div class="box fade-up stagger-4" title="Hassle-free parking">
         <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 17v-5a3 3 0 1 1 6 0v5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        Valet Parking
+        Ample Parking Space
       </div>
       <div class="box fade-up stagger-1" title="Customizable decoration">
         <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke-linecap="round" stroke-linejoin="round"/><line x1="9" y1="9" x2="9.01" y2="9" stroke-linecap="round" stroke-linejoin="round"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -509,7 +509,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 <section id="experiences">
   <div class="section-card">
     <h2 class="fade-up">Experiences</h2>
-    <div style="text-align:center; color:#666; margin-top:-40px; margin-bottom:40px; font-weight:500;" class="fade-up">
+    <div style="text-align:center; color:#666; margin-top:-40px; margin-bottom:40px; font-weight:500;" class="fade-up" data-cms="experiences.authorityLine">
       150+ Weddings & Celebrations Hosted
     </div>
     <div class="exp-tabs fade-up stagger-1">
@@ -613,11 +613,11 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
         <div style="background: var(--soft-bg); padding: 25px; border-radius: 15px; margin-bottom: 20px;">
           <p style="margin: 0 0 15px; color: #555; font-size: 15px;">
             <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Phone:</strong>
-            <a href="tel:+917002905175" style="color: var(--primary); text-decoration: none; font-size: 18px; font-weight: 600;">+91 70029 05175</a>
+            <a href="tel:+917002905175" style="color: var(--primary); text-decoration: none; font-size: 18px; font-weight: 600;" data-cms="contact.phone">+91 70029 05175</a>
           </p>
           <p style="margin: 0; color: #555; font-size: 15px;">
             <strong style="color: var(--primary); display: block; margin-bottom: 5px;">WhatsApp:</strong>
-            <a href="https://wa.me/917002905175" target="_blank" style="color: #25D366; text-decoration: none; font-size: 18px; font-weight: 600;">Message us on WhatsApp</a>
+            <a href="https://wa.me/917002905175" target="_blank" style="color: #25D366; text-decoration: none; font-size: 18px; font-weight: 600;" data-cms="contact.whatsapp">Message us on WhatsApp</a>
           </p>
           <div style="margin-top:15px; font-size:13px; color:#666; background:white; padding:8px 12px; border-radius:8px; display:inline-block; border:1px solid #eee; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
              ⚡ Replies within 30 minutes
@@ -665,16 +665,22 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
 </section>
 
 <footer>
-  <h3>Gunash Padmawati Bibha Bhaban</h3>
-  <p class="tagline">Designed for weddings, receptions & timeless celebrations</p>
+  <h3>Gunash Padmawati Bibah Bhaban</h3>
+  <p class="tagline" data-cms="footer.tagline">Designed for weddings, receptions & timeless celebrations</p>
   
-  <div style="margin-bottom: 30px; color:rgba(255,255,255,0.5); font-size:15px; line-height:1.6;">
-    Near Ganesh Mandir, Khanapara, Guwahati, Assam 781022<br>
+  <div style="margin-bottom: 30px; color:rgba(255,255,255,0.5); font-size:15px; line-height:1.6;" data-cms="contact.address">
+    State Highway 2, Dolibari, Sarmosali Gaon, Assam 781104<br>
     <a href="tel:+917002905175" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:color 0.3s;">+91 70029 05175</a>
   </div>
 
-  <p class="copyright">&copy; 2024 Gunash Padmawati Bibha Bhaban. All rights reserved.</p>
+  <p class="copyright" data-cms="footer.copyright">&copy; 2024 Gunash Padmawati Bibha Bhaban. All rights reserved.</p>
 </footer>
+
+<!-- FIREBASE SDKs & CONFIG -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/cms.js"></script>
 
 <!-- MODAL -->
 <div id="bookingModal" class="modal">
