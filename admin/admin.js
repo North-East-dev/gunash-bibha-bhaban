@@ -116,6 +116,7 @@ async function loadContent() {
     if (!currentContent.venue) currentContent.venue = {};
     if (!currentContent.amenities) currentContent.amenities = { items: [] };
     if (!currentContent.experiences) currentContent.experiences = { reviews: [], gallery: [] };
+    if (!currentContent.gallery) currentContent.gallery = { items: [] };
     if (!currentContent.contact) currentContent.contact = {};
     if (!currentContent.footer) currentContent.footer = {};
     // Ensure slideshows array exists
@@ -128,6 +129,7 @@ async function loadContent() {
     ensureIds(currentContent.amenities.items);
     ensureIds(currentContent.experiences.reviews);
     ensureIds(currentContent.experiences.gallery);
+    ensureIds(currentContent.gallery.items);
     ensureIds(currentContent.hero.slideshow);
 
     populateForms(currentContent);
@@ -172,6 +174,10 @@ function populateForms(data) {
     renderReviewsList(data.experiences.reviews || []);
     renderGalleryList(data.experiences.gallery || []);
   } catch (e) { errors.push('Experiences: ' + e.message); console.error(e); }
+
+  try {
+    renderSlideshowList(data.gallery.items || [], 'gallery.items', 'full-gallery-list');
+  } catch (e) { errors.push('Gallery: ' + e.message); console.error(e); }
   
   try {
       renderSlideshowList(data.hero.slideshow || [], 'hero.slideshow', 'hero-slideshow-list');

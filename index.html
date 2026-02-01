@@ -100,7 +100,7 @@ body.modal-open, body.menu-open { overflow: hidden; }
 
 /* Hamburger Menu */
 .hamburger {
-  display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1002;
+  display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1004;
 }
 .bar { width: 25px; height: 3px; background: var(--primary); border-radius: 2px; transition: 0.3s; }
 
@@ -109,7 +109,7 @@ body.modal-open, body.menu-open { overflow: hidden; }
   .nav-links {
     position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
     background: white; flex-direction: column; justify-content: center;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1003;
     box-shadow: -10px 0 30px rgba(0,0,0,0.1);
   }
   .nav-links.active { right: 0; }
@@ -606,7 +606,7 @@ footer p.copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 
       <div style="text-align:center; font-size:13px; color:#666; margin-bottom:20px; font-weight:500;">
         <span style="display:inline-block; width:10px; height:10px; background:#eee; border-radius:50%; margin-right:5px;"></span>Booked
         <span style="display:inline-block; width:10px; height:10px; border:1px solid #ddd; border-radius:50%; margin-left:15px; margin-right:5px;"></span>Available
-        <div style="margin-top:5px; color:var(--primary); font-size:12px;">Tap available dates to enquire</div>
+        <div id="calHint" style="margin-top:5px; color:var(--primary); font-size:12px;">Tap available dates to enquire</div>
       </div>
       <div class="calendar-grid" id="calendarGrid"></div>
     </div>
@@ -957,28 +957,7 @@ daysSelect.addEventListener("change",updateDateViews);
 customDaysInput.addEventListener("input",calculateEndDate);
 dateFrom.addEventListener("change",calculateEndDate);
 
-/* REMOVED: Conflicting TABS, SLIDESHOW, and CALENDAR logic. 
-   These are now handled by js/cms.js to ensure content from the Admin Panel is used. */
-</script>
-const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")}),{threshold:0.1});
-document.querySelectorAll(".fade-up").forEach(el=>obs.observe(el));
 
-/* Parallax & Navbar Scroll */
-window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY;
-  const heroBg = document.querySelector('.hero-bg');
-  const nav = document.querySelector('.navbar');
-  
-  if (heroBg && scrolled < window.innerHeight) {
-    heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.3}px)`;
-  }
-  
-  if (scrolled > 50) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
-});
 </script>
 
 </body>

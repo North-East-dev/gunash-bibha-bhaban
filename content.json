@@ -96,6 +96,9 @@
       }
     ]
   },
+  "gallery": {
+    "items": []
+  },
   "bookings": {
     "bookedDates": [
       {
@@ -132,6 +135,41 @@
         "end": "2026-02-25",
         "status": "blocked",
         "note": "Maintenance"
+      }
+    ]
+  },
+  "gallery": {
+    "title": "Photo Gallery",
+    "items": [
+      {
+        "id": "g1",
+        "src": "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200",
+        "caption": "Floral Decor"
+      },
+      {
+        "id": "g2",
+        "src": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200",
+        "caption": "Grand Entrance"
+      },
+      {
+        "id": "g3",
+        "src": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200",
+        "caption": "Seating Area"
+      },
+      {
+        "id": "g4",
+        "src": "https://images.unsplash.com/photo-1507915977619-6ccfe8003ae6?q=80&w=1200",
+        "caption": "Main Stage"
+      },
+      {
+        "id": "g5",
+        "src": "https://images.unsplash.com/photo-1464366400600-7168b8af0bc3?q=80&w=1200",
+        "caption": "Fine Dining"
+      },
+      {
+        "id": "g6",
+        "src": "assets/image/gallery/one.jpg",
+        "caption": "Ambient Lighting"
       }
     ]
   },

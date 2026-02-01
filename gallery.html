@@ -169,35 +169,8 @@ footer { text-align: center; padding: 40px; color: #777; font-size: 13px; margin
 </header>
 
 <div class="gallery-container">
-  <div class="gallery-grid">
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200" data-caption="1">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600" alt="Decor">
-      <div class="overlay">Floral Decor</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200" data-caption="2">
-      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=600" alt="Entrance">
-      <div class="overlay">Grand Entrance</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200" data-caption="3">
-      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600" alt="Seating">
-      <div class="overlay">Seating Area</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1507915977619-6ccfe8003ae6?q=80&w=1200" data-caption="4">
-      <img src="https://images.unsplash.com/photo-1507915977619-6ccfe8003ae6?q=80&w=600" alt="Stage">
-      <div class="overlay">Main Stage</div>
-    </div>
-    <div class="gallery-item" data-src="https://images.unsplash.com/photo-1464366400600-7168b8af0bc3?q=80&w=1200" data-caption="5">
-      <img src="https://images.unsplash.com/photo-1464366400600-7168b8af0bc3?q=80&w=600" alt="Dining">
-      <div class="overlay">Fine Dining</div>
-    </div>
-    <div class="gallery-item" data-src="assets/image/gallery/one.jpg"" data-caption="6">
-      <img src="assets/image/gallery/one.jpg" alt="Lighting">
-      <div class="overlay">Ambient Lighting</div>
-    </div>
-	<div class="gallery-item" data-src="assets/image/gallery/one.jpg"" data-caption="yoyo">
-      <img src="assets/image/gallery/one.jpg" alt="Lighting">
-      <div class="overlay">Ambient Lighting</div>
-    </div>
+  <div class="gallery-grid" data-cms="gallery.items">
+    <!-- Loaded dynamically via CMS -->
   </div>
 </div>
 
@@ -214,8 +187,14 @@ footer { text-align: center; padding: 40px; color: #777; font-size: 13px; margin
 
 <footer>© 2026 Gunash Padmawati Bibha Bhaban</footer>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/cms.js?v=2"></script>
+
 <script>
-(function() {
+window.initLightbox = function() {
   const items = document.querySelectorAll('.gallery-item');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
@@ -225,6 +204,7 @@ footer { text-align: center; padding: 40px; color: #777; font-size: 13px; margin
   function openLightbox(index) {
     currentIndex = index;
     const item = items[index];
+    if (!item) return;
     const src = item.getAttribute('data-src') || item.querySelector('img').src;
     const caption = item.getAttribute('data-caption') || item.querySelector('.overlay').textContent;
     lightboxImg.src = src;
@@ -268,7 +248,10 @@ footer { text-align: center; padding: 40px; color: #777; font-size: 13px; margin
   window.closeLightboxOnBackdrop = closeLightboxOnBackdrop;
   window.prevImage = prevImage;
   window.nextImage = nextImage;
-})();
+};
+
+// Initial call (will be re-called by CMS)
+window.initLightbox();
 </script>
 
 </body>

@@ -204,6 +204,7 @@
         <div class="nav-item" onclick="showSection('venue')">Venue Overview</div>
         <div class="nav-item" onclick="showSection('amenities')">Amenities</div>
         <div class="nav-item" onclick="showSection('experiences')">Experiences & Reviews</div>
+        <div class="nav-item" onclick="showSection('full-gallery')">📸 Gallery Manager</div>
         <div class="nav-item" onclick="showSection('bookings')">📅 Booking Calendar</div>
         <div class="nav-item" onclick="showSection('contact')">Contact & Footer</div>
         <div class="nav-item" onclick="showSection('settings')">⚙️ Settings & Tools</div>
@@ -360,6 +361,19 @@
             <div class="action-bar">
                 <button class="btn" onclick="saveContent()">Save Changes</button>
             </div>
+        </div>
+
+        <!-- GALLERY MANAGER -->
+        <div id="full-gallery" class="section-editor">
+          <h2 style="font-family:'Playfair Display'; margin-bottom:30px;">Full Gallery Manager</h2>
+          <p style="color:#666;">Manage the photos displayed on the dedicated Gallery page.</p>
+          
+          <div id="full-gallery-list"></div>
+          <button class="btn-outline btn" style="margin-top:15px;" onclick="addSlide('gallery.items')">+ Add Gallery Image</button>
+
+          <div class="action-bar">
+            <button class="btn" onclick="saveContent()">Save Changes</button>
+          </div>
         </div>
 
         <!-- CONTACT EDITOR -->
